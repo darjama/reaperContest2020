@@ -1,0 +1,32 @@
+{
+  "name": "reapercontest2020",
+  "version": "1.0.0",
+  "description": "Site for contest centered on using the Reaper DAW and it's native effects",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/darjama/reaperContest2020.git"
+  },
+  "author": "darjama",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/darjama/reaperContest2020/issues"
+  },
+  "homepage": "https://github.com/darjama/reaperContest2020#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-react": "^7.9.4",
+    "babel-loader": "^8.1.0",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  }
+}
