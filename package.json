@@ -2,9 +2,10 @@
   "name": "reapercontest2020",
   "version": "1.0.0",
   "description": "Site for contest centered on using the Reaper DAW and it's native effects",
-  "main": "index.js",
+  "main": "./src/index.js",
   "scripts": {
     "build": "webpack --mode production"
+
   },
   "repository": {
     "type": "git",
@@ -28,5 +29,8 @@
     "babel-loader": "^8.1.0",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11"
+  },
+  "babel": {
+    "presets": ["@babel/preset-env", "@babel/preset-react"]
   }
 }
