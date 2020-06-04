@@ -1,9 +1,7 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = 3003;
 
-app.use('/', express.static('../dist'))
-
-//app.get('/', (req,res) => res.send() )
+app.use('/', express.static(__dirname + '/../dist'))
 
 app.listen(port, ()=>console.log(`Started ReaperContest server on port ${port} at ${new Date()}`))
