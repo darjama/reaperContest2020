@@ -1,5 +1,6 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap-reboot.min.css';
+//import 'bootstrap/dist/css/bootstrap.min.css';
+import NavBar from './Navbar.js';
 
 class App extends React.Component {
   constructor() {
@@ -8,6 +9,7 @@ class App extends React.Component {
   render() {
     return(
       <div>
+        <NavBar/>
         React has loaded
       </div>
     )
