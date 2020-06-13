@@ -1,6 +1,6 @@
 import React from 'react';
-//import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './Navbar.js';
+import Vote from './Vote.js';
 
 class App extends React.Component {
   constructor() {
@@ -10,7 +10,7 @@ class App extends React.Component {
     return(
       <div>
         <NavBar/>
-        React has loaded
+        <Vote/>
       </div>
     )
   }
