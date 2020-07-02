@@ -1,6 +1,4 @@
 import React from 'react';
-import NavBar from './Navbar.js';
-import Vote from './Vote.js';
 
 class App extends React.Component {
   constructor() {
@@ -9,8 +7,7 @@ class App extends React.Component {
   render() {
     return(
       <div>
-        <NavBar/>
-        <Vote/>
+        This is home
       </div>
     )
   }
