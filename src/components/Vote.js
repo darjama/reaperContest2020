@@ -7,7 +7,6 @@ function Vote() {
     setTop3([...top3])
   }, [top3]);
   const [top3, setTop3] = useState([null,null,null]);
-  const [count, setCount] = useState(0);
   const newVote = (event, index) => {
     let newVal = event.dataTransfer.getData("mix");
     let oldIndex = top3.indexOf(newVal);
@@ -56,7 +55,6 @@ function Vote() {
           Mix 3
         </ListGroup.Item>
       </ListGroup>
-      <div onClick={() => setCount(count + 1)}>{count}</div>
     </div>
   );
 }
