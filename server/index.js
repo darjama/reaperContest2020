@@ -10,21 +10,42 @@ const port = process.env.PORT || 3003;
 let Client = require('ssh2-sftp-client');
 let sftp = new Client();
 
-sftp.connect({
-  host: process.env.FTPHOST,
-  port:  process.env.FTPPORT,
-  username: process.env.FTPUN,
-  password: process.env.FTPPW
-}).then(() => {
-  return sftp.list('/');
-}).then(data => {
-  console.log(data, 'the data info');
-}).catch(err => {
-  console.log(err, 'catch error');
-});
-
-
 app.use(cors());
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+  cb(null, 'dist')
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' +file.originalname )
+  }
+})
+
+var upload = multer({ storage: storage }).single('file')
+
+app.post('/upload', (req,res) => {
+  upload(req, res, function (err) {
+    if (err instanceof multer.MulterError) {
+        return res.status(500).json(err)
+    } else if (err) {
+        return res.status(500).json(err)
+    }
+    return res.status(200).send(req.file)
+  })
+})
+
+// sftp.connect({
+//   host: process.env.FTPHOST,
+//   port:  process.env.FTPPORT,
+//   username: process.env.FTPUN,
+//   password: process.env.FTPPW
+// }).then(() => {
+//   return sftp.list('/');
+// }).then(data => {
+//   console.log(data, 'the data info');
+// }).catch(err => {
+//   console.log(err, 'catch error');
+// });
 
 app.use('/', express.static(__dirname + '/../dist/'))
 app.use('/:id', express.static(__dirname + '/../dist/'))
