@@ -8,12 +8,10 @@ import Submit from './components/Submit.js';
 
 
 const app = document.getElementById('app');
-console.log(app);
 ReactDOM.render(
 <BrowserRouter>
   <NavBar/>
-    <Route path="/" component={App}>
-        <Route path="/Vote" component={Vote} />
-        <Route path="/Submit" component={Submit} />
-   </Route>
+    <Route exact path="/" component={App} />
+    <Route path="/Vote" component={Vote} />
+    <Route path="/Submit" component={Submit} />
 </BrowserRouter>, app);
