@@ -20,15 +20,20 @@
   "dependencies": {
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
+    "bs-custom-file-input": "^1.3.4",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
+    "ftp": "^0.3.10",
     "jquery": "^3.5.1",
     "mongoose": "^5.9.18",
+    "multer": "^1.4.2",
     "popper.js": "^1.16.1",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.13.1",
     "react-router-bootstrap": "^0.25.0",
     "react-router-dom": "^5.2.0",
+    "ssh2-sftp-client": "^5.1.3",
     "ve": "^0.1.3"
   },
   "devDependencies": {
@@ -36,6 +41,7 @@
     "@babel/preset-env": "^7.10.2",
     "@babel/preset-react": "^7.10.1",
     "babel-loader": "^8.1.0",
+    "dotenv": "^8.2.0",
     "nodemon": "^2.0.4",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11"
