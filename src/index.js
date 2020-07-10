@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter, Route} from 'react-router-dom';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import App from './components/App.js';
 import NavBar from './components/Navbar.js';
-import Vote from './components/Vote.js';
+import Vote from './components/Vote/Vote.js';
 import Submit from './components/Submit.js';
 
 
 const app = document.getElementById('app');
+
 ReactDOM.render(
 <BrowserRouter>
   <NavBar/>
