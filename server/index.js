@@ -7,10 +7,21 @@ const fs = require('fs')
 const cors = require('cors');
 const multer = require('multer');
 const port = process.env.PORT || 3003;
-let Client = require('ssh2-sftp-client');
-let sftp = new Client();
+const Contest = require('../db/model');
+const bodyParser = require('body-parser');
+
+// let Client = require('ssh2-sftp-client');
+// let sftp = new Client();
 
 app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+
+app.set("json spaces", 2);
+
+var contestRoutes = require('../db/contestRoutes');
+contestRoutes(app);
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
