@@ -15,8 +15,6 @@ class Submit extends React.Component {
     bsCustomFileInput.init()
   }
 
-
-
   onChangeHandler(event) {
     this.setState({selectedFile: event.target.files[0]})
 
@@ -25,9 +23,11 @@ class Submit extends React.Component {
   clickHandler(e) {
     e.preventDefault();
     const data = new FormData()
+    const config = {
+      onUploadProgress: progressEvent => console.log(progressEvent.loaded/progressEvent.total)
+  }
     data.append('file', this.state.selectedFile)
-    axios.post("/upload", data, { // receive two parameter endpoint url ,form data
-      })
+    axios.post('/upload', data, config)
       .then(res => { // then print response status
         console.log(res.statusText)
       })
@@ -36,11 +36,16 @@ class Submit extends React.Component {
   render() {
     return(
       <div style={{width: '50%'}}>
-        Upload Your File
+        <h1>Submit Your File</h1>
         <Form>
+          <Form.Label>Email address:</Form.Label>
+          <Form.Control type="email" placeholder="Enter email" />
+          <Form.Label>Message:</Form.Label>
+          <Form.Control as="textarea" rows="3" placeholder="Let me know your Reaper forum user name"/>
+          <Form.Label>Your zip file:</Form.Label>
           <Form.File
             id="custom-file"
-            label="Custom file input"
+            label="Select your zip file here"
             custom
             onChange={() => this.onChangeHandler(event)}
           />
@@ -48,6 +53,8 @@ class Submit extends React.Component {
               Submit
           </Button>
         </Form>
+
+
       </div>
     )
   }
