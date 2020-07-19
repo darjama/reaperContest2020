@@ -38,4 +38,13 @@ const noteReducer = function (state = '', action) {
   }
 }
 
-export default combineReducers({ playlistReducer, voteReducer, noteReducer });
+const contestDetailReducer = function (state = {}, action) {
+  switch (action.type) {
+    case 'UPDATE_DETAILS':
+      return action.payload
+    default:
+      return state
+  }
+}
+
+export default combineReducers({ playlistReducer, voteReducer, noteReducer, contestDetailReducer });
