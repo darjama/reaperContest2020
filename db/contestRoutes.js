@@ -1,7 +1,7 @@
 module.exports = function(app) {
   var contest = require('./contestController');
-  app.route('/contests')
+  app.route('/api/contests')
       .get(contest.contests)
-  app.route('/contests/:month/:year')
+  app.route('/api/contests/:month/:year')
       .get(contest.contest)
 };
