@@ -2,15 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from "redux-thunk";
 import combinedReducers from './reducers';
-import App from './components/App.js';
+import App from './components/Home/App.js';
 import NavBar from './components/Navbar.js';
 import Vote from './components/Vote/Vote.js';
-import Submit from './components/Submit.js';
+import Submit from './components/Submit/Submit.js';
 
 const app = document.getElementById('app');
-const store = createStore(combinedReducers);
+const store = createStore(combinedReducers, applyMiddleware(thunk));
 
 ReactDOM.render(
 <Provider store={store}>
