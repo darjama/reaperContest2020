@@ -1,5 +1,5 @@
 import React from 'react';
-import Carousel from './Carousel.js';
+import HeaderCarousel from './Carousel.js';
 import Schedule from './Schedule';
 import {connect} from 'react-redux';
 import {fetchContestDetails} from '../../redux/contestDetails/contestDetailActions';
@@ -11,7 +11,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchContestDetails();
+    if (!this.props.details) this.props.fetchContestDetails();
   }
 
   render() {
@@ -20,13 +20,21 @@ class App extends React.Component {
     let { month, year, songname, artist, artistimg, description, rawuri, startdate, duedate, votestart, voteend, resultdate, nextstart } = this.props.details;
 
     return(
-      <Container>
-        <p>Welcome to the Reaper Mix Contest Page. The perfect place to find new music to mix and to learn and share mixing techniques with others. The current contest is.</p>
+      <div>
+      <HeaderCarousel/>
+      <Container style={{ minWidth: '350px' }} fluid>
+        <CardDeck style={{ margin: '10px 0 0 0' }} >
+          <Card style={{ minWidth: '99%', margin: '5px 10px' }}>
+          <Card.Body>
+            <Card.Text>
+            Welcome to the Reaper Mix Contest Page. The perfect place to find new music to mix and to learn and share mixing techniques with others. The current contest is.
 
-        <p>Please join us over in the <a href='https://forums.cockos.com/forumdisplay.php?f=24' target="_blank">the Reaper Forums</a> for discussion about this month's contest and mixing in Reaper in general.</p>
-        <CardDeck>
-          <Card style={{ width: '18rem' }}>
-            <Card.Img variant="top" src={artistimg} />
+            Please join us over in the <a href='https://forums.cockos.com/forumdisplay.php?f=24' target="_blank">the Reaper Forums</a> for discussion about this month's contest and mixing in Reaper in general.
+            </Card.Text>
+          </Card.Body>
+          </Card>
+          <Card style={{ minWidth: '300px', width: '50%%' }}>
+            <Card.Img variant="top" src={artistimg}/>
             <Card.Body>
               <Card.Title>{months[month - 1]} {year}</Card.Title>
               <Card.Text>
@@ -37,7 +45,7 @@ class App extends React.Component {
               <Card.Link href={rawuri}>Download the Tracks</Card.Link>
             </Card.Body>
           </Card>
-          <Card style={{ width: '18rem' }}>
+          <Card style={{ minWidth: '300px', width: '50%' }}>
             <Card.Body>
               <Card.Title>Contest Schedule</Card.Title>
               <Card.Text>
@@ -48,6 +56,7 @@ class App extends React.Component {
         </CardDeck>
 
       </Container>
+      </div>
     )
   }
 }
