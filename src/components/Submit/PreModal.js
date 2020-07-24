@@ -51,6 +51,8 @@ class PreModal extends React.Component {
                   onChange={() => this.changeHandler(event)}/>
               )}
             </Form>
+            <br/><br/>
+            <a href='/'>Return to homepage</a>
           </Modal.Body>
 
         </Modal>
