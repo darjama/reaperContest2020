@@ -26,6 +26,7 @@ var Schedule = function(props) {
   }
 
   useEffect(() => {
+    calculateTimeLeft();
     setTimeout(() => {
       setTimeLeft(calculateTimeLeft());
     }, 1000);
@@ -34,6 +35,7 @@ var Schedule = function(props) {
   var options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
 
   function countDown() {
+    if (!timeLeft) return '...';
     let seconds = Math.trunc((timeLeft/1000) % 60).toString()
     if (seconds.length === 1) seconds = '0' + seconds;
     let minutes = Math.trunc((timeLeft/1000/60) % 60).toString()
