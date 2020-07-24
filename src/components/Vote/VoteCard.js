@@ -14,14 +14,16 @@ var VoteCard = function({id, url, notes}) {
             </Form.Control>
           </Form.Group>
         </Form>
-        <Button variant="secondary">Add to Playlist</Button>
+
+        <Button variant="secondary" onClick={clickHandler}>Add to Playlist</Button>
+        <Button variant="secondary" onClick={clickHandler}>Play Now</Button>
         <br/>
         Vote
         <br/>
-        <Button variant="primary" key='one' onClick={clickHandler}>1st</Button>
-        <Button variant="primary" key='two' onClick={clickHandler}>2nd</Button>
-        <Button variant="primary" key='three' onClick={clickHandler}>3rd</Button>
-        <Button variant="primary" key='clear' onClick={clickHandler}>remove</Button>
+        <Button variant="primary" key='one' onClick={voteHandler}>1st</Button>
+        <Button variant="primary" key='two' onClick={voteHandler}>2nd</Button>
+        <Button variant="primary" key='three' onClick={voteHandler}>3rd</Button>
+        <Button variant="primary" key='clear' onClick={voteHandler}>remove</Button>
       </Card.Body>
     </Card>
   )

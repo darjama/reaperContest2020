@@ -1,12 +1,19 @@
 import React, {useState, useEffect} from 'react';
-import {ListGroup} from 'react-bootstrap';
-
+import { shallowEqual, useSelector } from 'react-redux';
+import {ListGroup, Container} from 'react-bootstrap';
+import {fetchContestDetails} from '../../redux/contestDetails/contestDetailActions';
+import NotNowModal from './NotNow';
 
 function Vote() {
   useEffect(() => {
     setTop3([...top3])
   }, [top3]);
+
+  const details = useSelector(state => state.contestDetailReducer);
+  const {votestart, voteend, resultdate} = details;
+
   const [top3, setTop3] = useState([null,null,null]);
+
   const newVote = (event, index) => {
     let newVal = event.dataTransfer.getData("mix");
     let oldIndex = top3.indexOf(newVal);
@@ -31,7 +38,8 @@ function Vote() {
     e.preventDefault();
   }
    return (
-    <div>
+    <Container>
+      <NotNowModal votestart={votestart} voteend={voteend} resultdate={resultdate}/>
       <ListGroup defaultActiveKey="#link2">
         <ListGroup.Item onDragOver={(event) => event.preventDefault()} onDrop={(event) => newVote(event, 0)}>
           Gold: {top3[0]}
@@ -55,7 +63,7 @@ function Vote() {
           Mix 3
         </ListGroup.Item>
       </ListGroup>
-    </div>
+    </Container>
   );
 }
 export default Vote;
