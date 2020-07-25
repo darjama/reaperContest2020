@@ -10,6 +10,7 @@ import NavBar from './components/Navbar.js';
 import Vote from './components/Vote/Vote.js';
 import Submit from './components/Submit/Submit.js';
 import Loader from './components/Loader';
+import './css/main.css'
 
 const app = document.getElementById('app');
 const store = createStore(combinedReducers, applyMiddleware(thunk));
