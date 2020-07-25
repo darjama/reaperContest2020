@@ -5,3 +5,29 @@
   color: green;
   z-index: 50;
 }
+
+.cabin {
+  font-family: 'Cabin Sketch', cursive;
+}
+
+.rem4 {
+  font-size: 4rem;
+}
+
+.rem2 {
+  font-size: 2rem;
+}
+
+.cuprum {
+  font-family: 'Cuprum', sans-serif;
+}
+
+@media only screen and (min-width: 700px) {
+  .spacerdiv {
+    width: 900px;
+  }
+
+  .mr-auto {
+    width: 500px;
+  }
+}
