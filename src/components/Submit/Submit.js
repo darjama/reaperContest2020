@@ -37,14 +37,17 @@ class Submit extends React.Component {
 
   render() {
     return(
-      <Container style={{width: '50%'}}>
+      <Container style={{width: '50%', color: "white"}}>
         <PreModal/>
         <h1>Submit Your File</h1>
+        <br/>
         <Form>
-          <Form.Label>Email address:</Form.Label>
+          <Form.Label >Email address:</Form.Label>
           <Form.Control type="email" placeholder="Enter email" />
+          <br/>
           <Form.Label>Message:</Form.Label>
           <Form.Control as="textarea" rows="3" placeholder="Let me know your Reaper forum user name"/>
+          <br/>
           <Form.Label>Your zip file:</Form.Label>
           <Form.File
             id="custom-file"
@@ -52,6 +55,7 @@ class Submit extends React.Component {
             custom
             onChange={() => this.onChangeHandler(event)}
           />
+          <br/> <br/>
           <Button variant="primary" type="submit" onClick={() => this.clickHandler(event)}>
               Submit
           </Button>
