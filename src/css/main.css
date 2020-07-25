@@ -1,0 +1,21 @@
+html { font-size: 70%; }
+
+h1   { font-size: 2.4rem; }
+
+body {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 1.4rem;
+  background-color: #343a40;
+}
+
+.card {
+  background-color: #343a40;
+  border: 1px solid grey;
+  color: white;
+}
+
+.countdown-table {
+  border: solid 1px grey;
+  border-radius: 3px;
+  padding: 3px;
+}
