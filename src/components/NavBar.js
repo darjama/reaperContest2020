@@ -5,10 +5,10 @@ import {Navbar, Nav, NavItem, NavDropdown} from 'react-bootstrap';
 import "../css/navBar.css";
 var NavBar = function() {
   return (
-    <Navbar bg="dark" variant="dark"expand="lg" className="stickyheader">
-      <Navbar.Brand href="#home">reaMIXed</Navbar.Brand>
+    <Navbar bg="dark" variant="dark"expand="lg" className="stickyheader cuprum rem2">
+      <Navbar.Brand href="/" className="cabin rem4 spacerdiv"> reaMIXed</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
+      <Navbar.Collapse id="basic-navbar-nav" >
         <Nav className="mr-auto">
           <LinkContainer to='/'>
           <Nav.Link>Home</Nav.Link>
@@ -24,10 +24,10 @@ var NavBar = function() {
           </LinkContainer>
           <NavDropdown title="Archive" id="basic-nav-dropdown">
 
-            <NavDropdown.Item href="#action/3.2">Past Raw Files</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.3">Past Mixes</NavDropdown.Item>
+            <NavDropdown.Item className="cuprum" href="#action/3.2">Past Raw Files</NavDropdown.Item>
+            <NavDropdown.Item className="cuprum" href="#action/3.3">Past Mixes</NavDropdown.Item>
             <NavDropdown.Divider />
-            <NavDropdown.Item href="#action/3.1">Hall of Fame</NavDropdown.Item>
+            <NavDropdown.Item className="cuprum" href="#action/3.1">Hall of Fame</NavDropdown.Item>
           </NavDropdown>
         </Nav>
       </Navbar.Collapse>
