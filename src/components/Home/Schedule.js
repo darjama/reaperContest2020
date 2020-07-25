@@ -1,4 +1,5 @@
 import React, {useState, useEffect}  from 'react';
+import {Row, Col} from 'react-bootstrap';
 
 var Schedule = function(props) {
   let { startdate, duedate, votestart, voteend, resultdate, nextstart } = props.details;
@@ -12,10 +13,13 @@ var Schedule = function(props) {
   let nextEvent = labels[dates.indexOf(nextDate)]
 
   let schedule = labels.map((label, i) => (
-    <React.Fragment key={label}>
-      <span style={{fontWeight: 'bold'}}>{label}:</span> {dates[i].toLocaleTimeString('en-US',{timeStyle: 'short'})} {dates[i].toLocaleDateString('en-US', options)}
+    <Row key={label} style={{padding:'5px 0'}}>
+      <Col xs={5} style={{fontWeight: 'bold'}}>{label}:</Col>
+      <Col xs={4}>{dates[i].toLocaleDateString('en-US', options)}</Col>
+      <Col>{dates[i].toLocaleTimeString('en-US',{timeStyle: 'short'})}</Col>
+
       <br/>
-    </React.Fragment>
+    </Row>
   ))
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
@@ -43,16 +47,27 @@ var Schedule = function(props) {
     let hours = Math.trunc((timeLeft/1000/60/60) % 24).toString()
     if (hours.length === 1) hours = '0' + hours;
     let days = Math.trunc(timeLeft/1000/60/60/24).toString()
-    return (days > 0 ? days + ' days, ' : '') + hours + ':' + minutes + ':' + seconds;
+    return (
+      <Row className="rem2">
+        <Col/>
+        <Col className='countdown-table'>{days}<br/>days</Col>
+        <Col className='countdown-table'>{hours}<br/>hours</Col>
+        <Col className='countdown-table'>{minutes}<br/>minutes</Col>
+        <Col className='countdown-table'>{seconds}<br/>seconds</Col>
+        <Col/>
+      </Row>
+    )
   }
 
   return (
     <React.Fragment>
       {schedule}
       <br/>
+      <div className="text-center rem2">
       Coming up: {nextEvent}
       <br/>
-      in: {countDown()}
+      {countDown()}
+      </div>
     </React.Fragment>
   )
 }
