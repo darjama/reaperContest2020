@@ -10,7 +10,7 @@ function HeaderCarousel() {
   };
 
   return (
-    <Carousel activeIndex={index} onSelect={handleSelect} style={{maxHeight: '50vh', overflow: 'hidden'}}>
+    <Carousel activeIndex={index} onSelect={handleSelect} className="cuprum rem2" style={{maxHeight: '50vh', overflow: 'hidden'}}>
       <Carousel.Item>
         <img
           className="d-block w-100"
@@ -18,8 +18,8 @@ function HeaderCarousel() {
           alt="First slide"
         />
         <Carousel.Caption className="carousel-caption-top">
-          <h3>MIX</h3>
-          <p>Try your hand at mixing well professionally recorded tracks in a variety of genres.</p>
+          <h1>MIX</h1>
+          <p>Try your hand at mixing professionally recorded tracks in a variety of genres</p>
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
@@ -30,8 +30,8 @@ function HeaderCarousel() {
         />
 
         <Carousel.Caption  className="carousel-caption-top">
-          <h3>Second slide label</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <h1>LISTEN</h1>
+          <p>Compare the mixes from all the contestants</p>
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
@@ -42,9 +42,9 @@ function HeaderCarousel() {
         />
 
         <Carousel.Caption  className="carousel-caption-top">
-          <h3>Third slide label</h3>
+          <h1>VOTE</h1>
           <p>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+            Vote for the best mixes and learn from their projects
           </p>
         </Carousel.Caption>
       </Carousel.Item>
