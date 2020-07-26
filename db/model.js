@@ -13,7 +13,7 @@ const Schema = mongoose.Schema;
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-  // we're connected!
+  console.log('connected to db') // we're connected!
 });
 
 const Entry = new Schema ({
@@ -66,3 +66,12 @@ const Contest = new Schema({
 
 const ContestModel = mongoose.model('Contests', Contest)
 
+const DlLog = new Schema({
+  timestamp: { type: Date, default: Date.now },
+  ipaddr: String,
+})
+
+const DlLogModel = mongoose.model('DlLogs', DlLog)
+
+
+module.exports = { ContestModel, DlLogModel };

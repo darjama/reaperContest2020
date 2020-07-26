@@ -3,11 +3,13 @@ if (process.env.NODE_ENV !== 'production') {
 }
 const express = require('express');
 const app = express();
-const fs = require('fs')
+const fs = require('fs');
 const cors = require('cors');
 const multer = require('multer');
 const port = process.env.PORT || 3003;
-const Contest = require('../db/model');
+const models = require('../db/model');
+const Contest = models.ContestModel;
+const DlLog = models.DlLogModel;
 const bodyParser = require('body-parser');
 
 // let Client = require('ssh2-sftp-client');
@@ -17,11 +19,13 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-
 app.set("json spaces", 2);
 
 var contestRoutes = require('../db/contestRoutes');
 contestRoutes(app);
+
+var dlLogRoutes = require('../db/dlLogRoutes');
+dlLogRoutes(app);
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
