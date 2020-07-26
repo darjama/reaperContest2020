@@ -4,6 +4,7 @@ import Schedule from './Schedule';
 import {connect} from 'react-redux';
 import {fetchContestDetails} from '../../redux/contestDetails/contestDetailActions';
 import {Card, CardDeck, Container} from 'react-bootstrap';
+import axios from 'axios';
 
 class App extends React.Component {
   constructor(props) {
@@ -12,6 +13,16 @@ class App extends React.Component {
 
   componentDidMount() {
     if (!this.props.details) this.props.fetchContestDetails();
+  }
+
+  logHandler() {
+    axios({url:'/api/dlLog' , method:'post'})
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
   }
 
   render() {
@@ -40,7 +51,7 @@ class App extends React.Component {
                 <br/><br/>
                 {description}
               </Card.Text>
-              <Card.Link href={rawuri}>Download the Tracks</Card.Link>
+              <Card.Link href={rawuri} onClick={() => this.logHandler()}>Download the Tracks</Card.Link>
               <Card.Img variant="bottom" src={artistimg}/>
             </Card.Body>
           </Card>
