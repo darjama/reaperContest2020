@@ -2,7 +2,6 @@
   position: sticky;
   top: 0;
   width: 100%;
-  color: green;
   z-index: 50;
 }
 
@@ -18,16 +17,11 @@
   font-size: 2rem;
 }
 
-.cuprum {
-  font-family: 'Cuprum', sans-serif;
+
+.rem4 {
+  font-size: 4rem;
 }
 
-@media only screen and (min-width: 700px) {
-  .spacerdiv {
-    width: 900px;
-  }
-
-  .mr-auto {
-    width: 500px;
-  }
+.cuprum {
+  font-family: 'Cuprum', sans-serif;
 }
