@@ -7,9 +7,10 @@ import thunk from "redux-thunk";
 import combinedReducers from './reducers';
 import App from './components/Home/App.js';
 import NavBar from './components/Navbar.js';
+import GetStarted from './components/GetStarted/GetStarted.js';
 import Vote from './components/Vote/Vote.js';
 import Submit from './components/Submit/Submit.js';
-import Loader from './components/Loader';
+import Loader from './components/common/Loader';
 import './css/main.css'
 
 const app = document.getElementById('app');
@@ -22,6 +23,7 @@ ReactDOM.render(
     <NavBar/>
       <Route exact path="/" component={App} />
       <Route path="/Vote" component={Vote} />
+      <Route path="/GetStarted" component={GetStarted} />
       <Route path="/Submit" component={Submit} />
   </BrowserRouter>
 </Provider>
