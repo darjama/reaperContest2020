@@ -9,7 +9,8 @@ const Hero = function(props) {
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
       color: 'yellow',
-      minHeight: '25vh'
+      minHeight: '25vh',
+      width: '100vw'
       }}>
       <Container>
         <h1 className='cuprum rem4'>{props.name}</h1>
