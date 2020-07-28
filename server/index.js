@@ -7,7 +7,7 @@ const fs = require('fs');
 const cors = require('cors');
 const multer = require('multer');
 const port = process.env.PORT || 3003;
-const models = require('../db/model');
+const models = require('./db/model');
 const Contest = models.ContestModel;
 const DlLog = models.DlLogModel;
 const bodyParser = require('body-parser');
@@ -21,11 +21,14 @@ app.use(bodyParser.json());
 
 app.set("json spaces", 2);
 
-var contestRoutes = require('../db/contestRoutes');
+var contestRoutes = require('./db/contestRoutes');
 contestRoutes(app);
 
-var dlLogRoutes = require('../db/dlLogRoutes');
+var dlLogRoutes = require('./db/dlLogRoutes');
 dlLogRoutes(app);
+
+var emailRoutes = require('./email/emailROutes');
+emailRoutes(app);
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
