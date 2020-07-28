@@ -11,6 +11,7 @@ import GetStarted from './components/GetStarted/GetStarted.js';
 import Vote from './components/Vote/Vote.js';
 import Submit from './components/Submit/Submit.js';
 import Loader from './components/common/Loader';
+import Footer from './components/common/Footer';
 import './css/main.css'
 
 const app = document.getElementById('app');
@@ -26,5 +27,6 @@ ReactDOM.render(
       <Route path="/GetStarted" component={GetStarted} />
       <Route path="/Submit" component={Submit} />
   </BrowserRouter>
+  <Footer/>
 </Provider>
 , app);

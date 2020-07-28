@@ -19,3 +19,7 @@ body {
   border-radius: 3px;
   padding: 3px;
 }
+
+.hide-form {
+  display: none;
+}
