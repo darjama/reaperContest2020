@@ -18,8 +18,13 @@ db.once('open', function() {
 
 const Entry = new Schema ({
   contestant: String,
-  audioURI: String,
-  contestId: Number,
+  audiouri: String,
+  contestid: Number,
+  ipaddr: String,
+  email: String,
+  zipfile: String,
+  message: String,
+  timestamp: Date,
 })
 
 const EntryModel = mongoose.model('Entries', Entry);
@@ -29,23 +34,13 @@ const Vote = new Schema({
   first: Number,
   second: Number,
   third: Number,
-  ipaddress: String,
+  ipaddr: String,
   time: Date,
   notes: Object,
 })
 
 const VoteModel = mongoose.model('Votes', Vote);
 
-const Submission = new Schema({
-  name: String,
-  email: String,
-  ipaddress: String,
-  time: Date,
-  zipURI: String,
-  contestId: Number,
-})
-
-const SubmissionModel = mongoose.model('Submissions', Submission)
 
 const Contest = new Schema({
   month: Number,
@@ -74,4 +69,4 @@ const DlLog = new Schema({
 const DlLogModel = mongoose.model('DlLogs', DlLog)
 
 
-module.exports = { ContestModel, DlLogModel };
+module.exports = { ContestModel, DlLogModel, EntryModel };

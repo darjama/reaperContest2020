@@ -37,7 +37,7 @@ class Submit extends React.Component {
   render() {
     return(
       <React.Fragment>
-        <Hero name='Sumbit Your Mix'/>
+        <Hero name='Submit Your Mix'/>
         <Container style={{width: '50%', color: "white"}}>
           <PreModal/>
 
