@@ -2,7 +2,6 @@ const mongoose = require('mongoose'),
 Entry = mongoose.model('Entries');
 
 exports.addEntry  = function(req, res) {
-  console.log('in add entry');
   const newRecord = new Entry();
   newRecord.ipaddr = req.headers['x-forwarded-for'] ||
   req.connection.remoteAddress ||
@@ -16,7 +15,6 @@ exports.addEntry  = function(req, res) {
   newRecord.save({},function(err, confirmation) {
     if (err){
       res.send(err);
-      console.log(err);
     }
     res.json(confirmation);
   });
