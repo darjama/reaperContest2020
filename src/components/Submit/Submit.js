@@ -20,7 +20,7 @@ class Submit extends React.Component {
   componentDidMount() {
     bsCustomFileInput.init()
   }
-  checkFileSize = (event) => {
+  checkFileSize(event) {
     let files = event.target.files
     let size = 62914560;
     let err = "";
@@ -37,12 +37,12 @@ class Submit extends React.Component {
     return true;
   }
 
-  checkMimeType=(event)=>{
+  checkMimeType(event) {
     let files = event.target.files
     let err = ''
    const type = 'application/zip'
     for(var x = 0; x < files.length; x++) {
-         if (files[x].type !== type)) {
+         if (files[x].type !== type) {
          err += files[x].type+' is not a zip file. Please upload a zip file.\n';
        }
      };
@@ -61,6 +61,7 @@ class Submit extends React.Component {
          this.setState({
          selectedFile: files[0]
       })
+    }
   }
 
   textChangeHandler(e) {
@@ -75,7 +76,7 @@ class Submit extends React.Component {
     const config = {
       onUploadProgress: progressEvent => {
         console.log(progressEvent.loaded/progressEvent.total);
-        this.setState(progress: progressEvent.loaded/progressEvent.total)
+        this.setState({progress: progressEvent.loaded/progressEvent.total})
       },
       headers: {
           'Content-Type': 'multipart/form-data'
@@ -88,7 +89,7 @@ class Submit extends React.Component {
       .then(res => {
         console.log(res.statusText)
       })
-      .catch(err =>)
+      .catch(err => {cosole.log(err)})
   }
 
   render() {
@@ -96,7 +97,7 @@ class Submit extends React.Component {
       <React.Fragment>
         <Hero name='Submit Your Mix'/>
         <Container style={{width: '50%', color: "white"}}>
-          {/* <PreModal/> */}
+          <PreModal/>
 
           <br/>
           <Form>
