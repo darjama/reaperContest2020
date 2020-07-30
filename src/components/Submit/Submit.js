@@ -11,33 +11,75 @@ class Submit extends React.Component {
     this.state = {
       selectedFile: null,
       email: '',
-      message: ''
+      message: '',
+      progress: 0,
+      disableSubmit: true
     }
   }
 
   componentDidMount() {
     bsCustomFileInput.init()
   }
+  checkFileSize = (event) => {
+    let files = event.target.files
+    let size = 62914560;
+    let err = "";
+    for(var x = 0; x<files.length; x++) {
+      if (files[x].size > size) {
+      err += files[x].type+'is > 60MB. Please make sure you have not included any of the original media files, or contact us to deliver the file another way.\n';
+      }
+    };
+    if (err !== '') {
+      event.target.value = null
+      console.log(err)
+      return false
+    }
+    return true;
+  }
+
+  checkMimeType=(event)=>{
+    let files = event.target.files
+    let err = ''
+   const type = 'application/zip'
+    for(var x = 0; x < files.length; x++) {
+         if (files[x].type !== type)) {
+         err += files[x].type+' is not a zip file. Please upload a zip file.\n';
+       }
+     };
+   if (err !== '') { // if message not same old that mean has error
+        event.target.value = null // discard selected file
+        console.log(err)
+         return false;
+    }
+   return true;
+  }
 
   onChangeHandler(event) {
-    this.setState({selectedFile: event.target.files[0]})
+          var files = event.target.files
+      if(this.maxSelectFile(event) && this.checkMimeType(event)){
+      // if return true allow to setState
+         this.setState({
+         selectedFile: files[0]
+      })
   }
 
   textChangeHandler(e) {
     e.preventDefault();
-    console.log(e.target.type, e.target.value, this.state.email, this.state.message);
     this.setState({[e.target.id]: e.target.value})
   }
+
   clickHandler(e) {
     e.preventDefault();
 
     const data = new FormData();
-    console.log(data);
     const config = {
-      onUploadProgress: progressEvent => console.log(progressEvent.loaded/progressEvent.total),
+      onUploadProgress: progressEvent => {
+        console.log(progressEvent.loaded/progressEvent.total);
+        this.setState(progress: progressEvent.loaded/progressEvent.total)
+      },
       headers: {
           'Content-Type': 'multipart/form-data'
-        },
+      },
     }
     data.append('file', this.state.selectedFile);
     data.set('email', this.state.email);
@@ -46,6 +88,7 @@ class Submit extends React.Component {
       .then(res => {
         console.log(res.statusText)
       })
+      .catch(err =>)
   }
 
   render() {
@@ -71,7 +114,7 @@ class Submit extends React.Component {
               onChange={() => this.onChangeHandler(event)}
             />
             <br/> <br/>
-            <Button variant="primary" type="submit" onClick={() => this.clickHandler(event)}>
+            <Button variant="primary" type="submit" disable={this.state.disableSubmit} onClick={() => this.clickHandler(event)}>
                 Submit
             </Button>
           </Form>
