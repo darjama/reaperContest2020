@@ -30,10 +30,11 @@ var Schedule = function(props) {
   }
 
   useEffect(() => {
-    calculateTimeLeft();
-    setTimeout(() => {
+    const timer=setTimeout(() => {
       setTimeLeft(calculateTimeLeft());
     }, 1000);
+    // Clear timeout if the component is unmounted
+    return () => clearTimeout(timer);
   });
 
   var options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
