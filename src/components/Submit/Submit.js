@@ -10,6 +10,8 @@ class Submit extends React.Component {
     super(props);
     this.state = {
       selectedFile: null,
+      email: '',
+      message: ''
     }
   }
 
@@ -21,15 +23,27 @@ class Submit extends React.Component {
     this.setState({selectedFile: event.target.files[0]})
   }
 
+  textChangeHandler(e) {
+    e.preventDefault();
+    console.log(e.target.type, e.target.value, this.state.email, this.state.message);
+    this.setState({[e.target.id]: e.target.value})
+  }
   clickHandler(e) {
     e.preventDefault();
-    const data = new FormData()
+
+    const data = new FormData();
+    console.log(data);
     const config = {
-      onUploadProgress: progressEvent => console.log(progressEvent.loaded/progressEvent.total)
+      onUploadProgress: progressEvent => console.log(progressEvent.loaded/progressEvent.total),
+      headers: {
+          'Content-Type': 'multipart/form-data'
+        },
     }
-    data.append('file', this.state.selectedFile)
+    data.append('file', this.state.selectedFile);
+    data.set('email', this.state.email);
+    data.set('message', this.state.message);
     axios.post('/upload', data, config)
-      .then(res => { // then print response status
+      .then(res => {
         console.log(res.statusText)
       })
   }
@@ -39,15 +53,15 @@ class Submit extends React.Component {
       <React.Fragment>
         <Hero name='Submit Your Mix'/>
         <Container style={{width: '50%', color: "white"}}>
-          <PreModal/>
+          {/* <PreModal/> */}
 
           <br/>
           <Form>
             <Form.Label >Email address:</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" />
+            <Form.Control type="email" id="email" placeholder="Enter email" onChange={()=> this.textChangeHandler(event)}/>
             <br/>
             <Form.Label>Message:</Form.Label>
-            <Form.Control as="textarea" rows="3" placeholder="Let me know your Reaper forum user name"/>
+            <Form.Control as="textarea" id="message" rows="3" placeholder="Let me know your Reaper forum user name" onChange={()=> this.textChangeHandler(event)}/>
             <br/>
             <Form.Label>Your zip file:</Form.Label>
             <Form.File
