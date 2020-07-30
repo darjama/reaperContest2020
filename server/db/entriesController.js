@@ -12,11 +12,12 @@ exports.addEntry  = function(req, res) {
   newRecord.message = req.body.message;
   newRecord.zipfile = req.body.filename;
   newRecord.contestid = (newRecord.timestamp.getYear() + 1900) * 100 + (newRecord.timestamp.getMonth() + 1);
+  newRecord.uploadSuccessful = req.body.success;
   newRecord.save({},function(err, confirmation) {
     if (err){
-      res.send(err);
+      console.log(err); //changed from res.send to accomodate separate upload
     }
-    res.json(confirmation);
+    console.log(confirmation); //changed from res.send to accomodate separate upload
   });
 };
 

@@ -34,27 +34,40 @@ emailRoutes(app);
 var entriesRoutes = require('./db/entriesRoutes');
 entriesRoutes(app);
 
+var uploadedName = '';
+
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-  cb(null, 'dist')
+  cb(null, 'uploads')
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' +file.originalname )
+    let dateNow = Date.now()
+    uploadedName = dateNow + '-' +file.originalname;
+    cb(null, uploadedName )
   }
 })
 
 var upload = multer({ storage: storage }).single('file')
 
+var entries = require('./db/entriesController');
 app.post('/upload', (req,res) => {
+  //entries.addEntry(req, res);
+  let success = false;
   upload(req, res, function (err) {
     if (err instanceof multer.MulterError) {
         return res.status(500).json(err)
     } else if (err) {
         return res.status(500).json(err)
     }
+    success = true;
+    req.body.success = success;
+    req.body.filename = uploadedName;
+    entries.addEntry(req);
     return res.status(200).send(req.file)
   })
 })
+
+app.post('/upload', (entries.addEntry))
 
 // sftp.connect({
 //   host: process.env.FTPHOST,

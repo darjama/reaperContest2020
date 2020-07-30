@@ -29,6 +29,7 @@ const Entry = new Schema ({
   zipfile: String,
   message: String,
   timestamp: Date,
+  uploadSuccessful: Boolean,
 })
 
 const EntryModel = mongoose.model('Entries', Entry);
