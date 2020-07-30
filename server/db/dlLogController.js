@@ -15,7 +15,6 @@ exports.addLog = function(req, res) {
   req.connection.remoteAddress ||
   req.socket.remoteAddress ||
   (req.connection.socket ? req.connection.socket.remoteAddress : null);
-  console.log(req.connection.remoteAddress, req.socket.remoteAddress, req.socket)
   newRecord.timestamp = new Date();
   newRecord.save({},function(err, confirmation) {
     if (err)
