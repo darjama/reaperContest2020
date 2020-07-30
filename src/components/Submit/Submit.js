@@ -26,7 +26,7 @@ class Submit extends React.Component {
     let err = "";
     for(var x = 0; x<files.length; x++) {
       if (files[x].size > size) {
-      err += files[x].type+'is > 60MB. Please make sure you have not included any of the original media files, or contact us to deliver the file another way.\n';
+      err += files[x].type+' is > 60MB. Please make sure you have not included any of the original media files, or contact us to deliver the file another way.\n';
       }
     };
     if (err !== '') {
@@ -56,7 +56,7 @@ class Submit extends React.Component {
 
   onChangeHandler(event) {
           var files = event.target.files
-      if(this.maxSelectFile(event) && this.checkMimeType(event)){
+      if(this.checkFileSize(event) && this.checkMimeType(event)){
       // if return true allow to setState
          this.setState({
          selectedFile: files[0]
@@ -115,7 +115,7 @@ class Submit extends React.Component {
               onChange={() => this.onChangeHandler(event)}
             />
             <br/> <br/>
-            <Button variant="primary" type="submit" disable={this.state.disableSubmit} onClick={() => this.clickHandler(event)}>
+            <Button variant="primary" type="submit" disabled={this.state.disableSubmit} onClick={() => this.clickHandler(event)}>
                 Submit
             </Button>
           </Form>
