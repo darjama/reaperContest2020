@@ -4,8 +4,10 @@
   "description": "Site for contest centered on using the Reaper DAW and it's native effects",
   "main": "./src/index.js",
   "scripts": {
-    "build": "webpack --mode development --watch",
-    "start": "nodemon ./server/index.js"
+    "build": "NODE_ENV=production webpack",
+    "build-dev": "webpack --mode development --watch",
+    "start": "NODE_ENV=production webpack &&  node ./server/index.js",
+    "dev": "NODE_ENV=developmentc nodemon ./server/index.js"
   },
   "repository": {
     "type": "git",
