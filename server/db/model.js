@@ -1,12 +1,9 @@
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-}
-
+const config = require('../../config.js')
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
-mongoose.connect(`mongodb+srv://${process.env.MDBU}:${process.env.MDBP}@reamixed.lqgfh.gcp.mongodb.net/reamix?retryWrites=true&w=majority`, {
+mongoose.connect(`mongodb+srv://${config.get('dbs.un')}:${config.get('dbs.pw')}@reamixed.lqgfh.gcp.mongodb.net/reamix?retryWrites=true&w=majority`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,

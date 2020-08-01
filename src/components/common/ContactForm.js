@@ -36,6 +36,7 @@ var ContactForm = function(props) {
         setShowForm(false);
       })
       .catch(err => {
+        setSending(false);
         setOops(true);
       })
   }

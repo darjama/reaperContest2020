@@ -1,0 +1,8 @@
+.git
+.gitignore
+node_modules
+uploads
+main.js
+.dockerignore
+Dockerfile
+Dockerfile.prod

@@ -6,7 +6,7 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from "redux-thunk";
 import combinedReducers from './reducers';
 import App from './components/Home/App.js';
-import NavBar from './components/Navbar.js';
+import NavBar from './components/NavBar.js';
 import GetStarted from './components/GetStarted/GetStarted.js';
 import Vote from './components/Vote/Vote.js';
 import Submit from './components/Submit/Submit.js';

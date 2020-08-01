@@ -1,21 +1,15 @@
 const nodemailer = require("nodemailer");
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-}
+const config  = require("../../config.js")
 
 // async..await is not allowed in global scope, must use a wrapper
 async function main(req, res) {
-  // Generate test SMTP service account from ethereal.email
-  // Only needed if you don't have a real mail account for testing
-  let testAccount = await nodemailer.createTestAccount();
-
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: process.env.GMN,  // generated ethereal user
-      pass: process.env.GMP, // generated ethereal password
-    },
+      user: config.get('gms.un'),
+      pass: config.get('gms.pw')
+    }
   });
 
   let ipaddr = req.headers['x-forwarded-for'] ||
@@ -36,5 +30,5 @@ async function main(req, res) {
 }
 
 exports.email = function(req, res) {
-  main(req, res).then(a => res.status(200).send()).catch(err => res.send(err))
+  main(req, res).then(a => res.status(200).send(a)).catch(err => res.status(500).send(err))
 };

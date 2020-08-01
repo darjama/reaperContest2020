@@ -1,17 +1,17 @@
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-}
+const config = require('../config.js');
 const express = require('express');
 const app = express();
 const fs = require('fs');
 const cors = require('cors');
 const multer = require('multer');
-const port = process.env.PORT || 3003;
 const models = require('./db/model');
 const Contest = models.ContestModel;
 const DlLog = models.DlLogModel;
 const Entry = models.EntryModel;
 const bodyParser = require('body-parser');
+
+const port = config.get('port');
+
 
 // let Client = require('ssh2-sftp-client');
 // let sftp = new Client();
@@ -55,9 +55,11 @@ app.post('/upload', (req,res) => {
   let success = false;
   upload(req, res, function (err) {
     if (err instanceof multer.MulterError) {
-        return res.status(500).json(err)
+      entries.addEntry(req);
+      return res.status(500).json(err)
     } else if (err) {
-        return res.status(500).json(err)
+      entries.addEntry(req);
+      return res.status(500).json(err)
     }
     success = true;
     req.body.success = success;
@@ -67,13 +69,12 @@ app.post('/upload', (req,res) => {
   })
 })
 
-app.post('/upload', (entries.addEntry))
 
 // sftp.connect({
-//   host: process.env.FTPHOST,
-//   port:  process.env.FTPPORT,
-//   username: process.env.FTPUN,
-//   password: process.env.FTPPW
+//   host: config.get(ftps.host),
+//   port:  config.get(ftps.port),
+//   username: config.get(ftps.un),
+//   password: config.get(ftps.pw)
 // }).then(() => {
 //   return sftp.list('/');
 // }).then(data => {
