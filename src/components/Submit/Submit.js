@@ -13,13 +13,14 @@ class Submit extends React.Component {
       email: '',
       message: '',
       progress: 0,
-      disableSubmit: true
+      validFile: false,
     }
   }
 
   componentDidMount() {
     bsCustomFileInput.init()
   }
+
   checkFileSize(event) {
     let files = event.target.files
     let size = 62914560;
@@ -59,7 +60,13 @@ class Submit extends React.Component {
       if(this.checkFileSize(event) && this.checkMimeType(event)){
       // if return true allow to setState
          this.setState({
-         selectedFile: files[0]
+         selectedFile: files[0],
+         validFile: true
+      })
+    } else {
+      this.setState({
+        selectedFile: null,
+        validFile: false
       })
     }
   }
@@ -89,7 +96,7 @@ class Submit extends React.Component {
       .then(res => {
         console.log(res.statusText)
       })
-      .catch(err => {cosole.log(err)})
+      .catch(err => {console.log(err)})
   }
 
   render() {
@@ -115,7 +122,7 @@ class Submit extends React.Component {
               onChange={() => this.onChangeHandler(event)}
             />
             <br/> <br/>
-            <Button variant="primary" type="submit" disabled={this.state.disableSubmit} onClick={() => this.clickHandler(event)}>
+            <Button variant="primary" type="submit" disabled={!this.state.validFile} onClick={() => this.clickHandler(event)}>
                 Submit
             </Button>
           </Form>
