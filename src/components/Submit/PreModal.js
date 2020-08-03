@@ -8,7 +8,7 @@ class PreModal extends React.Component {
       showModal: true,
       checks: 0,
       rules: [
-        'I am uploading a zip-compressed file.',
+        'I am uploading a zip-compressed file <= 60MB in size.',
         'The file contains my Reaper project .RPP file.',
         'The file contains a 24-bit flac file of my mix at the same sample rate as the media files.',
         'The mix averages no more than -14 LUFS and peaks at -1.0dB or less',
