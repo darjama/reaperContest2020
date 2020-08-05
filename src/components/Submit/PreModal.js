@@ -10,7 +10,7 @@ class PreModal extends React.Component {
       rules: [
         'I am uploading a zip-compressed file <= 60MB in size.',
         'The file contains my Reaper project .RPP file.',
-        'The file contains a 24-bit flac file of my mix at the same sample rate as the media files.',
+        'The file contains a 24-bit FLAC file of my mix at the same sample rate as the media files.',
         'The mix measures no more than -14 LUFS (integrated) and peaks at -1.0dB or less',
         'The file DOES NOT contain the original media files.',
         'The file contains a JS directory with any JS effects used that are not part of the Reaper installation.',

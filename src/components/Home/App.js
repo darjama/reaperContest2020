@@ -6,7 +6,7 @@ import {fetchContestDetails} from '../../redux/contestDetails/contestDetailActio
 import {Card, CardDeck, Container} from 'react-bootstrap';
 import axios from 'axios';
 
-class App extends React.PureComponent {
+class App extends React.Pure Component {
   constructor(props) {
     super(props);
   }
