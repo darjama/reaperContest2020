@@ -1,6 +1,5 @@
 import React from 'react';
 import { Container, Card, Row, Col, Button } from 'react-bootstrap';
-import Background from '../../../dist/assets/reaper-panel.png';
 import Logo from '../../../dist/assets/reaperlogo.jpg';
 import Hero from '../common/Hero'
 
@@ -42,7 +41,7 @@ var  GetStarted = function(props) {
                 <ol>
                   <li>Don't use third party (non-JSFX) effects.</li>
                   <p>In order that we may all learn from each other's projects, only native Reaper and JSFX effects allowed. You may use a metering plugin to measure LUFS (like <a href="https://youlean.co/youlean-loudness-meter/">Youlean</a>) since this won't affect the output. Using (public domian) 3rd party impulse responses in ReaVerb is permitted, provided you include them with your submitted files.</p>
-                  <li>The loudness measurement of the project should not exceed -14 LUFS, and the peak should not exceed -1 dB.</li>
+                  <li>The loudness measurement of the project should not exceed -14 LUFS (integrated), and the peak should not exceed -1 dB.</li>
                   <p>You can use SWS or Youlean to measure LUFS for your file. Comparing projects will be fairer and easier if loudness is similar.</p>
                   <li>No destructive editing to the files.</li>
                   <p>Again, doing so limits the ability to share and learn from each other's projects.</p>
