@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
-import {Navbar, Nav, NavItem, NavDropdown, Row, Col} from 'react-bootstrap';
+import {Navbar, Nav, NavItem, NavDropdown} from 'react-bootstrap';
 import "../css/navBar.css";
 var NavBar = function() {
   return (
@@ -24,10 +24,10 @@ var NavBar = function() {
             </LinkContainer>
             <NavDropdown title="Archive" id="basic-nav-dropdown">
 
-              <NavDropdown.Item className="cuprum" href="#action/3.2">Past Raw Files</NavDropdown.Item>
-              <NavDropdown.Item className="cuprum" href="#action/3.3">Past Mixes</NavDropdown.Item>
+              <NavDropdown.Item className="cuprum" href="/Archive">Past Raw Files</NavDropdown.Item>
+              <NavDropdown.Item className="cuprum" href="/Archive#action/3.3">Past Mixes</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item className="cuprum" href="#action/3.1">Hall of Fame</NavDropdown.Item>
+              <NavDropdown.Item className="cuprum" href="/Archive#action/3.1">Hall of Fame</NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>

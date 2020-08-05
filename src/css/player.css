@@ -1,0 +1,7 @@
+.audio-player {
+  display: grid;
+  place-items: center;
+  height: 75px;
+  width: 200px;
+  background-color: lavender;
+}

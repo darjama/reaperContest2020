@@ -2,7 +2,9 @@ import React, {useState, useEffect} from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import {ListGroup, Container} from 'react-bootstrap';
 import {fetchContestDetails} from '../../redux/contestDetails/contestDetailActions';
-import NotNowModal from './NotNow';
+import NotNowModal from '../common/NotNow';
+import Hero from '../common/Hero'
+import Player from './Player';
 
 function Vote() {
   useEffect(() => {
@@ -37,9 +39,14 @@ function Vote() {
     e.stopPropagation();
     e.preventDefault();
   }
+  const options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
+  const early = `Voting hasn't started yet. Come back on  ${new Date(votestart).toLocaleDateString('en-US', options)}.`
+  const late = `Voting for this month is over. Check the homepage for results starting on ${new Date(resultdate).toLocaleDateString('en-US', options)}.`
+
    return (
     <Container>
-      <NotNowModal votestart={votestart} voteend={voteend} resultdate={resultdate}/>
+      <NotNowModal start={votestart} end={voteend} early={early} late={late}/>
+      <Player />
       <ListGroup defaultActiveKey="#link2">
         <ListGroup.Item onDragOver={(event) => event.preventDefault()} onDrop={(event) => newVote(event, 0)}>
           Gold: {top3[0]}
