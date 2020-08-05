@@ -3,6 +3,8 @@ import { shallowEqual, useSelector } from 'react-redux';
 import {ListGroup, Container} from 'react-bootstrap';
 import {fetchContestDetails} from '../../redux/contestDetails/contestDetailActions';
 import NotNowModal from '../common/NotNow';
+import Hero from '../common/Hero'
+import Player from './Player';
 
 function Vote() {
   useEffect(() => {
@@ -44,6 +46,7 @@ function Vote() {
    return (
     <Container>
       <NotNowModal start={votestart} end={voteend} early={early} late={late}/>
+      <Player />
       <ListGroup defaultActiveKey="#link2">
         <ListGroup.Item onDragOver={(event) => event.preventDefault()} onDrop={(event) => newVote(event, 0)}>
           Gold: {top3[0]}
