@@ -48,10 +48,10 @@ class Submit extends React.Component {
   checkMimeType(event) {
     let files = event.target.files
     let err = ''
-   const type = 'application/zip'
+   const type = ['application/zip', 'application/octet-stream', 'application/x-zip-compressed', 'multipart/x-zip']
     for(var x = 0; x < files.length; x++) {
-         if (files[x].type !== type) {
-         err += files[x].name+' is not a zip file. Please upload a zip file.\n';
+         if (!type.includes(files[x].type)) {
+         err += files[x].name + ' is not a zip file. Please upload a zip file.\n';
        }
      };
      this.setState({typeWarning: err})
