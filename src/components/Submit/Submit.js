@@ -145,11 +145,11 @@ class Submit extends React.Component {
           <br/>
           <Form>
             <Form.Label >Email address:</Form.Label>
-            <Form.Control type="email" id="email" placeholder="Enter email" onChange={()=> this.textChangeHandler(event)}/>
-            <div disabled={this.state.emailWarning === ''}>{this.state.emailWarning}</div>
+            <Form.Control type="email" id="email" placeholder="Enter email" autoComplete="off" onChange={()=> this.textChangeHandler(event)}/>
+            <div disabled={this.state.emailWarning === ''} style={{color:'red'}}>{this.state.emailWarning}</div>
             <br/>
             <Form.Label>Message:</Form.Label>
-            <Form.Control as="textarea" id="message" rows="3" placeholder="Let me know your Reaper forum user name" onChange={()=> this.textChangeHandler(event)}/>
+            <Form.Control as="textarea" id="message" autoComplete="off" rows="3" placeholder="Let me know your Reaper forum user name" onChange={()=> this.textChangeHandler(event)}/>
             <br/>
             <Form.Label>Your zip file:</Form.Label>
             <Form.File
