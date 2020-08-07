@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
-import {ListGroup, Container} from 'react-bootstrap';
+import {ListGroup, Container, Button} from 'react-bootstrap';
 import {fetchContestDetails} from '../../redux/contestDetails/contestDetailActions';
 import NotNowModal from '../common/NotNow';
 import Hero from '../common/Hero'
@@ -45,7 +45,7 @@ function Vote() {
 
    return (
     <Container>
-      <NotNowModal start={votestart} end={voteend} early={early} late={late}/>
+      {/* <NotNowModal start={votestart} end={voteend} early={early} late={late}/> */}
       <Player />
       <ListGroup defaultActiveKey="#link2">
         <ListGroup.Item onDragOver={(event) => event.preventDefault()} onDrop={(event) => newVote(event, 0)}>

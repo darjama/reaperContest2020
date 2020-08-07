@@ -4,6 +4,7 @@ import bsCustomFileInput from 'bs-custom-file-input';
 import axios from 'axios';
 import PreModal from './PreModal';
 import Hero from '../common/Hero';
+import {storage, firebase} from '../common/Firebase';
 
 class Submit extends React.Component {
   constructor(props) {
@@ -90,7 +91,7 @@ class Submit extends React.Component {
   textChangeHandler(e) {
     e.preventDefault();
     this.setState({[e.target.id]: e.target.value})
-    if (e.target.id = 'email') {
+    if (e.target.id === 'email') {
       this.setState({
         emailWarning: this.validateEmail(this.state.email) ? '' : 'A valid email address is required'
       })
@@ -101,37 +102,35 @@ class Submit extends React.Component {
   validateEmail(testString) {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const result = re.test(String(testString).toLowerCase());
-    console.log('emailTest:', result)
     return result;
   }
 
   clickHandler(e) {
     e.preventDefault();
     this.setState({ showToast: true })
-    const data = new FormData();
-    const config = {
-      onUploadProgress: progressEvent => {
-        //console.log(progressEvent.loaded/progressEvent.total);
-        this.setState({progress: progressEvent.loaded/progressEvent.total})
-      },
-      headers: {
-          'Content-Type': 'multipart/form-data'
-      },
+    const date = new Date();
+    const fileName = Date.now().toString() + '-' + this.state.selectedFile.name;
+    const contestId = date.getFullYear().toString() + (date.getMonth() > 8 ? '': '0') +(date.getMonth() + 1).toString();
+    const data = {
+      email: this.state.email,
+      message: this.state.message,
+      filename: fileName,
+      success: false
     }
-    data.append('file', this.state.selectedFile);
-    data.set('email', this.state.email);
-    data.set('message', this.state.message);
-    axios.post('/upload', data, config)
-      .then(res => {
-        console.log(res.statusText)
-        this.setState({toastMessage: 'Upload Complete, thanks for entering!'})
-        //
-      })
-      .catch(err => {
-        console.log(err)
+    const uploadTask = storage.ref(`uploads/${contestId}/${fileName}`).put(this.state.selectedFile);
+    uploadTask.on('state_changed',
+      (snapshot) => {this.setState({progress: snapshot.bytesTransferred / snapshot.totalBytes})},
+      (err) => {
+        console.log(err);
+        axios.post('/api/entry', data).then(res => console.log(res)).catch(err => console.log(err));
         this.setState({toastMessage: 'There was an error with your upload, please try again later or use the contact form to make arrangements to send a link to your file.'})
-      })
-
+      },
+        () => {
+          // storage.ref('uploads').child(fileName).then(url => console.log(url))
+            this.setState({toastMessage: 'Upload Complete, thanks for entering!'})
+          data.success = true;
+          axios.post('/api/entry', data).then(res => console.log(res)).catch(err => console.log(err));
+        })
   }
 
   render() {
@@ -140,7 +139,7 @@ class Submit extends React.Component {
       <React.Fragment>
         <Hero name='Submit Your Mix'/>
         <Container style={{width: '50%', color: "white"}}>
-          <PreModal/>
+          {/* <PreModal/> */}
 
           <br/>
           <Form>
