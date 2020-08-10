@@ -45,7 +45,7 @@ function Vote() {
 
    return (
     <Container>
-      {/* <NotNowModal start={votestart} end={voteend} early={early} late={late}/> */}
+      <NotNowModal start={votestart} end={voteend} early={early} late={late}/>
       <Player />
       <ListGroup defaultActiveKey="#link2">
         <ListGroup.Item onDragOver={(event) => event.preventDefault()} onDrop={(event) => newVote(event, 0)}>

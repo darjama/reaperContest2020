@@ -3,7 +3,7 @@ import {Card, Form, Button} from 'react-bootstrap'
 var VoteCard = function({id, url, notes}) {
 
   return (
-    <Card width='20rem'>
+    <Card width='20rem' className={}>
       <Card.Title>{name}</Card.Title>
       <Card.Body>
         <Form>

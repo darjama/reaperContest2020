@@ -9,6 +9,8 @@ var Player =  function(props) {
   const [duration, setDuration] = useState();
   const [curTime, setCurTime] = useState();
   const [playing, setPlaying] = useState(false);
+  const [startTime, setStartTime] = useState();
+  const [endTime, setEndTime] = useState();
   const [clickedTime, setClickedTime] = useState();
 
   useEffect(() => {
@@ -51,6 +53,7 @@ var Player =  function(props) {
       <Bar curTime={curTime} duration={duration} onTimeUpdate={(time) => setClickedTime(time)}/>
       <div>
       <Button onClick={()=>setPlaying(!playing)}>{playing ? 'Pause': 'Play'}</Button>
+      <Button onClick={()=> {setCurTime(0); audio.currentTime = 0; setPlaying(false);} }> Stop </Button>
       <Button onClick={()=> {setCurTime(0); audio.currentTime = 0; setPlaying(false);} }> Stop </Button>
       </div>
 
