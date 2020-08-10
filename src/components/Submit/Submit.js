@@ -4,7 +4,6 @@ import bsCustomFileInput from 'bs-custom-file-input';
 import axios from 'axios';
 import PreModal from './PreModal';
 import Hero from '../common/Hero';
-import {storage, firebase} from '../common/Firebase';
 
 class Submit extends React.Component {
   constructor(props) {
@@ -117,20 +116,29 @@ class Submit extends React.Component {
       filename: fileName,
       success: false
     }
-    const uploadTask = storage.ref(`uploads/${contestId}/${fileName}`).put(this.state.selectedFile);
-    uploadTask.on('state_changed',
-      (snapshot) => {this.setState({progress: snapshot.bytesTransferred / snapshot.totalBytes})},
-      (err) => {
+    axios.get(`/api/upload?filename=${fileName}`).then(res => {
+      const config = {
+        onUploadProgress: progressEvent => {
+          this.setState({progress: progressEvent.loaded/progressEvent.total})
+        },
+        headers: {
+          //'Content-Length': this.state.selectedFile.size,
+          'Content-Type': 'application/octet-stream',
+        }
+      };
+      let url= res.data //+ '&uploadType=resumable';
+      console.log(url);
+      return axios.put(url, this.state.selectedFile, config)
+    }).then(res => {
+      this.setState({toastMessage: 'Upload Complete, thanks for entering!'})
+      data.success = true;
+      axios.post('/api/entry', data).then(res => console.log(res)).catch(err => console.log(err));
+    }).catch(err => {
         console.log(err);
         axios.post('/api/entry', data).then(res => console.log(res)).catch(err => console.log(err));
         this.setState({toastMessage: 'There was an error with your upload, please try again later or use the contact form to make arrangements to send a link to your file.'})
-      },
-        () => {
-          // storage.ref('uploads').child(fileName).then(url => console.log(url))
-            this.setState({toastMessage: 'Upload Complete, thanks for entering!'})
-          data.success = true;
-          axios.post('/api/entry', data).then(res => console.log(res)).catch(err => console.log(err));
-        })
+      })
+
   }
 
   render() {
@@ -139,7 +147,7 @@ class Submit extends React.Component {
       <React.Fragment>
         <Hero name='Submit Your Mix'/>
         <Container style={{width: '50%', color: "white"}}>
-          {/* <PreModal/> */}
+          <PreModal/>
 
           <br/>
           <Form>
