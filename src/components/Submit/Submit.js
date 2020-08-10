@@ -90,7 +90,7 @@ class Submit extends React.Component {
   textChangeHandler(e) {
     e.preventDefault();
     this.setState({[e.target.id]: e.target.value})
-    if (e.target.id = 'email') {
+    if (e.target.id === 'email') {
       this.setState({
         emailWarning: this.validateEmail(this.state.email) ? '' : 'A valid email address is required'
       })
@@ -101,34 +101,41 @@ class Submit extends React.Component {
   validateEmail(testString) {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const result = re.test(String(testString).toLowerCase());
-    console.log('emailTest:', result)
     return result;
   }
 
   clickHandler(e) {
     e.preventDefault();
     this.setState({ showToast: true })
-    const data = new FormData();
-    const config = {
-      onUploadProgress: progressEvent => {
-        //console.log(progressEvent.loaded/progressEvent.total);
-        this.setState({progress: progressEvent.loaded/progressEvent.total})
-      },
-      headers: {
-          'Content-Type': 'multipart/form-data'
-      },
+    const date = new Date();
+    const fileName = Date.now().toString() + '-' + this.state.selectedFile.name;
+    const contestId = date.getFullYear().toString() + (date.getMonth() > 8 ? '': '0') +(date.getMonth() + 1).toString();
+    const data = {
+      email: this.state.email,
+      message: this.state.message,
+      filename: fileName,
+      success: false
     }
-    data.append('file', this.state.selectedFile);
-    data.set('email', this.state.email);
-    data.set('message', this.state.message);
-    axios.post('/upload', data, config)
-      .then(res => {
-        console.log(res.statusText)
-        this.setState({toastMessage: 'Upload Complete, thanks for entering!'})
-        //
-      })
-      .catch(err => {
-        console.log(err)
+    axios.get(`/api/upload?filename=${fileName}`).then(res => {
+      const config = {
+        onUploadProgress: progressEvent => {
+          this.setState({progress: progressEvent.loaded/progressEvent.total})
+        },
+        headers: {
+          //'Content-Length': this.state.selectedFile.size,
+          'Content-Type': 'application/octet-stream',
+        }
+      };
+      let url= res.data //+ '&uploadType=resumable';
+      console.log(url);
+      return axios.put(url, this.state.selectedFile, config)
+    }).then(res => {
+      this.setState({toastMessage: 'Upload Complete, thanks for entering!'})
+      data.success = true;
+      axios.post('/api/entry', data).then(res => console.log(res)).catch(err => console.log(err));
+    }).catch(err => {
+        console.log(err);
+        axios.post('/api/entry', data).then(res => console.log(res)).catch(err => console.log(err));
         this.setState({toastMessage: 'There was an error with your upload, please try again later or use the contact form to make arrangements to send a link to your file.'})
       })
 
@@ -145,11 +152,11 @@ class Submit extends React.Component {
           <br/>
           <Form>
             <Form.Label >Email address:</Form.Label>
-            <Form.Control type="email" id="email" placeholder="Enter email" onChange={()=> this.textChangeHandler(event)}/>
-            <div disabled={this.state.emailWarning === ''}>{this.state.emailWarning}</div>
+            <Form.Control type="email" id="email" placeholder="Enter email" autoComplete="off" onChange={()=> this.textChangeHandler(event)}/>
+            <div disabled={this.state.emailWarning === ''} style={{color:'red'}}>{this.state.emailWarning}</div>
             <br/>
             <Form.Label>Message:</Form.Label>
-            <Form.Control as="textarea" id="message" rows="3" placeholder="Let me know your Reaper forum user name" onChange={()=> this.textChangeHandler(event)}/>
+            <Form.Control as="textarea" id="message" autoComplete="off" rows="3" placeholder="Let me know your Reaper forum user name" onChange={()=> this.textChangeHandler(event)}/>
             <br/>
             <Form.Label>Your zip file:</Form.Label>
             <Form.File

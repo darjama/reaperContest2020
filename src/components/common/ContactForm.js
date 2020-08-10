@@ -74,12 +74,12 @@ var ContactForm = function(props) {
       <Form onSubmit={sendMessage} className={isFormVisible}>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+          <Form.Control type="email" placeholder="Enter email" autoComplete="off"  value={email} onChange={(e) => setEmail(e.target.value)}/>
           {invalidEmail}
         </Form.Group>
         <Form.Group controlId="formBasicTextArea">
           <Form.Label>Message</Form.Label>
-          <Form.Control rows="3" as="textarea" placeholder="Enter your message here." value={message} onChange={(e) => setMessage(e.target.value)}/>
+          <Form.Control rows="3" as="textarea" autoComplete="off" placeholder="Enter your message here." value={message} onChange={(e) => setMessage(e.target.value)}/>
         </Form.Group>
         <Button variant="primary" type="submit" disabled={!isValid}>
           Submit

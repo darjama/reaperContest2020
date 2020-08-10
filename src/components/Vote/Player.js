@@ -1,5 +1,8 @@
 import React, {useState, useEffect} from 'react';
+import {Button} from 'react-bootstrap';
+import Bar from './Bar.js';
 import '../../css/player.css';
+
 
 var Player =  function(props) {
 
@@ -40,11 +43,16 @@ var Player =  function(props) {
   });
 
   return (
-    <div className="audio-player" onClick={()=>setPlaying(!playing)}>
+    <div className="audio-player" >
       <audio id="audio">
-        <source src="http://knotmusic.net/grandd/old/rehearsal-20170112.mp3" />
+        <source src="http://knotmusic.net/grandd/rehearsal-20200227-spleeter.mp3" />
         Your browser does not support the <code>audio</code> element.
       </audio>
+      <Bar curTime={curTime} duration={duration} onTimeUpdate={(time) => setClickedTime(time)}/>
+      <div>
+      <Button onClick={()=>setPlaying(!playing)}>{playing ? 'Pause': 'Play'}</Button>
+      <Button onClick={()=> {setCurTime(0); audio.currentTime = 0; setPlaying(false);} }> Stop </Button>
+      </div>
 
     </div>
   )
