@@ -4,3 +4,4 @@ config.js
 config.json
 /uploads*
 Firebase.js
+upload.json
