@@ -22,6 +22,11 @@ var Player =  function(props) {
       setCurTime(audio.currentTime);
     }
 
+    const endOfSong= () => {
+      setPlaying(false);  //need to add playlist handling later;
+      audio.currentTime = 0;
+    }
+
     const setAudioTime = () => setCurTime(audio.currentTime);
 
     // DOM listeners: update React state on DOM events
@@ -31,6 +36,7 @@ var Player =  function(props) {
 
     // React state listeners: update DOM on React state changes
     playing ? audio.play() : audio.pause();
+    curTime >= duration -.01 ? endOfSong() : '';
 
     if (clickedTime && clickedTime !== curTime) {
       audio.currentTime = clickedTime;
@@ -47,14 +53,15 @@ var Player =  function(props) {
   return (
     <div className="audio-player" >
       <audio id="audio">
-        <source src="http://knotmusic.net/grandd/rehearsal-20200227-spleeter.mp3" />
+        <source src="http://flac.reamixed.com/202008/EricRacy_Higher_Mix_01.flac" />
         Your browser does not support the <code>audio</code> element.
       </audio>
       <Bar curTime={curTime} duration={duration} onTimeUpdate={(time) => setClickedTime(time)}/>
-      <div>
-      <Button onClick={()=>setPlaying(!playing)}>{playing ? 'Pause': 'Play'}</Button>
-      <Button onClick={()=> {setCurTime(0); audio.currentTime = 0; setPlaying(false);} }> Stop </Button>
-      <Button onClick={()=> {setCurTime(0); audio.currentTime = 0; setPlaying(false);} }> Stop </Button>
+      <div className='player-button-holder'>
+        <Button className='player-button' onClick={()=>setPlaying(!playing)}>{playing ? 'Pause': 'Play'}</Button>
+        <Button className='player-button' onClick={()=> {audio.currentTime -= 30;} }> {`<<`} </Button>
+        <Button className='player-button' onClick={()=> {audio.currentTime += 30;} }> >> </Button>
+        <Button className='player-button' onClick={()=> {audio.currentTime = 0; setPlaying(false);} }> Stop </Button>
       </div>
 
     </div>
