@@ -36,7 +36,7 @@ var Player =  function(props) {
 
     // React state listeners: update DOM on React state changes
     playing ? audio.play() : audio.pause();
-    curTime >= duration -.01 ? endOfSong() : '';
+    curTime >= duration -.1 ? endOfSong() : '';
 
     if (clickedTime && clickedTime !== curTime) {
       audio.currentTime = clickedTime;
