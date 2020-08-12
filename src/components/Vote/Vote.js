@@ -1,20 +1,41 @@
 import React, {useState, useEffect} from 'react';
-import { shallowEqual, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateNote } from '../../redux/notes/notesActions';
 import {ListGroup, Container, Button} from 'react-bootstrap';
-import {fetchContestDetails} from '../../redux/contestDetails/contestDetailActions';
 import NotNowModal from '../common/NotNow';
-import Hero from '../common/Hero'
+import Hero from '../common/Hero';
 import Player from './Player';
+import VoteCard from './VoteCard';
 
-function Vote() {
-  useEffect(() => {
-    setTop3([...top3])
-  }, [top3]);
+
+function Vote(props) {
 
   const details = useSelector(state => state.contestDetailReducer);
-  const {votestart, voteend, resultdate} = details;
+  const entries = useSelector(state => state.entriesDetailReducer);
+  //const notes = useSelector(state => state.noteReducer);
+  const dispatch = useDispatch();
 
+
+  const d = new Date();
+  const month = '0' + (d.getMonth() + 1).toString();
+  const contestId = Number(d.getFullYear().toString() + month.substring(month.length -2));
+
+  const {votestart, voteend, resultdate} = details;
   const [top3, setTop3] = useState([null,null,null]);
+
+  useEffect(() => {
+    const localNotes = JSON.parse(localStorage.getItem('contestNotes'));
+    if (localNotes && localNotes.contestId === contestId) {
+      dispatch(updateNote(localNotes))
+    } else {
+      localStorage.deleteItem('contestNotes')
+    }
+  },[])
+
+
+  const entryList = entries.map(entry => (
+    <VoteCard key={entry._id} entry={entry} contestId={contestId}/>
+  ))
 
   const newVote = (event, index) => {
     let newVal = event.dataTransfer.getData("mix");
@@ -46,7 +67,9 @@ function Vote() {
    return (
     <Container>
       {/* <NotNowModal start={votestart} end={voteend} early={early} late={late}/> */}
+
       <Player />
+      <div>{entryList}</div>
       <ListGroup defaultActiveKey="#link2">
         <ListGroup.Item onDragOver={(event) => event.preventDefault()} onDrop={(event) => newVote(event, 0)}>
           Gold: {top3[0]}

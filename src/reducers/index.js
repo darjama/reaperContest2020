@@ -13,26 +13,12 @@ const playlistReducer = function (state = [], action) {
   }
 }
 
-const voteReducer = function (state = [], action) {
-  switch (action.type) {
-    case 'ADD_VOTE':
-      state.splice(action.place, 0, action.id)
-      if (state.length > 3) state.pop()
-      return state
-    case 'REMOVE_VOTE':
-      state.splice(action.place, 1)
-      return state
-    default:
-      return state
-  }
-}
 
-const noteReducer = function (state = '', action) {
+
+const noteReducer = function (state = {}, action) {
   switch (action.type) {
     case 'EDIT_NOTE':
-      return action.text
-    case 'REMOVE_NOTE':
-      return ''
+      return {...state, ...action.payload}
     default:
       return state
   }
@@ -47,4 +33,13 @@ const contestDetailReducer = function (state = {}, action) {
   }
 }
 
-export default combineReducers({ playlistReducer, voteReducer, noteReducer, contestDetailReducer });
+const entriesDetailReducer = function(state = [], action) {
+  switch (action.type) {
+    case 'UPDATE_ENTRIES':
+      return action.payload
+    default:
+      return state
+  }
+}
+
+export default combineReducers({ playlistReducer, noteReducer, contestDetailReducer, entriesDetailReducer });

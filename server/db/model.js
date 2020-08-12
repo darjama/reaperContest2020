@@ -19,6 +19,7 @@ db.once('open', function() {
 
 const Entry = new Schema ({
   contestant: String,
+  mixnum: Number,
   audiouri: String,
   contestid: Number,
   ipaddr: String,

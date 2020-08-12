@@ -4,4 +4,6 @@ module.exports = function(app) {
       .get(entry.entries)
   app.route('/api/entry')
       .post(entry.addEntry)
+  app.route('/api/entriesanon/:year/:month')
+      .get(entry.entriesAnon)
 };
