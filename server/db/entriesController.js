@@ -32,3 +32,13 @@ exports.entries = function(req, res) {
     res.json(list);
   });
 }
+
+exports.entriesAnon = function(req, res) {
+  const month = '0' + req.params.month;
+  const contestid = '' + req.params.year +  month.substring(month.length -2);
+  Entry.find({contestid, mixnum: {$ne: null}}, 'mixnum audiouri', function(err, list) {
+    if (err) res.send(err);
+    list.sort((a,b) => a-b)
+    return res.json(list);
+  });
+}
