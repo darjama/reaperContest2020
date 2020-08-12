@@ -1,5 +1,4 @@
 const {Storage} = require('@google-cloud/storage');
-//export GOOGLE_APPLICATION_CREDENTIALS="./upload.json";
 
 var storage = new Storage()
 
