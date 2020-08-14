@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { playLink } from '../../redux/playlist/playlistActions';
 import {Button} from 'react-bootstrap';
 import Bar from './Bar.js';
 import '../../css/player.css';
@@ -12,10 +14,12 @@ var Player =  function(props) {
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState();
   const [clickedTime, setClickedTime] = useState();
+  const nowPlaying = useSelector(state => state.playNowReducer);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const audio = document.getElementById("audio");
 
+    const audio = document.getElementById("audio");
     // state setters wrappers
     const setAudioData = () => {
       setDuration(audio.duration);
@@ -23,8 +27,12 @@ var Player =  function(props) {
     }
 
     const endOfSong= () => {
-      setPlaying(false);  //need to add playlist handling later;
-      audio.currentTime = 0;
+      if(!nowPlaying.next) {
+        setPlaying(false);
+        audio.currentTime = 0;
+      } else {
+        dispatch(playLink(nowPlaying.next))
+      }
     }
 
     const setAudioTime = () => setCurTime(audio.currentTime);
@@ -50,12 +58,22 @@ var Player =  function(props) {
     }
   });
 
+  useEffect(() => {
+    audio.load();
+    if (nowPlaying.name !== 'Please Vote!') {
+      setPlaying(true)
+    }
+  }, [nowPlaying] )
+
+
+
   return (
     <div className="audio-player" >
       <audio id="audio">
-        <source src="http://flac.reamixed.com/202008/EricRacy_Higher_Mix_01.flac" />
+        <source src={nowPlaying.uri}/>
         Your browser does not support the <code>audio</code> element.
       </audio>
+      <h1>{nowPlaying.name}</h1>
       <Bar curTime={curTime} duration={duration} onTimeUpdate={(time) => setClickedTime(time)}/>
       <div className='player-button-holder'>
         <Button className='player-button' onClick={()=>setPlaying(!playing)}>{playing ? 'Pause': 'Play'}</Button>

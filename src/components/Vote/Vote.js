@@ -28,7 +28,7 @@ function Vote(props) {
     if (localNotes && localNotes.contestId === contestId) {
       dispatch(updateNote(localNotes))
     } else {
-      localStorage.deleteItem('contestNotes')
+      localStorage.removeItem('contestNotes')
     }
   },[])
 
