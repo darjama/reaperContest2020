@@ -14,6 +14,21 @@ const playlistReducer = function (state = [], action) {
 }
 
 
+const initPlayer = {
+  next: null,
+  prev: null,
+  uri: 'http://flac.reamixed.com/hi.mp3',
+  name: 'Please Vote!'
+}
+
+const playNowReducer = function (state = initPlayer, action) {
+  switch (action.type) {
+    case 'PLAY_NOW':
+      return action.payload
+    default:
+      return state
+  }
+}
 
 const noteReducer = function (state = {}, action) {
   switch (action.type) {
@@ -42,4 +57,10 @@ const entriesDetailReducer = function(state = [], action) {
   }
 }
 
-export default combineReducers({ playlistReducer, noteReducer, contestDetailReducer, entriesDetailReducer });
+export default combineReducers({
+  playlistReducer,
+  noteReducer,
+  contestDetailReducer,
+  entriesDetailReducer,
+  playNowReducer
+});
