@@ -11,10 +11,6 @@ class App extends React.PureComponent {
     super(props);
   }
 
-  componentDidMount() {
-    if (!this.props.details) this.props.fetchContestDetails();
-  }
-
   logHandler() {
     axios({url:'/api/dlLog' , method:'post'})
     .then(function (response) {
@@ -75,10 +71,4 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchContestDetails: () => dispatch(fetchContestDetails()),
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(mapStateToProps)(App)
