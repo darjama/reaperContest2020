@@ -1,9 +1,11 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import { Form, Button, Container, Toast, ProgressBar } from 'react-bootstrap';
 import bsCustomFileInput from 'bs-custom-file-input';
 import axios from 'axios';
 import PreModal from './PreModal';
 import Hero from '../common/Hero';
+import NotNow from '../common/NotNow';
 
 class Submit extends React.Component {
   constructor(props) {
@@ -106,7 +108,7 @@ class Submit extends React.Component {
 
   clickHandler(e) {
     e.preventDefault();
-    this.setState({ showToast: true })
+    this.setState({ showToast: true, toastMessage: '' })
     const date = new Date();
     const fileName = Date.now().toString() + '-' + this.state.selectedFile.name;
     const contestId = date.getFullYear().toString() + (date.getMonth() > 8 ? '': '0') +(date.getMonth() + 1).toString();
@@ -142,13 +144,17 @@ class Submit extends React.Component {
   }
 
   render() {
-
+    const {startdate, duedate, votestart} = this.props.details;
+    console.log(startdate,duedate);
+    const options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
+    const early = `The contest hasn't started yet. Come back on  ${new Date(startdate).toLocaleDateString('en-US', options)}.`
+    const late = `Sorry, you've missed the deadline for submissions. Come back to cast your vote on ${new Date(votestart).toLocaleDateString('en-US', options)}.`
     return(
       <React.Fragment>
         <Hero name='Submit Your Mix'/>
         <Container style={{width: '50%', color: "white"}}>
-          <PreModal/>
-
+          {new Date() >= new Date(startdate) && new Date() <= new Date(duedate) ? <PreModal/> :
+          <NotNow start={startdate} end={duedate} early={early} late={late}/>}
           <br/>
           <Form>
             <Form.Label >Email address:</Form.Label>
@@ -189,4 +195,10 @@ class Submit extends React.Component {
   }
 }
 
-export default Submit;
+const mapStateToProps = state => {
+  return {
+    details: state.contestDetailReducer,
+  }
+}
+
+export default connect(mapStateToProps)(Submit)

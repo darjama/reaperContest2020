@@ -48,6 +48,32 @@ const contestDetailReducer = function (state = {}, action) {
   }
 }
 
+const initVote = [null, null, null];
+
+const voteReducer = function (state = initVote, action) {
+  switch (action.type) {
+    case 'ADD_VOTE':
+    let [place, mixnum] = action.payload;
+      let top3 = [...state];
+
+      let oldIndex = top3.indexOf(mixnum);
+      if (place === 999) {
+        top3[oldIndex] = null;
+      } else if (oldIndex !== place) {
+        if (oldIndex > -1) top3.splice(oldIndex, 1);
+        if (top3[place] === null) {
+          top3[place] = mixnum;
+        } else {
+          top3.splice(place, 0, mixnum);
+        }
+        top3.splice(3, 1);
+      }
+      return top3;
+    default:
+      return state
+  }
+}
+
 const entriesDetailReducer = function(state = [], action) {
   switch (action.type) {
     case 'UPDATE_ENTRIES':
@@ -62,5 +88,6 @@ export default combineReducers({
   noteReducer,
   contestDetailReducer,
   entriesDetailReducer,
-  playNowReducer
+  playNowReducer,
+  voteReducer,
 });

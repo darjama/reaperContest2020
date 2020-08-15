@@ -1,0 +1,14 @@
+.vcardcontainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.votecard {
+  flex: 0 1 400px;
+  margin: 10px;
+  padding: 3px;
+}
+
+.nowPlaying {
+  background: radial-gradient(black 20%, lightgreen);
+}
