@@ -4,7 +4,7 @@ const app = express();
 const fs = require('fs');
 const cors = require('cors');
 const models = require('./db/model');
-const Contest = models.ContestModel, DlLog = models.DlLogModel, Entry = models.EntryModel;
+const Contest = models.ContestModel, DlLog = models.DlLogModel, Entry = models.EntryModel, Vote = models.VoteModel;
 const bodyParser = require('body-parser');
 
 const port = config.get('port');
@@ -30,6 +30,9 @@ entriesRoutes(app);
 
 var uploadRoutes = require('./upload/uploadRoutes');
 uploadRoutes(app);
+
+var votingRoutes = require('./db/votingRoutes');
+votingRoutes(app);
 
 app.use('/', express.static(__dirname + '/../dist/'))
 app.use('/:id', express.static(__dirname + '/../dist/'))
