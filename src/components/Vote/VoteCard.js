@@ -2,11 +2,14 @@ import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateNote } from '../../redux/notes/notesActions';
 import { playLink } from '../../redux/playlist/playlistActions';
+import { addVote } from '../../redux/voting/voteActions';
 import {Card, Form, Button} from 'react-bootstrap'
 
 var VoteCard = function({entry, contestId}) {
   const dispatch = useDispatch();
   const notes = useSelector(state => state.noteReducer);
+  const nowPlaying = useSelector(state => state.playNowReducer);
+  const top3 = useSelector(state => state.voteReducer);
   const note = notes[entry.mixnum];
 
   const debounce = (func, wait) => {
@@ -30,13 +33,18 @@ var VoteCard = function({entry, contestId}) {
     payload.contestId = contestId;
     dispatch(updateNote(payload));
   }
+  useEffect(() => {
+
+  }, [top3]);
 
   useEffect(()=>{
     debounce(localStorage.setItem('contestNotes', JSON.stringify(notes)), 500);
   }, [notes])
 
+  const voteHandler = function(e) {
+    dispatch(addVote(e.target.value, entry.mixnum))
+  }
   const clickHandler = function() {}
-  const voteHandler = function() {}
 
   const nextObj = { //for testing purposes
     next: null,
@@ -49,32 +57,34 @@ var VoteCard = function({entry, contestId}) {
     next: nextObj,
     prev: null,
     uri: 'http://flac.reamixed.com/' + entry.contestid + '/' + entry.audiouri,
+    mixnum: entry.mixnum,
     name: 'Mix #' + entry.mixnum
   }
 
+  const  classnames = 'votecard' + (nowPlaying.mixnum === entry.mixnum ? ' nowPlaying' : '');
 
   return (
-    <Card width='20rem' className='addNowPlayingLater'>
+    <Card width='20rem' className={classnames}>
       <Card.Title>Mix # {entry.mixnum}
         <Button variant="secondary" onClick={() => clickHandler}>Add to Playlist</Button>
         <Button variant="secondary" onClick={() => dispatch(playLink(playObj))}>Play Now</Button>
       </Card.Title>
       <Card.Body>
         <Form>
-          <Form.Group controlId="exampleForm.ControlTextarea1">
+          <Form.Group controlId="notes">
             <Form.Label>Notes</Form.Label>
             <Form.Control as="textarea"  autoComplete="off" value={note} rows="4" onChange={() => changeHandler(event)}>
             </Form.Control>
           </Form.Group>
-        </Form>
 
-
-        <br/>
+        <div key={`inline-radio`} className="mb-3">
         Vote :
-        <Button variant="primary" key='one' onClick={() => voteHandler}>1st</Button>
-        <Button variant="primary" key='two' onClick={() => voteHandler}>2nd</Button>
-        <Button variant="primary" key='three' onClick={() => voteHandler}>3rd</Button>
-        <Button variant="primary" key='clear' onClick={() => voteHandler}>clear</Button>
+          <Form.Check inline label="1st" type='radio' checked={top3[0] === entry.mixnum} name='vote' value='0' onChange={() => voteHandler(event)} />
+          <Form.Check inline label="2nd" type='radio' checked={top3[1] === entry.mixnum} name='vote' value='1' onChange={() => voteHandler(event)}/>
+          <Form.Check inline label="3rd" type='radio'  checked={top3[2] === entry.mixnum} name='vote' value='2' onChange={() => voteHandler(event)}/>
+          <Form.Check inline label="none" type='radio'  checked={!top3.includes(entry.mixnum)} name='vote' value='999' onChange={() => voteHandler(event)} />
+        </div>
+        </Form>
       </Card.Body>
     </Card>
   )
