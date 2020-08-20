@@ -1,9 +1,13 @@
 .audio-player {
+  flex: 1 1 500px;
   display: grid;
   place-items: center;
   height: 175px;
   width: 600px;
-  background-color: lavender;
+  background-color: #343a40;
+  color: white;
+  border: 3px groove grey;
+  margin: 10px;
 }
 
 .bar {
@@ -14,7 +18,7 @@
 }
 
   .bar__time {
-    color: orange;
+    color: lightseagreen;
     font-size: 16px;
   }
 
@@ -22,7 +26,7 @@
     flex: 1;
     border-radius: 5px;
     margin: 0 20px;
-    height: 10px;
+    height: 20px;
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -30,11 +34,11 @@
 
     .bar__progress__knob {
       position: relative;
-      height: 16px;
-      width: 16px;
-      border: 1.5px solid white;
+      height: 26px;
+      width: 26px;
+      border: 2px solid white;
       border-radius: 50%;
-      background-color: orange;
+      background-color: lightseagreen;
     }
 
 .player-button-holder {
@@ -45,7 +49,7 @@
 }
 
 .player-button {
-  width: 60px;
-  margin: 0px 10px;
+  width: 65px;
+  margin: 0px 5px;
 
 }
