@@ -15,6 +15,7 @@ var Player =  function(props) {
   const [endTime, setEndTime] = useState();
   const [clickedTime, setClickedTime] = useState();
   const nowPlaying = useSelector(state => state.playNowReducer);
+  const playlist = useSelector(state => state.playlistReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -67,6 +68,7 @@ var Player =  function(props) {
 
 
 
+
   return (
     <div className="audio-player" >
       <audio id="audio">
@@ -77,8 +79,10 @@ var Player =  function(props) {
       <Bar curTime={curTime} duration={duration} onTimeUpdate={(time) => setClickedTime(time)}/>
       <div className='player-button-holder'>
         <Button className='player-button' onClick={()=>setPlaying(!playing)}>{playing ? 'Pause': 'Play'}</Button>
+        <Button className='player-button' disabled={!nowPlaying.prev} onClick={()=> dispatch(playLink(nowPlaying.prev)) }> {`|<<`} </Button>
         <Button className='player-button' onClick={()=> {audio.currentTime -= 30;} }> {`<<`} </Button>
         <Button className='player-button' onClick={()=> {audio.currentTime += 30;} }> >> </Button>
+        <Button className='player-button' disabled={!nowPlaying.next} onClick={()=> dispatch(playLink(nowPlaying.next)) }> {`>>|`} </Button>
         <Button className='player-button' onClick={()=> {audio.currentTime = 0; setPlaying(false);} }> Stop </Button>
       </div>
 
