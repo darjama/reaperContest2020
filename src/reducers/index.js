@@ -1,18 +1,27 @@
 import { combineReducers } from 'redux';
+import {PlaylistMaker, PlaylistNode} from '../redux/playlist/playlistObj';
 
-const playlistReducer = function (state = [], action) {
+
+const initPlaylist = new PlaylistMaker();
+
+const playlistReducer = function (state = initPlaylist, action) {
   switch (action.type) {
-    case 'MOVE_UP':
-      if (action.id > 0) [state[action.id], state[action.id - 1]] = [state[action.id - 1], state[action.id]]
+    case 'CREATE_PLAYLIST':
+      const newState = new PlaylistMaker(action.payload)
+      return newState
+    case 'ADD_NODE':
+      state.addNode(action.payload)
       return state
-    case 'MOVE_DOWN':
-      if (action.id < state.length - 1) [state[action.id], state[action.id + 1]] = [state[action.id + 1], state[action.id]]
+    case 'DELETE_NODE':
+      state.deleteNode(action.payload)
+      return state
+    case 'MOVE_NODE':
+      state.moveNode(action.payload1, action.payload2)
       return state
     default:
       return state
   }
 }
-
 
 const initPlayer = {
   next: null,
@@ -25,6 +34,34 @@ const playNowReducer = function (state = initPlayer, action) {
   switch (action.type) {
     case 'PLAY_NOW':
       return action.payload
+
+    default:
+      return state
+  }
+}
+
+const shareNodeReducer = function (state = {}, action) {
+  switch (action.type) {
+    case 'SHARE_NODE':
+      return action.payload
+    default:
+      return state
+  }
+}
+
+const shareNodeReducer2 = function (state = null, action) {
+  switch (action.type) {
+    case 'SHARE_NODE2':
+      return action.payload
+    default:
+      return state
+  }
+}
+
+const rerenderReducer = function (state = true, action) {
+  switch (action.type) {
+    case 'SET_RERENDER':
+      return !state
     default:
       return state
   }
@@ -34,6 +71,8 @@ const noteReducer = function (state = {}, action) {
   switch (action.type) {
     case 'EDIT_NOTE':
       return {...state, ...action.payload}
+    case 'CLEAR_NOTES':
+      return {}
     default:
       return state
   }
@@ -69,6 +108,8 @@ const voteReducer = function (state = initVote, action) {
         top3.splice(3, 1);
       }
       return top3;
+    case 'CLEAR_VOTES':
+      return initVote;
     default:
       return state
   }
@@ -90,4 +131,8 @@ export default combineReducers({
   entriesDetailReducer,
   playNowReducer,
   voteReducer,
+  playlistReducer,
+  shareNodeReducer,
+  shareNodeReducer2,
+  rerenderReducer
 });
