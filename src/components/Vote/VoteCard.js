@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateNote } from '../../redux/notes/notesActions';
-import { playLink } from '../../redux/playlist/playlistActions';
+import { playLink, addTrack, rerenderNow } from '../../redux/playlist/playlistActions';
 import { addVote } from '../../redux/voting/voteActions';
 import {Card, Form, Button} from 'react-bootstrap'
 
@@ -44,7 +44,6 @@ var VoteCard = function({entry, contestId}) {
   const voteHandler = function(e) {
     dispatch(addVote(e.target.value, entry.mixnum))
   }
-  const clickHandler = function() {}
 
   const nextObj = { //for testing purposes
     next: null,
@@ -66,8 +65,8 @@ var VoteCard = function({entry, contestId}) {
   return (
     <Card width='20rem' className={classnames}>
       <Card.Title>Mix # {entry.mixnum}
-        <Button variant="secondary" onClick={() => clickHandler}>Add to Playlist</Button>
-        <Button variant="secondary" onClick={() => dispatch(playLink(playObj))}>Play Now</Button>
+        <Button style={{margin: '0 5px 0 20px'}} variant="secondary" onClick={() => {dispatch(addTrack(entry)); dispatch(rerenderNow())}}>Add to Playlist</Button>
+        <Button style={{margin: '0 5px 0 20px'}}  variant="secondary" onClick={() => dispatch(playLink(playObj))}>Play Now</Button>
       </Card.Title>
       <Card.Body>
         <Form>
