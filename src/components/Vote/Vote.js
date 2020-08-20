@@ -7,6 +7,7 @@ import Hero from '../common/Hero';
 import Player from './Player';
 import VoteCard from './VoteCard';
 import SubmitVote from './SubmitVote';
+import Playlist from './Playlist';
 import '../../css/vote.css';
 
 
@@ -42,13 +43,19 @@ function Vote(props) {
   const late = `Voting for this month is over. Check the homepage for results starting on ${new Date(resultdate).toLocaleDateString('en-US', options)}.`
 
    return (
-    <Container>
+    <div>
       <NotNowModal start={votestart} end={voteend} early={early} late={late}/>
+      <div className="playerparent">
+        <Player />
+        <SubmitVote />
+      </div>
 
-      <Player />
-      <SubmitVote />
-      <div className='vcardcontainer'>{entryList}</div>
-    </Container>
+      <div className='voteplparent'>
+        <div className='vcardcontainer'>{entryList}</div>
+        <Playlist />
+      </div>
+        <Button style={{margin: '10px'}} href={`http://flac.reamixed.com/${contestId}/${contestId}flacs.zip`} target="_blank" download>Download All Mixes from this Month</Button>
+    </div>
   );
 }
 export default Vote;
