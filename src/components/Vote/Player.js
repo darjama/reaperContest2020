@@ -61,7 +61,7 @@ var Player =  function(props) {
 
   useEffect(() => {
     audio.load();
-    if (nowPlaying.name !== 'Please Vote!') {
+    if (nowPlaying.name !== 'Please Vote (but not for yourself)!') {
       setPlaying(true)
     }
   }, [nowPlaying] )
