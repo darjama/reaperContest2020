@@ -52,7 +52,7 @@ function Vote(props) {
 
       <div className='voteplparent'>
         <div className='vcardcontainer'>{entryList}</div>
-        <Playlist />
+        <Playlist entries={entries} />
       </div>
         <Button style={{margin: '10px'}} href={`http://flac.reamixed.com/${contestId}/${contestId}flacs.zip`} target="_blank" download>Download All Mixes from this Month</Button>
     </div>

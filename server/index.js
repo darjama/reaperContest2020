@@ -34,6 +34,9 @@ uploadRoutes(app);
 var votingRoutes = require('./db/votingRoutes');
 votingRoutes(app);
 
+var resultRoutes = require('./db/resultRoutes');
+resultRoutes(app);
+
 app.use('/', express.static(__dirname + '/../dist/'))
 app.use('/:id', express.static(__dirname + '/../dist/'))
 

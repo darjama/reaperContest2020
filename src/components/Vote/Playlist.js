@@ -3,10 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { playLink, createPlaylist, moveTrack, deleteTrack, shareLink, shareLink2, rerenderNow} from '../../redux/playlist/playlistActions';
 import {Container, ListGroup, Button} from 'react-bootstrap'
 
-function Playlist() {
+function Playlist({entries}) {
 
   const details = useSelector(state => state.contestDetailReducer);
-  const entries = useSelector(state => state.entriesDetailReducer);
   const playlist = useSelector(state => state.playlistReducer);
   const mover = useSelector(state => state.shareNodeReducer);
   const newpos = useSelector(state => state.shareNodeReducer2);
@@ -76,7 +75,7 @@ function Playlist() {
 
   return (
   <div className="playlistgroup">
-    <h1 style={{color: 'lightgrey'}}>PLAYLIST</h1>
+    <h1 style={{color: 'lightgrey', textAlign:'center'}}>PLAYLIST</h1>
     <div className='player-button-holder'>
       <Button className='player-button' onClick={() => dispatch(playLink(playlist.head))}>Play</Button>
       <Button className='player-button' onClick={() => {dispatch(createPlaylist([])); dispatch(rerenderNow())}}>Clear</Button>

@@ -13,7 +13,7 @@ var PlaylistMaker = function(array = []) {
 }
 
 const PlaylistNode = function(obj, prev = null, next = null) {
-  this.uri = `http://flac.reamixed.com/${obj.contestid}/${obj.audiouri}`,
+  this.uri = `https://flac.reamixed.com/${obj.contestid}/${obj.audiouri}`,
   this.name = 'Mix #' + obj.mixnum,
   this.mixnum = obj.mixnum,
   this.next = next,

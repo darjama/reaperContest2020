@@ -39,7 +39,7 @@ class App extends React.PureComponent {
             </Card.Text>
           </Card.Body>
           </Card>
-          <Card style={{ minWidth: '18rem' }} id="download">
+          <Card style={{ minWidth: '35rem' }} id="download">
             <Card.Body>
               <Card.Title className="text-center rem2 cuprum">{months[month - 1]} {year}</Card.Title>
               <Card.Text>
@@ -51,7 +51,7 @@ class App extends React.PureComponent {
               <Card.Img variant="bottom" src={artistimg}/>
             </Card.Body>
           </Card>
-          <Card style={{ minWidth: '18rem'}}>
+          <Card style={{ minWidth: '35rem'}}>
             <Card.Body>
               <Card.Title className="text-center rem2 cuprum">Contest Schedule</Card.Title>
                 <Schedule details={this.props.details} date={new Date()}/>

@@ -22,13 +22,19 @@ var NavBar = function() {
             <LinkContainer to='/vote'>
             <Nav.Link>Vote</Nav.Link>
             </LinkContainer>
-            <NavDropdown title="Archive" id="basic-nav-dropdown">
+            <LinkContainer to='/results'>
+            <Nav.Link>Results</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to='/archive'>
+            <Nav.Link>Archive</Nav.Link>
+            </LinkContainer>
+            {/* <NavDropdown title="Archive" id="basic-nav-dropdown">
 
               <NavDropdown.Item className="cuprum" href="/Archive">Past Raw Files</NavDropdown.Item>
               <NavDropdown.Item className="cuprum" href="/Archive#action/3.3">Past Mixes</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item className="cuprum" href="/Archive#action/3.1">Hall of Fame</NavDropdown.Item>
-            </NavDropdown>
+            </NavDropdown> */}
           </Nav>
         </Navbar.Collapse>
     </Navbar>
