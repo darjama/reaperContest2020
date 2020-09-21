@@ -13,6 +13,7 @@ import Vote from './components/Vote/Vote.js';
 import Submit from './components/Submit/Submit.js';
 import Loader from './components/common/Loader';
 import Footer from './components/common/Footer';
+import Results from './components/Results/Results.js';
 import './css/main.css'
 
 const app = document.getElementById('app');
@@ -29,6 +30,7 @@ ReactDOM.render(
       <Route path="/GetStarted" component={GetStarted} />
       <Route path="/Submit" component={Submit} />
       <Route path="/Archive" component={Archive} />
+      <Route path="/Results" component={Results} />
   </BrowserRouter>
   </div>
   <Footer/>
