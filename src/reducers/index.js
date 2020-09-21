@@ -26,8 +26,8 @@ const playlistReducer = function (state = initPlaylist, action) {
 const initPlayer = {
   next: null,
   prev: null,
-  uri: 'http://flac.reamixed.com/hi.mp3',
-  name: 'Please Vote!'
+  uri: 'https://flac.reamixed.com/hi.mp3',
+  name: 'Please Vote (but not for yourself)!'
 }
 
 const playNowReducer = function (state = initPlayer, action) {
