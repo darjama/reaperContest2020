@@ -58,7 +58,7 @@ var SubmitVote = function() {
               </Form.Group>
             </Form>
             <div style={{margin:'0 0 0 auto'}}>
-              <Button variant="primary" type="submit" onClick={() => submitHandler(event)}> Submit </Button>
+              <Button variant="primary" type="submit" disabled={top3.includes(null)} onClick={() => submitHandler(event)}> Submit </Button>
             </div>
 
           </ListGroup.Item>
