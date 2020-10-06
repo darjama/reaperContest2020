@@ -22,6 +22,7 @@ const Entry = new Schema ({
   mixnum: Number,
   audiouri: String,
   contestid: Number,
+  contestant: String,
   ipaddr: String,
   email: String,
   zipfile: String,
