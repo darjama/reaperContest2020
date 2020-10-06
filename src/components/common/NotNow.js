@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import { Modal, Button } from 'react-bootstrap';
 
 class NotNowModal extends React.Component {
@@ -23,7 +24,7 @@ class NotNowModal extends React.Component {
             {date < start ? this.props.early : ''}
             {date > end ? this.props.late : ''}
             <br/><br/>
-            <a href='/'>Return to homepage</a>
+            <Link to='/'>Return to homepage</Link>
           </Modal.Body>
 
         </Modal>
