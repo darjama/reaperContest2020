@@ -30,12 +30,12 @@ class Submit extends React.Component {
 
   checkFileSize(event) {
     let files = event.target.files
-    let size = 62914560;
+    let size = 89128960;
     let err = "";
     for(var x = 0; x<files.length; x++) {
       if (files[x].size > size) {
 
-      err += files[x].name+' is > 60MB. Please make sure you have not included any of the original media files, or contact us to deliver the file another way.\n';
+      err += files[x].name+' is > 85MB. Please make sure you have not included any of the original media files, or contact us to deliver the file another way.\n';
       }
     };
     this.setState({sizeWarning: err})
