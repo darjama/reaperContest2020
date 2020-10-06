@@ -14,6 +14,9 @@ exports.addEntry  = function(req, res) {
   newRecord.zipfile = req.body.filename;
   newRecord.contestid = (newRecord.timestamp.getYear() + 1900) * 100 + (newRecord.timestamp.getMonth() + 1);
   newRecord.uploadSuccessful = req.body.success;
+  newRecord.mixnum = null;
+  newRecord.contestant = null;
+  newRecord.audiouri = null;
   newRecord.save({},function(err, data) {
     if (err){
       console.log(err); //changed from res.send to accomodate separate upload
