@@ -58,7 +58,7 @@ var  GetStarted = function(props) {
                   <li><a href='/Submit'>Submit</a>  your REAPER project (.rpp), any reverb impulses you've used, any custom* JSFX, a master mix, a note containing your Reaper Forum username.</li>
                   <li><strong style={{textDecoration: 'underline'}}>DON'T</strong> include the original media files in your upload.</li>
                   <li>Listen to the submissions.</li>
-                  <li>Vote for your 3 favourite mixes.</li>
+                  <li>Vote for your 3 favourite mixes (aside from your own).</li>
                   <li>See who won, and check out the other participants project.</li>
                   <li>The winner gets to help choose a project for the next month's contest. And the glory. But that's about it.</li>
                 </ol>
