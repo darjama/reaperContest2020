@@ -2,7 +2,7 @@ const mongoose = require('mongoose'),
 Contest = mongoose.model('Contests');
 
 exports.contests = function(req, res) {
-  Contest.find({}, function(err, contest) {
+  Contest.find( {}, null, {sort: {contestid: -1}}, function(err, contest) {
     if (err)
       res.send(err);
     res.json(contest);
