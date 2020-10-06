@@ -20,7 +20,7 @@ const Results = function() {
     axios.get('/api/contests')
     .then(res => {
       const x = (res.data
-      .sort((a,b) => new Date(a.resultdate) - new Date(b.resultdate))
+      // .sort((a,b) => new Date(b.resultdate) - new Date(a.resultdate))
       .find(a => new Date(a.resultdate) < date))
       setDetails(x)
       return x
