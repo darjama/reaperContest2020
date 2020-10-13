@@ -94,16 +94,16 @@ const Results = function() {
       <h2>{details.songname} by {details.artist}</h2>
       <div style={{color: 'white', display:'grid', placeItems: 'center'}}>
 
-        <div style={{width:'95%', display: 'flex', }}>
+        <div style={{width:'100%', display: 'flex', flexWrap: 'wrap-reverse'}}>
 
-          <div style={{maxWidth:'600px', margin:'7px'}}>
+          <div style={{flex: '1 2 450px', margin:'7px'}}>
             <Player/>
             <Playlist entries={allEntriesData} />
             <Button style={{margin: '10px'}} href={`https://flac.reamixed.com/${contestId}/${contestId}flacs.zip`} target="_blank" download>Download All Mixes</Button>
             <Button style={{margin: '10px'}} href={`https://flac.reamixed.com/${contestId}/${contestId}projects.zip`} target="_blank" download>Download All Project Files</Button>
             <Button style={{margin: '10px'}} href={details.rawuri} target="_blank" download>Download All Original Tracks</Button>
           </div>
-          <div>
+          <div style={{flex: '2 1 50%',  margin:'7px'}}>
             <PointsGraph pointsData={pointsData} />
             <Comments allComments={allComments} allEntries={allEntriesData} />
           </div>
