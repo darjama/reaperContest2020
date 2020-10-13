@@ -94,7 +94,7 @@ class Submit extends React.Component {
     this.setState({[e.target.id]: e.target.value})
     if (e.target.id === 'email') {
       this.setState({
-        emailWarning: this.validateEmail(this.state.email) ? '' : 'A valid email address is required'
+        emailWarning: this.validateEmail(e.target.value) ? '' : 'A valid email address is required'
       })
     }
   }
@@ -129,15 +129,14 @@ class Submit extends React.Component {
         }
       };
       let url= res.data //+ '&uploadType=resumable';
-      console.log(url);
       return axios.put(url, this.state.selectedFile, config)
     }).then(res => {
       this.setState({toastMessage: 'Upload Complete, thanks for entering!'})
       data.success = true;
-      axios.post('/api/entry', data).then(res => console.log(res)).catch(err => console.log(err));
+      axios.post('/api/entry', data).catch(err => console.log(err));
     }).catch(err => {
         console.log(err);
-        axios.post('/api/entry', data).then(res => console.log(res)).catch(err => console.log(err));
+        axios.post('/api/entry', data).catch(err => console.log(err));
         this.setState({toastMessage: 'There was an error with your upload, please try again later or use the contact form to make arrangements to send a link to your file.'})
       })
 
@@ -145,7 +144,6 @@ class Submit extends React.Component {
 
   render() {
     const {startdate, duedate, votestart} = this.props.details;
-    console.log(startdate,duedate);
     const options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
     const early = `The contest hasn't started yet. Come back on  ${new Date(startdate).toLocaleDateString('en-US', options)}.`
     const late = `Sorry, you've missed the deadline for submissions. Come back to cast your vote on ${new Date(votestart).toLocaleDateString('en-US', options)}.`
