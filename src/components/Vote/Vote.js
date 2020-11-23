@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateNote } from '../../redux/notes/notesActions';
 import {ListGroup, Container, Button} from 'react-bootstrap';
 import NotNowModal from '../common/NotNow';
+import ExcludeModal from './ExcludeModal';
 import Hero from '../common/Hero';
 import Player from './Player';
 import VoteCard from './VoteCard';
@@ -23,6 +24,7 @@ function Vote(props) {
 
   const {votestart, voteend, resultdate} = details;
   const [top3, setTop3] = useState([null,null,null]);
+  const [excluded, setExcluded] = useState(null);
 
   useEffect(() => {
     const localNotes = JSON.parse(localStorage.getItem('contestNotes'));
@@ -33,10 +35,11 @@ function Vote(props) {
     }
   },[])
 
+  const entryList = entries.map(entry => {
 
-  const entryList = entries.map(entry => (
-    <VoteCard key={entry._id} entry={entry} contestId={contestId}/>
-  ))
+    return (
+    <VoteCard key={entry._id} entry={entry} prefix={details.prefix} contestId={contestId} excluded={excluded === entry.mixnum}/>
+  )})
 
   const options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
   const early = `Voting hasn't started yet. Come back on  ${new Date(votestart).toLocaleDateString('en-US', options)}.`
@@ -45,14 +48,17 @@ function Vote(props) {
    return (
     <div>
       <NotNowModal start={votestart} end={voteend} early={early} late={late}/>
+      <ExcludeModal start={votestart} end={voteend} entries={entries} setExcluded={setExcluded}/>
+
       <div className="playerparent">
-        <Player />
-        <SubmitVote />
+        <Player songName={details.songname} markers={details.markers}/>
+
+        <SubmitVote voter={entries.filter(a=>a.mixnum === excluded)[0]}/>
       </div>
 
       <div className='voteplparent'>
         <div className='vcardcontainer'>{entryList}</div>
-        <Playlist entries={entries} />
+        <Playlist entries={entries} prefix={details.prefix}/>
       </div>
         <Button style={{margin: '10px'}} href={`http://flac.reamixed.com/${contestId}/${contestId}flacs.zip`} target="_blank" download>Download All Mixes from this Month</Button>
     </div>
