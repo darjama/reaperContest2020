@@ -97,8 +97,8 @@ const Results = function() {
         <div style={{width:'100%', display: 'flex', flexWrap: 'wrap-reverse'}}>
 
           <div style={{flex: '1 2 450px', margin:'7px'}}>
-            <Player/>
-            <Playlist entries={allEntriesData} />
+            <Player songName={details.songname}/>
+            <Playlist entries={allEntriesData} prefix={details.prefix}/>
             <Button style={{margin: '10px'}} href={`https://flac.reamixed.com/${contestId}/${contestId}flacs.zip`} target="_blank" download>Download All Mixes</Button>
             <Button style={{margin: '10px'}} href={`https://flac.reamixed.com/${contestId}/${contestId}projects.zip`} target="_blank" download>Download All Project Files</Button>
             <Button style={{margin: '10px'}} href={details.rawuri} target="_blank" download>Download All Original Tracks</Button>
