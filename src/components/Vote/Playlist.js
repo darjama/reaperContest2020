@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { playLink, createPlaylist, moveTrack, deleteTrack, shareLink, shareLink2, rerenderNow} from '../../redux/playlist/playlistActions';
 import {Container, ListGroup, Button} from 'react-bootstrap'
 
-function Playlist({entries}) {
+function Playlist({entries, prefix}) {
 
   const details = useSelector(state => state.contestDetailReducer);
   const playlist = useSelector(state => state.playlistReducer);
@@ -15,7 +15,7 @@ function Playlist({entries}) {
 
 
   useEffect(()=> {
-    dispatch(createPlaylist(randomize(entries)));
+    dispatch(createPlaylist(randomize(entries), prefix));
     dispatch(rerenderNow());
   },[entries])
 
