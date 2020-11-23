@@ -5,7 +5,8 @@ import { playLink, addTrack, rerenderNow } from '../../redux/playlist/playlistAc
 import { addVote } from '../../redux/voting/voteActions';
 import {Card, Form, Button} from 'react-bootstrap'
 
-var VoteCard = function({entry, contestId}) {
+var VoteCard = function({entry, contestId, prefix, excluded}) {
+
   const dispatch = useDispatch();
   const notes = useSelector(state => state.noteReducer);
   const nowPlaying = useSelector(state => state.playNowReducer);
@@ -45,23 +46,23 @@ var VoteCard = function({entry, contestId}) {
     dispatch(addVote(e.target.value, entry.mixnum))
   }
 
-  const nextObj = { //for testing purposes
-    next: null,
-    prev: playObj,
-    uri: 'http://flac.reamixed.com/202008/04.flac',
-    name: 'Mix #4'
-  }
+  // const nextObj = { //for testing purposes
+  //   next: null,
+  //   prev: playObj,
+  //   uri: 'http://flac.reamixed.com/202008/04.flac',
+  //   name: 'Mix #4'
+  // }
 
   const playObj = {
-    next: nextObj,
+    next: null,
     prev: null,
-    uri: 'http://flac.reamixed.com/' + entry.contestid + '/' + entry.audiouri,
+    uri: 'http://flac.reamixed.com/' + contestId + '/' + prefix + ('0' + entry.mixnum).slice(-2)+'.flac',
     mixnum: entry.mixnum,
-    name: 'Mix #' + entry.mixnum
+    name: 'Mix #' + entry.mixnum,
+    normalize: entry.normalize || 0
   }
 
   const  classnames = 'votecard' + (nowPlaying.mixnum === entry.mixnum ? ' nowPlaying' : '');
-
   return (
     <Card width='20rem' className={classnames}>
       <Card.Title>Mix # {entry.mixnum}
@@ -77,11 +78,11 @@ var VoteCard = function({entry, contestId}) {
           </Form.Group>
 
         <div key={`inline-radio`} className="mb-3">
-        Vote :
-          <Form.Check inline label="1st" type='radio' checked={top3[0] === entry.mixnum} name='vote' value='0' onChange={() => voteHandler(event)} />
-          <Form.Check inline label="2nd" type='radio' checked={top3[1] === entry.mixnum} name='vote' value='1' onChange={() => voteHandler(event)}/>
-          <Form.Check inline label="3rd" type='radio'  checked={top3[2] === entry.mixnum} name='vote' value='2' onChange={() => voteHandler(event)}/>
-          <Form.Check inline label="none" type='radio'  checked={!top3.includes(entry.mixnum)} name='vote' value='999' onChange={() => voteHandler(event)} />
+        Vote :{`  `}
+          <Form.Check inline label="1st" type='radio' checked={top3[0] === entry.mixnum} disabled={excluded} name='vote' value='0' onChange={() => voteHandler(event)} />
+          <Form.Check inline label="2nd" type='radio' checked={top3[1] === entry.mixnum} disabled={excluded} name='vote' value='1' onChange={() => voteHandler(event)}/>
+          <Form.Check inline label="3rd" type='radio'  checked={top3[2] === entry.mixnum} disabled={excluded} name='vote' value='2' onChange={() => voteHandler(event)}/>
+          <Form.Check inline label="none" type='radio'  checked={!top3.includes(entry.mixnum)} disabled={excluded} name='vote' value='999' onChange={() => voteHandler(event)} />
         </div>
         </Form>
       </Card.Body>
