@@ -5,6 +5,7 @@ import {Button, Form, Row, Col} from 'react-bootstrap';
 import Bar from './Bar.js';
 import MarkerList from './MarkerList';
 import '../../css/player.css';
+import { withRouter} from 'react-router-dom'
 
 
 var Player =  function({songName, markers}) {
@@ -15,7 +16,7 @@ var Player =  function({songName, markers}) {
   const [curTime, setCurTime] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [startTime, setStartTime] = useState(0);
-  const [endTime, setEndTime] = useState();
+  const [endTime, setEndTime] = useState(10000);
   const [clickedTime, setClickedTime] = useState();
   const [normalize, setNormalize] = useState(false)
   const nowPlaying = useSelector(state => state.playNowReducer);
@@ -29,7 +30,8 @@ var Player =  function({songName, markers}) {
     const setAudioData = () => {
       setDuration(audio.duration);
       setCurTime(audio.currentTime);
-      if (markers && (endTime > markers[markers.length - 2].time || !endTime)) setEndTime(audio.duration - .5 );
+      if (markers && endTime > markers[markers.length - 2].time && audio.duration > 5) setEndTime(audio.duration - .5 );
+
     }
     if (normalize && nowPlaying.normalize !== undefined) {
       audio.volume = Math.pow(10, Number(nowPlaying.normalize) / 20);
@@ -97,7 +99,7 @@ var Player =  function({songName, markers}) {
         <source src={nowPlaying.uri}/>
         Your browser does not support the <code>audio</code> element.
       </audio>
-      <h1>{nowPlaying.name !== 'Please Vote (but not for yourself)!' ? songName : ''} {nowPlaying.name}</h1>
+      <h3>{nowPlaying.name !== 'Please Vote (but not for yourself)!' ? songName : ''} {nowPlaying.name}</h3>
       <Bar curTime={curTime} duration={duration} onTimeUpdate={(time) => setClickedTime(time)}/>
       <div className='player-button-holder'>
         <Button className='player-button' onClick={()=>setPlaying(!playing)}>{playing ? 'Pause': 'Play'}</Button>
@@ -130,4 +132,4 @@ var Player =  function({songName, markers}) {
   )
 }
 
-export default Player;
+export default withRouter(Player);
