@@ -10,6 +10,7 @@ import VoteCard from './VoteCard';
 import SubmitVote from './SubmitVote';
 import Playlist from './Playlist';
 import '../../css/vote.css';
+import { withRouter} from 'react-router-dom'
 
 
 function Vote(props) {
@@ -22,7 +23,7 @@ function Vote(props) {
   const month = '0' + (d.getMonth() + 1).toString();
   const contestId = Number(d.getFullYear().toString() + month.substring(month.length -2));
 
-  const {votestart, voteend, resultdate} = details;
+  const {votestart, voteend, resultdate, prefix, songname, markers} = details;
   const [top3, setTop3] = useState([null,null,null]);
   const [excluded, setExcluded] = useState(null);
 
@@ -38,7 +39,7 @@ function Vote(props) {
   const entryList = entries.map(entry => {
 
     return (
-    <VoteCard key={entry._id} entry={entry} prefix={details.prefix} contestId={contestId} excluded={excluded === entry.mixnum}/>
+    <VoteCard key={entry._id} entry={entry} prefix={prefix} contestId={contestId} excluded={excluded === entry.mixnum}/>
   )})
 
   const options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
@@ -46,22 +47,22 @@ function Vote(props) {
   const late = `Voting for this month is over. Check the homepage for results starting on ${new Date(resultdate).toLocaleDateString('en-US', options)}.`
 
    return (
-    <div>
+    <Container fluid>
       <NotNowModal start={votestart} end={voteend} early={early} late={late}/>
       <ExcludeModal start={votestart} end={voteend} entries={entries} setExcluded={setExcluded}/>
 
       <div className="playerparent">
-        <Player songName={details.songname} markers={details.markers}/>
+        <Player songName={songname} markers={markers}/>
 
         <SubmitVote voter={entries.filter(a=>a.mixnum === excluded)[0]}/>
       </div>
 
       <div className='voteplparent'>
         <div className='vcardcontainer'>{entryList}</div>
-        <Playlist entries={entries} prefix={details.prefix}/>
+        <Playlist entries={entries} prefix={prefix}/>
       </div>
         <Button style={{margin: '10px'}} href={`http://flac.reamixed.com/${contestId}/${contestId}flacs.zip`} target="_blank" download>Download All Mixes from this Month</Button>
-    </div>
+    </Container>
   );
 }
-export default Vote;
+export default withRouter(Vote);
