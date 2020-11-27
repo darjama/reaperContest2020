@@ -1,9 +1,7 @@
 .audio-player {
-  flex: 1 1 500px;
+  flex: 2 1 500px;
   display: grid;
   place-items: center;
-  height: 11rem;
-  width: 500px;
   background-color: #343a40;
   color: white;
   border: 3px groove grey;
@@ -43,6 +41,7 @@
 
 .player-button-holder {
   display: flex;
+  padding: 4px 0px;
   width: 100%;
   justify-content: center;
 
@@ -52,4 +51,8 @@
   min-width: 3rem;
   margin: 0px 5px;
 
+}
+
+.big-checkbox {
+  font-size: 3em;
 }
