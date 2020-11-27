@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import axios from 'axios';
 import {Container, Form, Button, Toast} from 'react-bootstrap';
+import validateEmail from './SharedFormulas';
 
 var ContactForm = function(props) {
   const [email, setEmail] = useState('');
