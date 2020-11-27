@@ -46,17 +46,17 @@ var SubmitVote = function({voter}) {
     </h4></ListGroup.Item>
           <ListGroup.Item variant='dark' className="submit-list">
             1st place (3 points):
-            <span style={{color: 'red'}}>{top3[0] ? ` Mix# ${top3[0]}` : ''}</span>
+            <span style={{color: 'darkred'}}>{top3[0] ? ` Mix# ${top3[0]}` : ''}</span>
           </ListGroup.Item>
           <ListGroup.Item variant='dark' className="submit-list">
             2nd place (2 points):
-            <span style={{color: 'red'}}>{top3[1] ? ` Mix# ${top3[1]}` : ''}</span>
+            <span style={{color: 'darkred'}}>{top3[1] ? ` Mix# ${top3[1]}` : ''}</span>
           </ListGroup.Item>
           <ListGroup.Item variant='dark' className="submit-list">
             3rd place (1 point):
-            <span style={{color: 'red'}}>{top3[2] ? ` Mix# ${top3[2]}` : ''}</span>
+            <span style={{color: 'darkred'}}>{top3[2] ? ` Mix# ${top3[2]}` : ''}</span>
           </ListGroup.Item>
-          <ListGroup.Item variant='dark' className='submit-list playerparent'>
+          <ListGroup.Item variant='dark' className='submit-list'>
 
             {voter === undefined  && (
               <>
@@ -71,7 +71,7 @@ var SubmitVote = function({voter}) {
             <Form inline>
               <Form.Group controlId="formBasicCheckbox">
                 <Form.Check type="checkbox" onClick={()=>setIncludeNotes(!includeNotes)}/>
-                <Form.Label>Include your notes with your vote</Form.Label>
+                <Form.Label>Include your notes</Form.Label>
               </Form.Group>
               &nbsp;&nbsp;
             </Form>
