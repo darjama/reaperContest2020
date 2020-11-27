@@ -5,7 +5,7 @@ import { RiPlayFill, RiDeleteBin6Line } from 'react-icons/ri';
 import {Container, ListGroup, Button} from 'react-bootstrap'
 import { withRouter} from 'react-router-dom'
 
-function Playlist({entries, prefix}) {
+function Playlist({entries, prefix, random}) {
 
   const details = useSelector(state => state.contestDetailReducer);
   const playlist = useSelector(state => state.playlistReducer);
@@ -17,7 +17,12 @@ function Playlist({entries, prefix}) {
 
 
   useEffect(()=> {
-    dispatch(createPlaylist(randomize(entries), prefix));
+    if (random) {
+      dispatch(createPlaylist(randomize(entries), prefix));
+    } else {
+      dispatch(createPlaylist(entries, prefix));
+    }
+
     dispatch(rerenderNow());
   },[entries, prefix])
 
