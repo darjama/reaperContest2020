@@ -21,17 +21,19 @@ export const shareLink2 = (data) => {
   };
 };
 
-export const createPlaylist = (data) => {
+export const createPlaylist = (data, prefix) => {
   return {
       type: CREATE_PLAYLIST,
-      payload: data
+      payload1: data,
+      payload2: prefix
   };
 };
 
-export const addTrack = (data) => {
+export const addTrack = (data, prefix) => {
   return {
       type: ADD_NODE,
-      payload: data
+      payload1: data,
+      payload2: prefix
   };
 };
 

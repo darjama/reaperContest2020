@@ -1,21 +1,23 @@
-var PlaylistMaker = function(array = []) {
+var PlaylistMaker = function(array = [], prefix) {
   this.head = null;
   let last;
   array.forEach(item => {
     if (!this.head) {
-      this.head = new PlaylistNode(item);
+      this.head = new PlaylistNode(item, prefix);
       last = this.head;
     } else {
-      last.next = new PlaylistNode(item, last);
+      last.next = new PlaylistNode(item, prefix, last);
       last = last.next;
     }
   })
 }
 
-const PlaylistNode = function(obj, prev = null, next = null) {
-  this.uri = `https://flac.reamixed.com/${obj.contestid}/${obj.audiouri}`,
-  this.name = 'Mix #' + obj.mixnum,
+const PlaylistNode = function(obj, prefix, prev = null, next = null) {
+  this.uri = `https://flac.reamixed.com/${obj.contestid}/${prefix}${('0' + obj.mixnum.toString()).slice(-2)}.flac`,
+  this.name = 'Mix ' + obj.mixnum,
   this.mixnum = obj.mixnum,
+  this.normalize = obj.normalize || 0,
+  this.offset = obj.offset || 0,
   this.next = next,
   this.prev = prev
 }
