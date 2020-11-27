@@ -6,6 +6,7 @@ import axios from 'axios';
 import PreModal from './PreModal';
 import Hero from '../common/Hero';
 import NotNow from '../common/NotNow';
+import validateEmail from '../common/SharedFormulas';
 
 class Submit extends React.Component {
   constructor(props) {
@@ -97,13 +98,6 @@ class Submit extends React.Component {
         emailWarning: this.validateEmail(e.target.value) ? '' : 'A valid email address is required'
       })
     }
-  }
-
-
-  validateEmail(testString) {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const result = re.test(String(testString).toLowerCase());
-    return result;
   }
 
   clickHandler(e) {
