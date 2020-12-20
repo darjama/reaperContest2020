@@ -18,7 +18,7 @@ function Playlist({entries, prefix, random}) {
 
   useEffect(()=> {
     if (random) {
-      dispatch(createPlaylist(randomize(entries), prefix));
+      dispatch(createPlaylist(randomize([...entries]), prefix));
     } else {
       dispatch(createPlaylist(entries, prefix));
     }

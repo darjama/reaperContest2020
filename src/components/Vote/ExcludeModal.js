@@ -12,8 +12,8 @@ class ExcludeModal extends React.Component {
     let date = new Date();
     let start = new Date(this.props.start);
     let end = new Date(this.props.end);
-    let setExcluded = this.props.setExcluded;
-    let entries = [...this.props.entries];
+    let { setExcluded, contestId, entries } = this.props;
+
     entries.sort((a,b) => {
       if (a.contestant.toLowerCase() > b.contestant.toLowerCase()) return 1;
       return -1;
@@ -21,7 +21,7 @@ class ExcludeModal extends React.Component {
 
     return(
         <Modal
-          show={this.state.show && date >= start && date <= end}
+          show={this.state.show && date >= start && date <= end }
           backdrop="static"
           keyboard={false}
         >
@@ -34,9 +34,27 @@ class ExcludeModal extends React.Component {
               <p>If so, please select your username below:</p>
             </div>
             <DropdownButton id="dropdown-basic-button" title="Who Are You?">
-              <Dropdown.Item onSelect={() => {setExcluded(null); this.setState({show: false})}}> I didn't mix this month</Dropdown.Item>
+              <Dropdown.Item onSelect={() => {
+                const localE = JSON.stringify({
+                  mixnum: null,
+                  contestId: contestId
+                })
+                localStorage.setItem('excluded', localE)
+                setExcluded(null);
+                this.setState({show: false});
+                }}> I didn't mix this month</Dropdown.Item>
               {entries.map(entry => (
-                <Dropdown.Item key={entry._id} onSelect={() => {setExcluded(entry.mixnum); this.setState({show: false})}}>{entry.contestant}</Dropdown.Item>
+                <Dropdown.Item
+                key={entry._id}
+                onSelect={() => {
+                  const localE = JSON.stringify({
+                    mixnum: entry.mixnum,
+                    contestId: contestId
+                  })
+                  localStorage.setItem('excluded', localE)
+                  setExcluded(entry.mixnum);
+                  this.setState({show: false})
+                }}>{entry.contestant}</Dropdown.Item>
               ))}
 
             </DropdownButton>

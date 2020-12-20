@@ -5,9 +5,10 @@ import { clearNotes } from '../../redux/notes/notesActions'
 import { playLink } from '../../redux/playlist/playlistActions';
 import { validateEmail }from '../common/SharedFormulas';
 import { ListGroup, Form, Button } from 'react-bootstrap';
+import { addVote } from '../../redux/voting/voteActions';
 import axios from 'axios';
 
-var SubmitVote = function({voter}) {
+var SubmitVote = function({voter, setExcluded}) {
   const notesAll = useSelector(state => state.noteReducer)
   const top3 = useSelector(state => state.voteReducer)
   const dispatch = useDispatch();
@@ -35,14 +36,33 @@ var SubmitVote = function({voter}) {
     if (localStorage.getItem('lastVoted') === contestId) {
       setDisableSubmit(true);
     }
+    const localVotes = JSON.parse(localStorage.getItem('votes'));
+    if (localVotes && localVotes[3] === contestId) {
+      dispatch(addVote(0,localVotes[0]))
+      dispatch(addVote(1,localVotes[1]))
+      dispatch(addVote(2,localVotes[2]))
+    } else {
+      localStorage.removeItem('votes')
+    }
   },[])
+
+  useEffect(() => {
+    let localVotes = JSON.stringify([...top3, contestId]);
+    console.log(localStorage.getItem('votes'))
+    localStorage.setItem('votes', localVotes)
+  }, [top3]);
+
+  const changeVoter = function(){
+    setExcluded(undefined);
+    localStorage.removeItem('excluded');
+  }
 
   if (!disableSubmit) {
     return (
       <div className='submitvote'>
         <ListGroup >
     <ListGroup.Item variant='dark'><h4>
-      {!!voter && voter.contestant + ' - ' }Submit Your Vote:
+      {!!voter && (<><span onClick={changeVoter}>{voter.contestant}</span> - </>)}Place Your Vote:
     </h4></ListGroup.Item>
           <ListGroup.Item variant='dark' className="submit-list">
             1st place (3 points):
@@ -57,8 +77,8 @@ var SubmitVote = function({voter}) {
             <span style={{color: 'darkred'}}>{top3[2] ? ` Mix# ${top3[2]}` : ''}</span>
           </ListGroup.Item>
           <ListGroup.Item variant='dark' className='submit-list'>
-
-            {voter === undefined  && (
+            <span style={{color: 'blue'}} onClick={changeVoter}>CLICK HERE to reset who is voting.</span>
+            {!voter && (
               <>
               <Form>
               <Form.Group controlId="formBasicEmail">
@@ -80,7 +100,7 @@ var SubmitVote = function({voter}) {
                 variant="primary" type="submit"
                 disabled={top3.includes(null) || (voter === undefined ? !validateEmail(email) : false)}
                 onClick={() => submitHandler(event)}>
-                  Submit
+                  Vote
               </Button>
             </div>
 
@@ -97,10 +117,13 @@ var SubmitVote = function({voter}) {
       <h2>Come back at the end of the month to see the results.</h2>
       <Button onClick={() => {
         setDisableSubmit(false);
+        setExcluded(undefined);
         dispatch(clearVotes());
         dispatch(clearNotes());
         localStorage.removeItem('lastVoted');
-        localStorage.removeItem('contestNotes')} }>
+        localStorage.removeItem('contestNotes')
+        localStorage.removeItem('votes')
+        localStorage.removeItem('excluded')} }>
         Give someone else a turn to vote
       </Button>
     </div>

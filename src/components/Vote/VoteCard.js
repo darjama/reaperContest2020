@@ -35,9 +35,6 @@ var VoteCard = function({entry, contestId, prefix, excluded}) {
     payload.contestId = contestId;
     dispatch(updateNote(payload));
   }
-  useEffect(() => {
-
-  }, [top3]);
 
   useEffect(()=>{
     debounce(localStorage.setItem('contestNotes', JSON.stringify(notes)), 500);

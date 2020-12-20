@@ -25,18 +25,24 @@ function Vote(props) {
 
   const {votestart, voteend, resultdate, prefix, songname, markers} = details;
   const [top3, setTop3] = useState([null,null,null]);
-  const [excluded, setExcluded] = useState(null);
+  const [excluded, setExcluded] = useState(undefined);
 
   useEffect(() => {
     const localNotes = JSON.parse(localStorage.getItem('contestNotes'));
-    if (localNotes && localNotes.contestId === contestId) {
+    const localExcluded = JSON.parse(localStorage.getItem('excluded'));
+    if (localNotes?.contestId === contestId) {
       dispatch(updateNote(localNotes))
     } else {
       localStorage.removeItem('contestNotes')
     }
+    if (localExcluded?.contestId === contestId) {
+      setExcluded(localExcluded.mixnum)
+    } else {
+      localStorage.removeItem('excluded')
+    }
   },[])
 
-  const entryList = entries.map(entry => {
+  const entryList = entries.sort((a,b)=>a.mixnum - b.mixnum).map(entry => {
 
     return (
     <VoteCard key={entry._id} entry={entry} prefix={prefix} contestId={contestId} excluded={excluded === entry.mixnum}/>
@@ -49,12 +55,15 @@ function Vote(props) {
    return (
     <Container fluid>
       <NotNowModal start={votestart} end={voteend} early={early} late={late}/>
-      <ExcludeModal start={votestart} end={voteend} entries={entries} setExcluded={setExcluded}/>
+      {excluded === undefined && (
+        <ExcludeModal contestId={contestId} start={votestart} end={voteend} entries={entries} setExcluded={setExcluded}/>
+      )}
+
 
       <div className="playerparent">
         <Player songName={songname} markers={markers}/>
 
-        <SubmitVote voter={entries.filter(a=>a.mixnum === excluded)[0]}/>
+        <SubmitVote voter={entries.filter(a=>a.mixnum === excluded)[0]} setExcluded={setExcluded}/>
       </div>
 
       <div className='voteplparent'>

@@ -18,7 +18,7 @@ var Player =  function({songName, markers}) {
   const [startTime, setStartTime] = useState(0);
   const [endTime, setEndTime] = useState(10000);
   const [clickedTime, setClickedTime] = useState();
-  const [normalize, setNormalize] = useState(false)
+  const [normalize, setNormalize] = useState(true)
   const nowPlaying = useSelector(state => state.playNowReducer);
   const playlist = useSelector(state => state.playlistReducer);
   const dispatch = useDispatch();
@@ -114,7 +114,7 @@ var Player =  function({songName, markers}) {
           <Form inline>
             <Form.Group controlId="formBasicCheckbox">
 
-              <Form.Check type="checkbox" className='big-checkbox' value={normalize} onChange={() => {setNormalize(!normalize)}}/>
+              <Form.Check type="checkbox" checked className='big-checkbox' value={normalize} onChange={() => {setNormalize(!normalize)}}/>
               <Form.Label>Normalize</Form.Label>
             </Form.Group>
           </Form>
