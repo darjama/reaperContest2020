@@ -6,7 +6,7 @@ import axios from 'axios';
 import PreModal from './PreModal';
 import Hero from '../common/Hero';
 import NotNow from '../common/NotNow';
-import validateEmail from '../common/SharedFormulas';
+import { validateEmail } from '../common/SharedFormulas';
 
 class Submit extends React.Component {
   constructor(props) {
@@ -23,6 +23,8 @@ class Submit extends React.Component {
       typeWarning: '',
       ToastMessage: '',
     }
+
+    this.validateEmail = validateEmail.bind(this);
   }
 
   componentDidMount() {

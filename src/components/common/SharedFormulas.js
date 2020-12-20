@@ -3,4 +3,4 @@ const validateEmail = function(testString) {
   return re.test(String(testString).toLowerCase());
 }
 
-export default { validateEmail }
+export { validateEmail }

@@ -33,17 +33,16 @@ var Player =  function({songName, markers}) {
       if (markers && endTime > markers[markers.length - 2].time && audio.duration > 5) setEndTime(audio.duration - .5 );
 
     }
-    if (normalize && nowPlaying.normalize !== undefined) {
+    if (normalize && nowPlaying.normalize !== undefined && nowPlaying.normalize <= 0 ) {
       audio.volume = Math.pow(10, Number(nowPlaying.normalize) / 20);
     } else {
       audio.volume = 1;
     }
 
-
     const endOfSong= () => {
       setEndOfRange(false);
       if(!nowPlaying.next) {
-        audio.currentTime = startTime;
+        audio.currentTime = startTime - (startTime > 0 ? nowPlaying.offset : 0);
       } else {
         dispatch(playLink(nowPlaying.next))
       }
@@ -67,7 +66,7 @@ var Player =  function({songName, markers}) {
     playing && (audio.paused ||  audio.ended) ? audio.play() : '';
     !playing && (!audio.paused && !audio.ended) ? audio.pause() : '';
     (endOfRange) ? endOfSong() : '';
-    (!audio.paused && audio.currentTime >= endTime) ? endRange() : '';
+    (!audio.paused && audio.currentTime >= endTime - nowPlaying.offset ) ? endRange() : '';
 
 
     if (clickedTime && clickedTime !== curTime) {
@@ -86,7 +85,7 @@ var Player =  function({songName, markers}) {
     audio.load();
     audio.loop = false;
     if (playCount) {
-      audio.currentTime = startTime;
+      audio.currentTime = startTime - (startTime > 0 ? nowPlaying.offset : 0);
       setPlaying(true)
     } else {
       setPlayCount(playCount + 1)

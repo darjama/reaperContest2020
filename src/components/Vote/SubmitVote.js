@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { clearVotes } from '../../redux/voting/voteActions';
 import { clearNotes } from '../../redux/notes/notesActions'
 import { playLink } from '../../redux/playlist/playlistActions';
-import validateEmail from '../common/SharedFormulas';
+import { validateEmail }from '../common/SharedFormulas';
 import { ListGroup, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 

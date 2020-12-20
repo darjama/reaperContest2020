@@ -58,8 +58,8 @@ const Comments = function({allComments, allEntries}) {
                 </Form.Group>
               </Form>
             </td>
-            <td> Text Search:
-                <FormControl aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder='filter the comments' value={textFilter} onChange={(e)=> setTextFilter(e.target.value) } />
+            <td> Text Search
+                <FormControl aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder='filter the comments' value={textFilter} onChange={(e)=> setTextFilter(e.target.value)} style={{margin:'6px 0 0 0'}} />
             </td>
           </tr>
           </tbody>
