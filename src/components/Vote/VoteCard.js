@@ -44,17 +44,10 @@ var VoteCard = function({entry, contestId, prefix, excluded}) {
     dispatch(addVote(e.target.value, entry.mixnum))
   }
 
-  // const nextObj = { //for testing purposes
-  //   next: null,
-  //   prev: playObj,
-  //   uri: 'http://flac.reamixed.com/202008/04.flac',
-  //   name: 'Mix #4'
-  // }
-
   const playObj = {
     next: null,
     prev: null,
-    uri: 'http://flac.reamixed.com/' + contestId + '/' + prefix + ('0' + entry.mixnum).slice(-2)+'.flac',
+    uri: 'https://flac.reamixed.com/' + contestId + '/' + prefix + ('0' + entry.mixnum).slice(-2)+'.flac',
     mixnum: entry.mixnum,
     name: 'Mix #' + entry.mixnum,
     normalize: entry.normalize || 0
