@@ -22,10 +22,12 @@ var Player =  function({songName, markers}) {
   const nowPlaying = useSelector(state => state.playNowReducer);
   const playlist = useSelector(state => state.playlistReducer);
   const dispatch = useDispatch();
+  const offset = nowPlaying.offset || 0;
 
   useEffect(() => {
 
     const audio = document.getElementById("audio");
+    console.log(audio.seekable);
     // state setters wrappers
     const setAudioData = () => {
       setDuration(audio.duration);
@@ -42,7 +44,7 @@ var Player =  function({songName, markers}) {
     const endOfSong= () => {
       setEndOfRange(false);
       if(!nowPlaying.next) {
-        audio.currentTime = startTime - (startTime > 0 ? nowPlaying.offset : 0);
+        audio.currentTime = startTime - (startTime > 0 ? offset : 0);
       } else {
         dispatch(playLink(nowPlaying.next))
       }
@@ -66,7 +68,7 @@ var Player =  function({songName, markers}) {
     playing && (audio.paused ||  audio.ended) ? audio.play() : '';
     !playing && (!audio.paused && !audio.ended) ? audio.pause() : '';
     (endOfRange) ? endOfSong() : '';
-    (!audio.paused && audio.currentTime >= endTime - nowPlaying.offset ) ? endRange() : '';
+    !audio.paused && audio.currentTime >= endTime - offset ? endRange() : '';
 
 
     if (clickedTime && clickedTime !== curTime) {
@@ -85,7 +87,7 @@ var Player =  function({songName, markers}) {
     audio.load();
     audio.loop = false;
     if (playCount) {
-      audio.currentTime = startTime - (startTime > 0 ? nowPlaying.offset : 0);
+      audio.currentTime = startTime - (startTime > 0 ? offset : 0);
       setPlaying(true)
     } else {
       setPlayCount(playCount + 1)

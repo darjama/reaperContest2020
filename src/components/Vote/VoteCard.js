@@ -47,11 +47,18 @@ var VoteCard = function({entry, contestId, prefix, excluded}) {
   const playObj = {
     next: null,
     prev: null,
-    uri: 'https://flac.reamixed.com/' + contestId + '/' + prefix + ('0' + entry.mixnum).slice(-2)+'.flac',
+    uri:
+      'https://flac.reamixed.com/' +
+      contestId +
+      '/' +
+      prefix +
+      ('0' + entry.mixnum).slice(-2) +
+      '.flac',
     mixnum: entry.mixnum,
     name: 'Mix #' + entry.mixnum,
-    normalize: entry.normalize || 0
-  }
+    offset: entry.offset || 0,
+    normalize: entry.normalize || 0,
+  };
 
   const  classnames = 'votecard' + (nowPlaying.mixnum === entry.mixnum ? ' nowPlaying' : '');
   return (
