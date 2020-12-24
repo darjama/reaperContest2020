@@ -36,6 +36,7 @@
     "mongoose": "^5.9.24",
     "multer": "^1.4.2",
     "multer-sftp": "^1.1.0",
+    "node-forge": "^0.10.0",
     "nodemailer": "^6.4.10",
     "popper.js": "^1.16.1",
     "react": "^16.13.1",
