@@ -11,9 +11,10 @@ export const updateEntriesDetails = (data) => {
 export function fetchEntriesDetails() {
   return function(dispatch) {
     const d = new Date();
-    const month = d.getMonth() + 1;
-    const year = d.getFullYear()
-    return axios.get(`/api/entriesanon/${year}/${month}`)
+    let month = ('0' + (d.getMonth() + 1));
+    month = month.substring(month.length - 2);
+    const year = d.getFullYear();
+    return axios.get(`/api/entries/${year}${month}`)
       .then(({ data }) => {
         dispatch(updateEntriesDetails(data));
     }).catch(err => console.log(err));

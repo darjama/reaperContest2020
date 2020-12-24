@@ -14,6 +14,7 @@ exports.addVote = function(req, res) {
   newRecord.first = req.body.first;
   newRecord.second = req.body.second;
   newRecord.third = req.body.third;
+  newRecord.voter = req.body.respondant;
   newRecord.save({},function(err, data) {
     if (err){
       console.log(err); //changed from res.send to accomodate separate upload

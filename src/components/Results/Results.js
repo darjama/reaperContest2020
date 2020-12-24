@@ -10,34 +10,34 @@ import Player from '../Vote/Player';
 import '../../css/results.css';
 
 const Results = function() {
-  const date = new Date()
-  const [contestId, setContestId] = useState(0);
-  const [details, setDetails] = useState({});
+  const [details, setDetails] = useState();
   const [resultData, setResultData] = useState([]);
   const [allEntriesData, setAllEntriesData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true)
+
 
   useEffect(() => {
-    axios.get('/api/contests')
-    .then(res => {
-      const x = (res.data
-      // .sort((a,b) => new Date(b.resultdate) - new Date(a.resultdate))
-      .find(a => new Date(a.resultdate) < date))
-      setDetails(x)
-      return x
-    }).then(res => {
-      setContestId(res.contestid)
-      return res.contestid})
+      axios.get('/api/resultscontest')
+      .then(res => {
+        setDetails(res.data)
+        return res.data.contestid
+      }).then(contestId => {
+        console.log(contestId)
+          axios.get('/api/resultsdata/' + contestId)
+          .then(data => setResultData(data.data))
+          .catch(err => {console.log(err)})
+          axios.get('/api/entries/' + contestId)
+          .then(data => setAllEntriesData(data.data))
+          .catch(err => {console.log(err)})
+      }).catch(err => {console.log(err)})
+
   }, [])
 
-  useEffect(() => {
-    if (contestId > 0) {
-      axios.get('/api/resultsdata/' + contestId)
-      .then(data => setResultData(data.data))
-      axios.get('/api/entries/' + contestId)
-      .then(data => setAllEntriesData(data.data))
-    }
+  console.log(details, resultData, allEntriesData)
 
-  }, [contestId])
+  useEffect(() => {
+    if (allEntriesData.length > 0) setIsLoading(false);
+  },[allEntriesData])
 
     const [pointsData, setPointsData] = useState([]);
   const [allComments, setAllComments] = useState([]);
@@ -87,6 +87,8 @@ const Results = function() {
 
   },[resultData, allEntriesData])
 
+  if (isLoading) return (<div/>)
+
   return (
     <div style={{color: 'white', display:'grid', placeItems: 'center'}}>
       <Hero name='Results'/>
@@ -94,16 +96,16 @@ const Results = function() {
       <h2>{details.songname} by {details.artist}</h2>
       <div style={{color: 'white', display:'grid', placeItems: 'center'}}>
 
-        <div style={{width:'95%', display: 'flex', }}>
+        <div style={{width:'100%', display: 'flex', flexWrap: 'wrap-reverse'}}>
 
-          <div style={{maxWidth:'600px', margin:'7px'}}>
-            <Player/>
-            <Playlist entries={allEntriesData} />
-            <Button style={{margin: '10px'}} href={`https://flac.reamixed.com/${contestId}/${contestId}flacs.zip`} target="_blank" download>Download All Mixes</Button>
-            <Button style={{margin: '10px'}} href={`https://flac.reamixed.com/${contestId}/${contestId}projects.zip`} target="_blank" download>Download All Project Files</Button>
+          <div style={{flex: '1 2 450px', margin:'7px'}}>
+            <Player songName={details.songname} markers={details.markers}/>
+            <Playlist entries={allEntriesData} prefix={details.prefix}/>
+            <Button style={{margin: '10px'}} href={`https://flac.reamixed.com/${details.contestid}/${details.contestid}flacs.zip`} target="_blank" download>Download All Mixes</Button>
+            <Button style={{margin: '10px'}} href={`https://flac.reamixed.com/${details.contestid}/${details.contestid}projects.zip`} target="_blank" download>Download All Project Files</Button>
             <Button style={{margin: '10px'}} href={details.rawuri} target="_blank" download>Download All Original Tracks</Button>
           </div>
-          <div>
+          <div style={{flex: '2 1 50%',  margin:'7px'}}>
             <PointsGraph pointsData={pointsData} />
             <Comments allComments={allComments} allEntries={allEntriesData} />
           </div>

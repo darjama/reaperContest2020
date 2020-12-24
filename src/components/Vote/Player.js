@@ -1,40 +1,55 @@
 import React, {useState, useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { playLink } from '../../redux/playlist/playlistActions';
-import {Button} from 'react-bootstrap';
+import {Button, Form, Row, Col} from 'react-bootstrap';
 import Bar from './Bar.js';
+import MarkerList from './MarkerList';
 import '../../css/player.css';
+import { withRouter} from 'react-router-dom'
 
 
-var Player =  function(props) {
+var Player =  function({songName, markers}) {
 
+  const [endOfRange, setEndOfRange] = useState(false)
+  const [playCount, setPlayCount] = useState(0)
   const [duration, setDuration] = useState();
-  const [curTime, setCurTime] = useState();
+  const [curTime, setCurTime] = useState(0);
   const [playing, setPlaying] = useState(false);
-  const [startTime, setStartTime] = useState();
-  const [endTime, setEndTime] = useState();
+  const [startTime, setStartTime] = useState(0);
+  const [endTime, setEndTime] = useState(10000);
   const [clickedTime, setClickedTime] = useState();
+  const [normalize, setNormalize] = useState(true)
   const nowPlaying = useSelector(state => state.playNowReducer);
   const playlist = useSelector(state => state.playlistReducer);
   const dispatch = useDispatch();
+  const offset = nowPlaying.offset || 0;
 
   useEffect(() => {
 
     const audio = document.getElementById("audio");
+    console.log(audio.seekable);
     // state setters wrappers
     const setAudioData = () => {
       setDuration(audio.duration);
       setCurTime(audio.currentTime);
+      if (markers && endTime > markers[markers.length - 2].time && audio.duration > 5) setEndTime(audio.duration - .5 );
+
+    }
+    if (normalize && nowPlaying.normalize !== undefined && nowPlaying.normalize <= 0 ) {
+      audio.volume = Math.pow(10, Number(nowPlaying.normalize) / 20);
+    } else {
+      audio.volume = 1;
     }
 
     const endOfSong= () => {
+      setEndOfRange(false);
       if(!nowPlaying.next) {
-        setPlaying(false);
-        audio.currentTime = 0;
+        audio.currentTime = startTime - (startTime > 0 ? offset : 0);
       } else {
         dispatch(playLink(nowPlaying.next))
       }
     }
+
 
     const setAudioTime = () => setCurTime(audio.currentTime);
 
@@ -43,9 +58,18 @@ var Player =  function(props) {
 
     audio.addEventListener("timeupdate", setAudioTime);
 
+    const endRange = function() {
+      setPlaying(false)
+      setEndOfRange(true)
+    }
+
+
     // React state listeners: update DOM on React state changes
-    playing ? audio.play() : audio.pause();
-    curTime >= duration -.1 ? endOfSong() : '';
+    playing && (audio.paused ||  audio.ended) ? audio.play() : '';
+    !playing && (!audio.paused && !audio.ended) ? audio.pause() : '';
+    (endOfRange) ? endOfSong() : '';
+    !audio.paused && audio.currentTime >= endTime - offset ? endRange() : '';
+
 
     if (clickedTime && clickedTime !== curTime) {
       audio.currentTime = clickedTime;
@@ -61,13 +85,14 @@ var Player =  function(props) {
 
   useEffect(() => {
     audio.load();
-    if (nowPlaying.name !== 'Please Vote (but not for yourself)!') {
+    audio.loop = false;
+    if (playCount) {
+      audio.currentTime = startTime - (startTime > 0 ? offset : 0);
       setPlaying(true)
+    } else {
+      setPlayCount(playCount + 1)
     }
   }, [nowPlaying] )
-
-
-
 
   return (
     <div className="audio-player" >
@@ -75,7 +100,7 @@ var Player =  function(props) {
         <source src={nowPlaying.uri}/>
         Your browser does not support the <code>audio</code> element.
       </audio>
-      <h1>{nowPlaying.name}</h1>
+      <h3>{nowPlaying.name !== 'Please Vote (but not for yourself)!' ? songName : ''} {nowPlaying.name}</h3>
       <Bar curTime={curTime} duration={duration} onTimeUpdate={(time) => setClickedTime(time)}/>
       <div className='player-button-holder'>
         <Button className='player-button' onClick={()=>setPlaying(!playing)}>{playing ? 'Pause': 'Play'}</Button>
@@ -83,11 +108,29 @@ var Player =  function(props) {
         <Button className='player-button' onClick={()=> {audio.currentTime -= 30;} }> {`<<`} </Button>
         <Button className='player-button' onClick={()=> {audio.currentTime += 30;} }> >> </Button>
         <Button className='player-button' disabled={!nowPlaying.next} onClick={()=> dispatch(playLink(nowPlaying.next)) }> {`>>|`} </Button>
-        <Button className='player-button' onClick={()=> {audio.currentTime = 0; setPlaying(false);} }> Stop </Button>
+        <Button className='player-button' onClick={()=> {audio.currentTime = startTime; setPlaying(false);} }> Stop </Button>
       </div>
+      <Row xs="auto">
+
+        <Col>
+          <Form inline>
+            <Form.Group controlId="formBasicCheckbox">
+
+              <Form.Check type="checkbox" checked className='big-checkbox' value={normalize} onChange={() => {setNormalize(!normalize)}}/>
+              <Form.Label>Normalize</Form.Label>
+            </Form.Group>
+          </Form>
+        </Col>
+        <Col xs='auto' />
+        <Col xs={50} >
+          {markers && <MarkerList markers={markers} start={startTime} end={endTime} setEnd={setEndTime} setStart={setStartTime}/>}
+        </Col>
+      </Row>
+
+
 
     </div>
   )
 }
 
-export default Player;
+export default withRouter(Player);

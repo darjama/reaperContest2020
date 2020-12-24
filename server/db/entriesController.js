@@ -29,7 +29,7 @@ exports.addEntry  = function(req, res) {
 
 
 exports.entries = function(req, res) {
-  Entry.find({contestid: req.params.contestid}, function(err, list) {
+  Entry.find({contestid: req.params.contestid,  mixnum: {$ne: null}}, {}, {sort: {mixnum: 1}}, function(err, list) {
     if (err)
       res.send(err);
     res.json(list);

@@ -22,12 +22,15 @@ const Entry = new Schema ({
   mixnum: Number,
   audiouri: String,
   contestid: Number,
+  contestant: String,
   ipaddr: String,
   email: String,
   zipfile: String,
   message: String,
   timestamp: Date,
   uploadSuccessful: Boolean,
+  offset: Number,
+  normalize: Number,
 })
 
 const EntryModel = mongoose.model('Entries', Entry);
@@ -40,6 +43,7 @@ const Vote = new Schema({
   ipaddr: String,
   time: Date,
   notes: Object,
+  voter: String
 })
 
 const VoteModel = mongoose.model('Votes', Vote);
@@ -60,6 +64,8 @@ const Contest = new Schema({
   rawfile: String,
   mixedbundle: String,
   projectbundle: String,
+  markers: Array,
+  prefix: String
 })
 
 const ContestModel = mongoose.model('Contests', Contest)

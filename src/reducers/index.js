@@ -7,10 +7,10 @@ const initPlaylist = new PlaylistMaker();
 const playlistReducer = function (state = initPlaylist, action) {
   switch (action.type) {
     case 'CREATE_PLAYLIST':
-      const newState = new PlaylistMaker(action.payload)
+      const newState = new PlaylistMaker(action.payload1, action.payload2)
       return newState
     case 'ADD_NODE':
-      state.addNode(action.payload)
+      state.addNode(action.payload, action.payload2)
       return state
     case 'DELETE_NODE':
       state.deleteNode(action.payload)

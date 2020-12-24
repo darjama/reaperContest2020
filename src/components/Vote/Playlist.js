@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { playLink, createPlaylist, moveTrack, deleteTrack, shareLink, shareLink2, rerenderNow} from '../../redux/playlist/playlistActions';
+import { RiPlayFill, RiDeleteBin6Line } from 'react-icons/ri';
 import {Container, ListGroup, Button} from 'react-bootstrap'
+import { withRouter} from 'react-router-dom'
 
-function Playlist({entries}) {
+function Playlist({entries, prefix, random}) {
 
   const details = useSelector(state => state.contestDetailReducer);
   const playlist = useSelector(state => state.playlistReducer);
@@ -15,9 +17,14 @@ function Playlist({entries}) {
 
 
   useEffect(()=> {
-    dispatch(createPlaylist(randomize(entries)));
+    if (random) {
+      dispatch(createPlaylist(randomize([...entries]), prefix));
+    } else {
+      dispatch(createPlaylist(entries, prefix));
+    }
+
     dispatch(rerenderNow());
-  },[entries])
+  },[entries, prefix])
 
   const randomize = function(array) {
     const randnums = [];
@@ -33,20 +40,20 @@ function Playlist({entries}) {
     while (node) {
       const currentNode = node;
       result.push(
-      <ListGroup.Item key={'a' + currentNode.mixnum+'-'+ count}
+      <ListGroup.Item as="div" key={'a' + currentNode.mixnum+'-'+ count}
       onDragStart={() => dispatch(shareLink(currentNode))}
       onDragOver={(event) => event.preventDefault()}
       onDrop={() => dispatch(shareLink2(currentNode))}
-      variant='dark'
-      draggable>
+      draggable
+      className='dark-list-item'>
         <div className='playlist-holder'>
           <div className='playlist-name'>
             &#x2630; {currentNode.name}
           </div>
 
           <div className='playlist-buttons'>
-            <Button className='player-button' onClick={() => dispatch(playLink(currentNode))}>Play</Button>
-            <Button className='player-button' onClick={() => {dispatch(deleteTrack(currentNode)); dispatch(rerenderNow())}}>Remove</Button>
+            <Button className='player-button' title="Play Now" alt="Play Now" onClick={() => dispatch(playLink(currentNode))} alt="play"><RiPlayFill /></Button>
+            <Button className='player-button'  title="Remove" alt="Remove" onClick={() => {dispatch(deleteTrack(currentNode)); dispatch(rerenderNow())}} alt="delete"><RiDeleteBin6Line /></Button>
           </div>
 
         </div>
@@ -56,7 +63,7 @@ function Playlist({entries}) {
       node = node.next;
       count++
     }
-    return <ListGroup>{result}</ListGroup>
+    return <>{result}</>
   }
 
   useEffect(() => {
@@ -74,18 +81,21 @@ function Playlist({entries}) {
 
 
   return (
-  <div className="playlistgroup">
-    <h1 style={{color: 'lightgrey', textAlign:'center'}}>PLAYLIST</h1>
-    <div className='player-button-holder'>
-      <Button className='player-button' onClick={() => dispatch(playLink(playlist.head))}>Play</Button>
-      <Button className='player-button' onClick={() => {dispatch(createPlaylist([])); dispatch(rerenderNow())}}>Clear</Button>
-      <Button className='player-button' onClick={() => {dispatch(createPlaylist(entries)); dispatch(rerenderNow())}}>Reset</Button>
-    </div>
+    <ListGroup className="playlistgroup">
+      <div >
+        <ListGroup.Item className='dark-list-item'>
 
-    <br/>
-    {renderedList}
-  </div>
+          <h1 style={{textAlign:'center'}}>PLAYLIST</h1>
+          <div className='player-button-holder'>
+            <Button className='player-button' onClick={() => dispatch(playLink(playlist.head))}>Play</Button>
+            <Button className='player-button' onClick={() => {dispatch(createPlaylist([])); dispatch(rerenderNow())}}>Clear</Button>
+            <Button className='player-button' onClick={() => {dispatch(createPlaylist(entries)); dispatch(rerenderNow())}}>Reset</Button>
+          </div>
+        </ListGroup.Item>
+        {renderedList}
+      </div>
+    </ListGroup>
   )
 }
 
-export default Playlist;
+export default withRouter(Playlist);
