@@ -30,6 +30,7 @@ var Player = function ({ songName, markers }) {
       setCurTime(audio.currentTime);
       if (
         markers &&
+        markers.length &&
         endTime > markers[markers.length - 2].time &&
         audio.duration > 5
       )

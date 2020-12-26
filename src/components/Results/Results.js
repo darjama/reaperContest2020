@@ -46,6 +46,8 @@ const Results = function (props) {
   useEffect(() => {
     if (!props.contestid) return;
     setIsLoading(true);
+    setAllEntriesData([]);
+    setResultData([]);
     axios
       .get(
         `/api/contests/${props.contestid
@@ -80,6 +82,8 @@ const Results = function (props) {
   const [allComments, setAllComments] = useState([]);
 
   useEffect(() => {
+    setPointsData([]);
+    setAllComments([]);
     if (!resultData.length || !allEntriesData.length) return;
     const update = [...pointsData];
     const comments = [];

@@ -10,28 +10,31 @@ var Archive = function (props) {
   const [loading, setLoading] = useState(false);
   const [archiveContest, setArchiveContest] = useState();
   const history = useHistory();
+  console.log(props);
 
   const updateAC = function (id) {
+    if (id === '0') return;
     setArchiveContest(id);
-    history.push('/archive/?id=' + id);
+    history.push('/archive?id=' + id);
   };
 
   console.log(archiveContest);
   useEffect(() => {
     let params = Number(new URL(document.location).searchParams.get('id'));
-    axios.get('/api/contestnames/').then((data) => {
-      setContestList(data.data);
-
-      console.log(params);
-      data.data
-        .forEach((a) => {
-          if (a.contestid === params && new Date(a.resultdate) < new Date()) {
-            updateAC(params);
-          }
-        })
-        .catch((err) => console.log(err));
-    });
-  }, []);
+    axios
+      .get('/api/contestnames/')
+      .then((data) => {
+        setContestList(data.data);
+        if (
+          data.data.some(
+            (a) => a.contestid === params && new Date(a.resultdate) < new Date()
+          )
+        ) {
+          setArchiveContest(params);
+        }
+      })
+      .catch((err) => console.log(err));
+  }, [props.location.search]);
 
   return (
     <div style={{ textAlign: 'center' }}>
@@ -42,13 +45,13 @@ var Archive = function (props) {
           <tr>
             <td style={{ width: '45%' }}>
               <Form>
-                <Form.Group controlId='exampleForm.ControlSelect1'>
+                <Form.Group controlId='archiveContestSelect'>
                   <Form.Control
                     as='select'
-                    defaultValue={archiveContest || 0}
+                    defaultValue={0}
                     onChange={(e) => updateAC(e.target.value)}
                   >
-                    <option>select a contest</option>
+                    <option value={0}>select a contest</option>
                     {contestList.map((contest) => (
                       <option
                         key={contest._id}
