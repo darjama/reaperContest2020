@@ -168,7 +168,7 @@ var Player = function ({ songName, markers }) {
             <Form.Group controlId='formBasicCheckbox'>
               <Form.Check
                 type='checkbox'
-                checked
+                checked={normalize}
                 className='big-checkbox'
                 value={normalize}
                 onChange={() => {
