@@ -1,23 +1,29 @@
-const config = require('../../config.js')
+const config = require('../../config.js');
 const mongoose = require('mongoose');
+const Double = require('@mongoosejs/double');
 
 mongoose.Promise = global.Promise;
 
-mongoose.connect(`mongodb+srv://${config.get('dbs.un')}:${config.get('dbs.pw')}@reamixed.lqgfh.gcp.mongodb.net/reamix?retryWrites=true&w=majority`, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-})
+mongoose.connect(
+  `mongodb+srv://${config.get('dbs.un')}:${config.get(
+    'dbs.pw'
+  )}@reamixed.lqgfh.gcp.mongodb.net/reamix?retryWrites=true&w=majority`,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  }
+);
 
 const Schema = mongoose.Schema;
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  console.log('connected to db') // we're connected!
+db.once('open', function () {
+  console.log('connected to db'); // we're connected!
 });
 
-const Entry = new Schema ({
+const Entry = new Schema({
   contestant: String,
   mixnum: Number,
   audiouri: String,
@@ -29,9 +35,9 @@ const Entry = new Schema ({
   message: String,
   timestamp: Date,
   uploadSuccessful: Boolean,
-  offset: Number,
-  normalize: Number,
-})
+  offset: Double,
+  normalize: Double,
+});
 
 const EntryModel = mongoose.model('Entries', Entry);
 
@@ -43,11 +49,10 @@ const Vote = new Schema({
   ipaddr: String,
   time: Date,
   notes: Object,
-  voter: String
-})
+  voter: String,
+});
 
 const VoteModel = mongoose.model('Votes', Vote);
-
 
 const Contest = new Schema({
   month: Number,
@@ -65,17 +70,16 @@ const Contest = new Schema({
   mixedbundle: String,
   projectbundle: String,
   markers: Array,
-  prefix: String
-})
+  prefix: String,
+});
 
-const ContestModel = mongoose.model('Contests', Contest)
+const ContestModel = mongoose.model('Contests', Contest);
 
 const DlLog = new Schema({
   timestamp: { type: Date, default: Date.now },
   ipaddr: String,
-})
+});
 
-const DlLogModel = mongoose.model('DlLogs', DlLog)
-
+const DlLogModel = mongoose.model('DlLogs', DlLog);
 
 module.exports = { ContestModel, DlLogModel, EntryModel };
