@@ -5,8 +5,8 @@ import Hero from '../common/Hero';
 import axios from 'axios';
 import PointsGraph from './PointsGraph';
 import Comments from './Comments';
-import Playlist from '../Vote/Playlist';
-import Player from '../Vote/Player';
+import Playlist from '../common/Playlist';
+import Player from '../common/Player';
 import '../../css/results.css';
 
 const Results = function (props) {
