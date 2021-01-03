@@ -58,7 +58,8 @@ var Archive = function (props) {
                         value={contest.contestid}
                         disabled={new Date(contest.resultdate) > new Date()}
                       >
-                        {contest.contestlabel}
+                        {contest.contestlabel}: {contest.songname} by{' '}
+                        {contest.artist}
                       </option>
                     ))}
                   </Form.Control>
