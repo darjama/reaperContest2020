@@ -18,7 +18,10 @@ var Archive = function (props) {
     history.push('/archive?id=' + id);
   };
 
-  console.log(archiveContest);
+  useEffect(() => {
+    document.title = 'reaMIXed: Archive';
+  }, []);
+
   useEffect(() => {
     let params = Number(new URL(document.location).searchParams.get('id'));
     axios

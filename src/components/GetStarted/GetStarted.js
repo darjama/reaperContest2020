@@ -4,6 +4,10 @@ import Logo from '../../../dist/assets/reaperlogo.jpg';
 import Hero from '../common/Hero';
 
 var GetStarted = function (props) {
+  React.useEffect(() => {
+    document.title = 'reaMIXed: Getting Started';
+  }, []);
+
   return (
     <React.Fragment>
       <Hero name='Getting Started' />

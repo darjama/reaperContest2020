@@ -11,6 +11,10 @@ class App extends React.PureComponent {
     super(props);
   }
 
+  componentDidMount() {
+    document.title = 'reaMIXed: The (Unauthorized) Reaper Mix Contest';
+  }
+
   logHandler() {
     axios({ url: '/api/dlLog', method: 'post' })
       .then(function (response) {

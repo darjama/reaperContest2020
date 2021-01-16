@@ -16,6 +16,7 @@ const Results = function (props) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    document.title = 'reaMIXed: Results';
     if (props.contestid) return;
     axios
       .get('/api/resultscontest')

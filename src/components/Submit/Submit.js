@@ -29,6 +29,7 @@ class Submit extends React.Component {
 
   componentDidMount() {
     bsCustomFileInput.init();
+    document.title = 'reaMIXed: Submit Your Mix';
   }
 
   checkFileSize(event) {

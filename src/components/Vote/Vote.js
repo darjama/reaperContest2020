@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateNote } from '../../redux/notes/notesActions';
-import { ListGroup, Container, Button } from 'react-bootstrap';
+import { ListGroup, Container, Button, Col, Row } from 'react-bootstrap';
 import loadable from '@loadable/component';
 import NotNowModal from '../common/NotNow';
 const ExcludeModal = loadable(() => import('./ExcludeModal'));
@@ -30,6 +30,7 @@ function Vote(props) {
 
   console.log('excluded', excluded);
   useEffect(() => {
+    document.title = 'reaMIXed: Vote';
     const localNotes = JSON.parse(localStorage.getItem('contestNotes'));
     const localExcluded = JSON.parse(localStorage.getItem('excluded'));
     if (localNotes?.contestId === contestId) {
@@ -58,6 +59,8 @@ function Vote(props) {
       );
     });
 
+  const test = true;
+
   const options = {
     weekday: 'long',
     year: 'numeric',
@@ -73,7 +76,7 @@ function Vote(props) {
 
   return (
     <Container fluid>
-      <NotNowModal start={votestart} end={voteend} early={early} late={late} />
+      {/* <NotNowModal start={votestart} end={voteend} early={early} late={late} /> */}
       {excluded === undefined && (
         <ExcludeModal
           contestId={contestId}
@@ -83,28 +86,31 @@ function Vote(props) {
           setExcluded={setExcluded}
         />
       )}
-
-      <div className='playerparent'>
-        <Player songName={songname} markers={markers} />
-
-        <SubmitVote
-          voter={entries.filter((a) => a.mixnum === excluded)[0]}
-          setExcluded={setExcluded}
-        />
-      </div>
-
-      <div className='voteplparent'>
-        <div className='vcardcontainer'>{entryList}</div>
-        <Playlist entries={entries} prefix={prefix} random={true} />
-      </div>
-      <Button
-        style={{ margin: '10px' }}
-        href={`http://flac.reamixed.com/${contestId}/${contestId}flacs.zip`}
-        target='_blank'
-        download
-      >
-        Download All Mixes from this Month
-      </Button>
+      <Row>
+        <Col xs={7} lg={5}>
+          <div className='playerparent'>
+            <Player songName={songname} markers={markers} />
+            <Playlist entries={entries} prefix={prefix} random={true} />
+          </div>
+        </Col>
+        <Col>
+          <SubmitVote
+            voter={entries.filter((a) => a.mixnum === excluded)[0]}
+            setExcluded={setExcluded}
+          />
+          <div className='voteplparent'>
+            <div className='vcardcontainer'>{entryList}</div>
+          </div>
+          <Button
+            style={{ margin: '10px' }}
+            href={`http://flac.reamixed.com/${contestId}/${contestId}flacs.zip`}
+            target='_blank'
+            download
+          >
+            Download All Mixes from this Month
+          </Button>
+        </Col>
+      </Row>
     </Container>
   );
 }
