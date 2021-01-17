@@ -97,6 +97,7 @@ function Vote(props) {
           <SubmitVote
             voter={entries.filter((a) => a.mixnum === excluded)[0]}
             setExcluded={setExcluded}
+            entriesCount={entries.length}
           />
           <div className='voteplparent'>
             <div className='vcardcontainer'>{entryList}</div>

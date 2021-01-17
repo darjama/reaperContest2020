@@ -14,9 +14,9 @@ var VoteCard = function ({ entry, contestId, prefix, excluded }) {
   const dispatch = useDispatch();
   const notes = useSelector((state) => state.noteReducer);
   const nowPlaying = useSelector((state) => state.playNowReducer);
-  const top3 = useSelector((state) => state.voteReducer);
+  const ratings = useSelector((state) => state.voteReducer);
   const note = notes[entry.mixnum];
-  const [starValue, setStarValue] = useState(0);
+  const starValue = ratings[entry.mixnum] || 0;
   const [hoveredStars, setHoveredStars] = useState(0);
 
   const debounce = (func, wait) => {
@@ -42,13 +42,14 @@ var VoteCard = function ({ entry, contestId, prefix, excluded }) {
   };
 
   const setStars = function (e) {
-    setStarValue(
+    const starCount =
       Math.floor(
         (e.nativeEvent.offsetX / e.nativeEvent.srcElement.offsetWidth) * 10
       ) /
         2 +
-        0.5
-    );
+      0.5;
+    dispatch(addVote(starCount, entry.mixnum));
+    dispatch(addVote(contestId, 'contestId'));
   };
 
   const starColor = hoveredStars ? 'darkgrey' : 'gold';
@@ -67,6 +68,7 @@ var VoteCard = function ({ entry, contestId, prefix, excluded }) {
 
   const voteHandler = function (e) {
     dispatch(addVote(e.target.value, entry.mixnum));
+    dispatch(addVote('contestId', contestid));
   };
 
   const playObj = {
