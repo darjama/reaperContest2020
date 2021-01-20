@@ -4,6 +4,7 @@ import Schedule from './Schedule';
 import { connect } from 'react-redux';
 import { fetchContestDetails } from '../../redux/contestDetails/contestDetailActions';
 import { Card, CardDeck, Container, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 class App extends React.PureComponent {
@@ -69,8 +70,8 @@ class App extends React.PureComponent {
                   perfect place to find new music to mix and to learn and share
                   mixing techniques with others. If you're new to the contest or
                   to Reaper I'd suggest you visit the{' '}
-                  <a href='/Start'>Getting Started</a> page to find some helpful
-                  resources.
+                  <Link to='/getstarted'>Getting Started</Link> page to find
+                  some helpful resources.
                   <br />
                   <br />
                   Please join us over in the{' '}

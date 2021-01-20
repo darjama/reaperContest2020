@@ -94,8 +94,7 @@ function Vote(props) {
           </div>
           <Button
             style={{ margin: '10px' }}
-            href={`http://flac.reamixed.com/${contestId}/${contestId}flacs.zip`}
-            target='_blank'
+            href={`https://flac.reamixed.com/${contestId}/${contestId}flacs.zip`}
             download
           >
             Download All Mixes from this Month

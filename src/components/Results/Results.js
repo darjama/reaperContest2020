@@ -152,7 +152,6 @@ const Results = function (props) {
             <Button
               style={{ margin: '10px' }}
               href={`https://flac.reamixed.com/${details.contestid}/${details.contestid}flacs.zip`}
-              target='_blank'
               download
             >
               Download All Mixes
@@ -160,7 +159,6 @@ const Results = function (props) {
             <Button
               style={{ margin: '10px' }}
               href={`https://flac.reamixed.com/${details.contestid}/${details.contestid}projects.zip`}
-              target='_blank'
               download
             >
               Download All Project Files
@@ -168,10 +166,10 @@ const Results = function (props) {
             <Button
               style={{ margin: '10px' }}
               href={details.rawuri}
-              target='_blank'
+              target={details.rawuri.slice(-4) === '.zip' ? '_self' : '_blank'}
               download
             >
-              Download All Original Tracks
+              Download Original Tracks
             </Button>
           </div>
           <div style={{ flex: '2 1 50%', margin: '7px' }}>
