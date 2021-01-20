@@ -4,8 +4,8 @@
 }
 
 .votecard {
-
   margin: 5px;
+  min-width: 285px;
   padding: 0px;
 }
 
@@ -17,14 +17,12 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
   grid-gap: 1rem;
-
 }
 .playlistgroup {
   grid-column: -1;
-  padding: 0 15px 0 0;
+  padding: 0 5px 0 5px;
   width: 100%;
   grid-row: 1;
-
 }
 
 .dark-list-item {
@@ -35,38 +33,37 @@
 }
 
 .playerparent {
-
   display: flex;
+  flex: 2 0 75px;
   flex-wrap: wrap;
   justify-content: space-between;
-
 }
 .playlist-holder {
   width: 100%;
   display: flex;
+  flex: 2 0 425px;
   flex-direction: row;
   justify-content: space-between;
 }
 
 .playlist-buttons {
-
   margin: 50 0 0 auto;
 }
 .playlist-name {
   flex: 1 1 75px;
   margin: 0 auto 0 0;
-  font-size: .8em;
+  font-size: 0.8em;
 }
 
 .submitvote {
-  flex: 1 2 400px;
+  flex: 1 5 75px;
   margin: 10px;
   padding: 3px;
 }
 
-.submit-list{
-  padding: .2em .9em;
-  font-size: .9em;
+.submit-list {
+  padding: 0.2em 0.9em;
+  font-size: 0.9em;
 }
 
 .flex-row-spaced {

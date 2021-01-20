@@ -129,33 +129,34 @@ var VoteCard = function ({ entry, contestId, prefix, excluded }) {
               onChange={() => changeHandler(event)}
             ></Form.Control>
           </Form.Group>
-
-          <div key={`inline-radio`} className='mb-3'>
-            Vote :&nbsp;
-            <div
-              style={{
-                display: 'inline-block',
-                background: `linear-gradient(90deg, ${starColor} ${
-                  (100 * starCount) / 5
-                }%, white ${(100 * starCount) / 5}%)`,
-              }}
-            >
+          {!excluded && (
+            <div key={`inline-radio`} className='mb-3'>
+              Vote :&nbsp;
               <div
                 style={{
                   display: 'inline-block',
-                  color: 'white',
-                  mixBlendMode: 'darken',
-                  backgroundColor: '#343a40',
+                  background: `linear-gradient(90deg, ${starColor} ${
+                    (100 * starCount) / 5
+                  }%, white ${(100 * starCount) / 5}%)`,
                 }}
-                onClick={setStars}
-                onMouseMove={setHover}
-                onMouseLeave={() => setHoveredStars(0)}
               >
-                &#9733;&#9733;&#9733;&#9733;&#9733;
+                <div
+                  style={{
+                    display: 'inline-block',
+                    color: 'white',
+                    mixBlendMode: 'darken',
+                    backgroundColor: '#343a40',
+                  }}
+                  onClick={setStars}
+                  onMouseMove={setHover}
+                  onMouseLeave={() => setHoveredStars(0)}
+                >
+                  &#9733;&#9733;&#9733;&#9733;&#9733;
+                </div>
               </div>
+              &nbsp;{starValue}
             </div>
-            &nbsp;{starValue}
-          </div>
+          )}
         </Form>
       </Card.Body>
     </Card>

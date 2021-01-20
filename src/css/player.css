@@ -1,11 +1,14 @@
 .audio-player {
-  flex: 2 1 500px;
+  flex: 2 0 415px;
+  font-size: 0.75em;
   display: grid;
   place-items: center;
   background-color: #343a40;
   color: white;
   border: 3px groove grey;
+  border-radius: 6px;
   margin: 10px;
+  padding: 2px;
 }
 
 .bar {
@@ -15,42 +18,40 @@
   align-items: center;
 }
 
-  .bar__time {
-    color: lightseagreen;
-    font-size: 16px;
-  }
+.bar__time {
+  color: lightseagreen;
+  font-size: 16px;
+}
 
-  .bar__progress {
-    flex: 1;
-    border-radius: 5px;
-    margin: 0 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-  }
+.bar__progress {
+  flex: 1;
+  border-radius: 5px;
+  margin: 0 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
 
-    .bar__progress__knob {
-      position: relative;
-      height: 26px;
-      width: 26px;
-      border: 2px solid white;
-      border-radius: 50%;
-      background-color: lightseagreen;
-    }
+.bar__progress__knob {
+  position: relative;
+  height: 26px;
+  width: 26px;
+  border: 2px solid white;
+  border-radius: 50%;
+  background-color: lightseagreen;
+}
 
 .player-button-holder {
   display: flex;
   padding: 4px 0px;
   width: 100%;
   justify-content: center;
-
 }
 
 .player-button {
   min-width: 3rem;
   margin: 0px 5px;
-
 }
 
 .big-checkbox {

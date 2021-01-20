@@ -75,8 +75,8 @@ function Vote(props) {
   ).toLocaleDateString('en-US', options)}.`;
 
   return (
-    <Container fluid>
-      {/* <NotNowModal start={votestart} end={voteend} early={early} late={late} /> */}
+    <Container fluid style={{ maxWidth: '2200px' }}>
+      <NotNowModal start={votestart} end={voteend} early={early} late={late} />
       {excluded === undefined && (
         <ExcludeModal
           contestId={contestId}
@@ -87,11 +87,19 @@ function Vote(props) {
         />
       )}
       <Row>
-        <Col xs={7} lg={5}>
+        <Col xs={8} md={6} lg={5} xl={4}>
           <div className='playerparent'>
             <Player songName={songname} markers={markers} />
             <Playlist entries={entries} prefix={prefix} random={true} />
           </div>
+          <Button
+            style={{ margin: '10px' }}
+            href={`http://flac.reamixed.com/${contestId}/${contestId}flacs.zip`}
+            target='_blank'
+            download
+          >
+            Download All Mixes from this Month
+          </Button>
         </Col>
         <Col>
           <SubmitVote
@@ -102,14 +110,6 @@ function Vote(props) {
           <div className='voteplparent'>
             <div className='vcardcontainer'>{entryList}</div>
           </div>
-          <Button
-            style={{ margin: '10px' }}
-            href={`http://flac.reamixed.com/${contestId}/${contestId}flacs.zip`}
-            target='_blank'
-            download
-          >
-            Download All Mixes from this Month
-          </Button>
         </Col>
       </Row>
     </Container>

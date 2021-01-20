@@ -4,7 +4,7 @@ import { clearVotes } from '../../redux/voting/voteActions';
 import { clearNotes } from '../../redux/notes/notesActions';
 import { playLink } from '../../redux/playlist/playlistActions';
 import { validateEmail } from '../common/SharedFormulas';
-import { ListGroup, Form, Button } from 'react-bootstrap';
+import { ListGroup, Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { addVote } from '../../redux/voting/voteActions';
 import axios from 'axios';
 
@@ -13,7 +13,7 @@ var SubmitVote = function ({ voter, setExcluded, entriesCount }) {
   const ratings = useSelector((state) => state.voteReducer);
   const dispatch = useDispatch();
 
-  const [includeNotes, setIncludeNotes] = useState(false);
+  const [includeNotes, setIncludeNotes] = useState(true);
   const [email, setEmail] = useState('');
   const [disableSubmit, setDisableSubmit] = useState(false);
   const [votesLeft, setVotesLeft] = useState(0);
@@ -32,6 +32,8 @@ var SubmitVote = function ({ voter, setExcluded, entriesCount }) {
       .post('/api/addVote', { ratings, notes, respondant })
       .then((res) => {
         localStorage.setItem('lastVoted', contestId);
+        localStorage.removeItem('votes');
+        localStorage.removeItem('notes');
       })
       .catch((err) => console.log(err));
   };
@@ -95,32 +97,38 @@ var SubmitVote = function ({ voter, setExcluded, entriesCount }) {
                     />
                   </Form.Group>
                 </Form>
-                &nbsp;&nbsp;
               </>
             )}
-            <Form inline>
-              <Form.Group controlId='formBasicCheckbox'>
-                <Form.Check
-                  type='checkbox'
-                  onClick={() => setIncludeNotes(!includeNotes)}
-                />
-                <Form.Label>Include your notes</Form.Label>
-              </Form.Group>
-              &nbsp;&nbsp;
-            </Form>
-            <div style={{ margin: '0 0 0 auto' }}>
-              <Button
-                variant='primary'
-                type='submit'
-                disabled={
-                  votesLeft ||
-                  (voter === undefined ? !validateEmail(email) : false)
-                }
-                onClick={() => submitHandler(event)}
-              >
-                {votesLeft > 0 ? votesLeft + ' More to Rate' : 'Vote'}
-              </Button>
-            </div>
+            <Container fluid>
+              <Row md={1} lg={2}>
+                <Col>
+                  <Form inline>
+                    <Form.Group controlId='formBasicCheckbox'>
+                      <Form.Check
+                        type='checkbox'
+                        defaultChecked={includeNotes}
+                        onClick={() => setIncludeNotes(!includeNotes)}
+                      />
+                      <Form.Label>Include your notes</Form.Label>
+                    </Form.Group>
+                    &nbsp;&nbsp;
+                  </Form>
+                </Col>
+                <Col>
+                  <Button
+                    variant='primary'
+                    type='submit'
+                    disabled={
+                      votesLeft > 0 ||
+                      (voter === undefined ? !validateEmail(email) : false)
+                    }
+                    onClick={() => submitHandler(event)}
+                  >
+                    {votesLeft > 0 ? votesLeft + ' more' : 'Vote'}
+                  </Button>
+                </Col>
+              </Row>
+            </Container>
           </ListGroup.Item>
         </ListGroup>
       </div>
@@ -135,14 +143,14 @@ var SubmitVote = function ({ voter, setExcluded, entriesCount }) {
       <h2>Come back at the end of the month to see the results.</h2>
       <Button
         onClick={() => {
-          setDisableSubmit(false);
-          setExcluded(undefined);
           dispatch(clearVotes());
           dispatch(clearNotes());
           localStorage.removeItem('lastVoted');
           localStorage.removeItem('contestNotes');
           localStorage.removeItem('votes');
           localStorage.removeItem('excluded');
+          setExcluded(undefined);
+          setDisableSubmit(false);
         }}
       >
         Give someone else a turn to vote
