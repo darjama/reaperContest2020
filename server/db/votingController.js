@@ -14,9 +14,7 @@ exports.addVote = function (req, res) {
   newRecord.contestid =
     newRecord.time.getFullYear() * 100 + (newRecord.time.getMonth() + 1);
   newRecord.ratings = req.body.ratings;
-  // newRecord.second = req.body.second;
-  // newRecord.third = req.body.third;
-  // newRecord.voter = req.body.respondant;
+  newRecord.voter = req.body.respondant;
   newRecord.save({}, function (err, data) {
     if (err) {
       console.log(err); //changed from res.send to accomodate separate upload
