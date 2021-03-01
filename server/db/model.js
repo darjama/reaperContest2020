@@ -46,6 +46,7 @@ const Vote = new Schema({
   first: Number,
   second: Number,
   third: Number,
+  ratings: Object,
   ipaddr: String,
   time: Date,
   notes: Object,

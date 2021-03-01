@@ -18,7 +18,10 @@ var Archive = function (props) {
     history.push('/archive?id=' + id);
   };
 
-  console.log(archiveContest);
+  useEffect(() => {
+    document.title = 'reaMIXed: Archive';
+  }, []);
+
   useEffect(() => {
     let params = Number(new URL(document.location).searchParams.get('id'));
     axios
@@ -58,7 +61,8 @@ var Archive = function (props) {
                         value={contest.contestid}
                         disabled={new Date(contest.resultdate) > new Date()}
                       >
-                        {contest.contestlabel}
+                        {contest.contestlabel}: {contest.songname} by{' '}
+                        {contest.artist}
                       </option>
                     ))}
                   </Form.Control>

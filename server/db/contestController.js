@@ -32,7 +32,7 @@ exports.resultsContest = function (req, res) {
 exports.contestNames = function (req, res) {
   Contest.find(
     {},
-    ['contestid', 'contestlabel', 'resultdate'],
+    ['contestid', 'contestlabel', 'songname', 'artist', 'resultdate'],
     { sort: { contestid: -1 } },
     function (err, contest) {
       if (err) return res.send(err);

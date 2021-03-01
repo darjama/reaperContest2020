@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Table, Button, Spinner } from 'react-bootstrap';
 import Hero from '../common/Hero';
 import axios from 'axios';
-import PointsGraph from './PointsGraph';
+import Top3PointsGraph from './Top3PointsGraph';
+import FiveStarPointsGraph from './FiveStarPointsGraph';
 import Comments from './Comments';
 import Playlist from '../common/Playlist';
 import Player from '../common/Player';
@@ -16,6 +17,7 @@ const Results = function (props) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    document.title = 'reaMIXed: Results';
     if (props.contestid) return;
     axios
       .get('/api/resultscontest')
@@ -24,7 +26,6 @@ const Results = function (props) {
         return res.data.contestid;
       })
       .then((contestId) => {
-        console.log(contestId);
         axios
           .get('/api/resultsdata/' + contestId)
           .then((data) => setResultData(data.data))
@@ -46,8 +47,9 @@ const Results = function (props) {
   useEffect(() => {
     if (!props.contestid) return;
     setIsLoading(true);
-    setAllEntriesData([]);
+    setDetails();
     setResultData([]);
+    setAllEntriesData([]);
     axios
       .get(
         `/api/contests/${props.contestid
@@ -55,7 +57,6 @@ const Results = function (props) {
           .substring(4)}/${props.contestid.toString().substring(0, 4)}`
       )
       .then((res) => {
-        console.log('res.data', res.data);
         setDetails(res.data);
       })
       .catch((err) => console.log(err));
@@ -82,35 +83,49 @@ const Results = function (props) {
   const [allComments, setAllComments] = useState([]);
 
   useEffect(() => {
-    setPointsData([]);
-    setAllComments([]);
     if (!resultData.length || !allEntriesData.length) return;
-    const update = [...pointsData];
+    const update = [];
     const comments = [];
     allEntriesData.forEach((entry, i) => {
       update[entry.mixnum - 1] = {
         mixnum: entry.mixnum,
         contestant: entry.contestant,
+        dynamicRange: Number(entry?.dynamicRange?.$numberDecimal),
+        trackCount: entry?.trackCount,
         first: 0,
         second: 0,
         third: 0,
         total: 0,
+        ratings: [],
+        min: Infinity,
+        max: -Infinity,
       };
     });
     resultData.forEach((vote, idx) => {
-      if (vote.first) {
+      if (vote?.first) {
         update[vote.first - 1].first++;
         update[vote.first - 1].total += 3;
       }
-      if (vote.second) {
+      if (vote?.second) {
         update[vote.second - 1].second++;
         update[vote.second - 1].total += 2;
       }
-      if (vote.third) {
+      if (vote?.third) {
         update[vote.third - 1].third++;
         update[vote.third - 1].total++;
       }
-      if (vote.notes) {
+      if (vote?.ratings) {
+        Object.entries(vote.ratings).forEach(([key, rating]) => {
+          let index = Number(key) - 1;
+          if (key === 'contestId') {
+            return;
+          }
+          update[index].ratings.push(rating);
+          update[index].min = Math.min(update[index].min, rating);
+          update[index].max = Math.max(update[index].max, rating);
+        });
+      }
+      if (vote?.notes) {
         Object.entries(vote.notes).forEach(([key, comment]) => {
           comments.push({
             mixnum: key,
@@ -120,6 +135,13 @@ const Results = function (props) {
         });
       }
     });
+    if (update[0]?.ratings?.length) {
+      update.forEach((row, i) => {
+        row.avg = (
+          row.ratings.reduce((a, b) => a + b, 0) / row.ratings.length
+        ).toFixed(2);
+      });
+    }
     setPointsData(update);
     setAllComments(comments);
   }, [resultData, allEntriesData]);
@@ -151,7 +173,6 @@ const Results = function (props) {
             <Button
               style={{ margin: '10px' }}
               href={`https://flac.reamixed.com/${details.contestid}/${details.contestid}flacs.zip`}
-              target='_blank'
               download
             >
               Download All Mixes
@@ -159,7 +180,6 @@ const Results = function (props) {
             <Button
               style={{ margin: '10px' }}
               href={`https://flac.reamixed.com/${details.contestid}/${details.contestid}projects.zip`}
-              target='_blank'
               download
             >
               Download All Project Files
@@ -167,17 +187,25 @@ const Results = function (props) {
             <Button
               style={{ margin: '10px' }}
               href={details.rawuri}
-              target='_blank'
+              target={details.rawuri.slice(-4) === '.zip' ? '_self' : '_blank'}
               download
             >
-              Download All Original Tracks
+              Download Original Tracks
             </Button>
           </div>
           <div style={{ flex: '2 1 50%', margin: '7px' }}>
-            <PointsGraph
-              pointsData={pointsData}
-              isArchive={!!props.contestid}
-            />
+            {!!resultData[0]?.first && (
+              <Top3PointsGraph
+                pointsData={pointsData}
+                isArchive={!!props.contestid}
+              />
+            )}
+            {!!pointsData[0]?.ratings.length && (
+              <FiveStarPointsGraph
+                pointsData={pointsData}
+                isArchive={!!props.contestid}
+              />
+            )}
             <Comments allComments={allComments} allEntries={allEntriesData} />
           </div>
         </div>
