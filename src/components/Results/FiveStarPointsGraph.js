@@ -17,24 +17,20 @@ const PointsGraph = function ({ pointsData, isArchive }) {
         sortDesc ? b[sortResult] - a[sortResult] : a[sortResult] - b[sortResult]
       )
   ).map((row) => {
-    maxScore = Math.max(maxScore, row.total);
+    maxScore = Math.max(maxScore, row.avg);
     return (
       <tr key={row.contestant + row.mixnum}>
         <td>{row.mixnum}</td>
         <td>{row.contestant}</td>
-        <td>{row.first}</td>
-        <td>{row.second}</td>
-        <td>{row.third}</td>
-        <td>{row.total}</td>
+        <td>{row.avg}</td>
+        <td>{row.dynamicRange}</td>
+        <td>{row.trackCount}</td>
       </tr>
     );
   });
-
   const winners = pointsData
-    .filter((a) => a.total === maxScore)
+    .filter((a) => a.avg == maxScore)
     .map((a) => a.contestant);
-
-  //console.log(pointsData);
 
   return (
     <div className='result-graph'>
@@ -45,9 +41,9 @@ const PointsGraph = function ({ pointsData, isArchive }) {
           ) : (
             <h2>And the winners are: {winners.join(' and ')}!</h2>
           )}
-          Congratulations! The winners' get to help pick the song for next
-          month's contest, not to mention the love and adortation of their
-          peers. Thanks to all who participated!
+          Congratulations! The winner(s) get to help pick the song for next
+          month's contest, not to mention the love and adoration of their peers.
+          Thanks to all who participated!
         </div>
       )}
       <br />
@@ -79,47 +75,37 @@ const PointsGraph = function ({ pointsData, isArchive }) {
               </th>
               <th
                 onClick={() =>
-                  sortResult === 'first'
+                  sortResult === 'avg'
                     ? setSortDesc(!sortDesc)
-                    : setSortResult('first')
+                    : setSortResult('avg')
                 }
               >
-                1st Place Votes
+                Average Rating
               </th>
               <th
                 onClick={() =>
-                  sortResult === 'second'
+                  sortResult === 'dynamicRange'
                     ? setSortDesc(!sortDesc)
-                    : setSortResult('second')
+                    : setSortResult('dynamicRange')
                 }
               >
-                2nd Place Votes
+                Dynamic Range
               </th>
               <th
                 onClick={() =>
-                  sortResult === 'third'
+                  sortResult === 'trackCount'
                     ? setSortDesc(!sortDesc)
-                    : setSortResult('third')
+                    : setSortResult('trackCount')
                 }
               >
-                3rd Place Votes
-              </th>
-              <th
-                onClick={() =>
-                  sortResult === 'total'
-                    ? setSortDesc(!sortDesc)
-                    : setSortResult('total')
-                }
-              >
-                Total Points
+                Track Count
               </th>
             </tr>
           </thead>
           <tbody>{resultRows}</tbody>
         </Table>
         <p style={{ fontSize: '1.3rem' }}>
-          1st place votes are worth 3 points, 2nd place votes are worth 2
-          points, 3rd place votes are worth 1 point.
+          Ratings are given in half star increments, from 1/2 star to 5 stars.
         </p>
       </div>
     </div>

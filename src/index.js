@@ -25,7 +25,7 @@ const store = createStore(combinedReducers, applyMiddleware(thunk));
 ReactDOM.render(
   <Provider store={store}>
     <Loader />
-    <div style={{ minHeight: '90vh' }}>
+    <div style={{ minHeight: '90vh', maxWidth: '2000px', margin: 'auto' }}>
       <BrowserRouter>
         <NavBar />
         <Route exact path='/' component={App} />

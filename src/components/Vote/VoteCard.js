@@ -100,7 +100,7 @@ var VoteCard = function ({ entry, contestId, prefix, excluded }) {
             alt='Add to Playlist'
             variant='secondary'
             onClick={() => {
-              dispatch(addTrack(entry));
+              dispatch(addTrack(entry, prefix));
               dispatch(rerenderNow());
             }}
           >
