@@ -52,6 +52,7 @@
 .playlist-name {
   flex: 1 1 75px;
   margin: 0 auto 0 0;
+  text-align: left;
   font-size: 0.8em;
 }
 

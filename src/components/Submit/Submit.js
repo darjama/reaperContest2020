@@ -14,6 +14,7 @@ class Submit extends React.Component {
     this.state = {
       selectedFile: null,
       email: '',
+      contestant: '',
       message: '',
       progress: 0,
       validFile: false,
@@ -126,6 +127,7 @@ class Submit extends React.Component {
       email: this.state.email,
       message: this.state.message,
       filename: fileName,
+      contestant: this.state.contestant,
       success: false,
     };
     axios
@@ -203,13 +205,22 @@ class Submit extends React.Component {
               {this.state.emailWarning}
             </div>
             <br />
+            <Form.Label>Contestant Name:</Form.Label>
+            <Form.Control
+              type='text'
+              id='contestant'
+              placeholder='Your Reaper Forum username, or your name'
+              autoComplete='off'
+              onChange={() => this.textChangeHandler(event)}
+            />
+            <br />
             <Form.Label>Message:</Form.Label>
             <Form.Control
               as='textarea'
               id='message'
               autoComplete='off'
               rows='3'
-              placeholder='Let me know your Reaper forum user name'
+              placeholder='Say hi'
               onChange={() => this.textChangeHandler(event)}
             />
             <br />
