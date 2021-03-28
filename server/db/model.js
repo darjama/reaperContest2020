@@ -36,6 +36,8 @@ const Entry = new Schema({
   timestamp: Date,
   uploadSuccessful: Boolean,
   offset: Double,
+  trackCount: Double,
+  dynamicRange: Double,
   normalize: Double,
 });
 

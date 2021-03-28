@@ -17,8 +17,10 @@ exports.addEntry = function (req, res) {
     (newRecord.timestamp.getMonth() + 1);
   newRecord.uploadSuccessful = req.body.success;
   newRecord.mixnum = 0;
-  newRecord.contestant = '';
+  newRecord.contestant = req.body.contestant || '';
   newRecord.offset = 0;
+  newRecord.dynamicRange = 0;
+  newRecord.trackCount = 0;
   newRecord.normalize = 0;
   newRecord.save({}, function (err, data) {
     if (err) {
