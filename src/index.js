@@ -15,6 +15,7 @@ const GetStarted = loadable(() =>
 import Vote from './components/Vote/Vote.js';
 const Submit = loadable(() => import('./components/Submit/Submit.js'));
 const Loader = loadable(() => import('./components/common/Loader'));
+const MixCheck = loadable(() => import('./components/MixCheck/MixCheck'));
 const Footer = loadable(() => import('./components/common/Footer'));
 const Results = loadable(() => import('./components/Results/Results.js'));
 import './css/main.css';
@@ -34,6 +35,7 @@ ReactDOM.render(
         <Route path='/Submit' component={Submit} />
         <Route path='/Archive' component={Archive} />
         <Route path='/Results' component={Results} />
+        <Route path='/MixCheck' component={MixCheck} />
       </BrowserRouter>
     </div>
     <Footer />

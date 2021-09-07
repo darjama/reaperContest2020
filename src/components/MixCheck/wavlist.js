@@ -1,0 +1,18 @@
+export default [
+  '01_Loop.wav',
+  '02_Kick.wav',
+  '03_Snare.wav',
+  '04_Cowbell.wav',
+  '05_Shaker.wav',
+  '06_Sample.wav',
+  '07_Bass1.wav',
+  '08_Bass2.wav',
+  '09_Bass3.wav',
+  '10_ElecGtr1.wav',
+  '11_ElecGtr2.wav',
+  '12_ElecGtr3.wav',
+  '13_AcousticGtr.wav',
+  '14_Organ.wav',
+  '15_Synth.wav',
+  '16_LeadVox.wav',
+];
