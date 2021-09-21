@@ -1,23 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardGroup, Table, Container } from 'react-bootstrap';
+import { Card, Table, Container } from 'react-bootstrap';
 import nativeVsts from './nativeVsts';
 import nativeJsfx from './nativeJsfx';
 import vstParser from './vstParser';
+import axios from 'axios';
 
 export default function MixCheck() {
   const [notAllowedFx, setNotAllowedFx] = useState([]);
-  const [notAllowedFiles, setNotAllowedFiles] = useState([]);
-  const [impulses, setImpulses] = useState(new Set());
+  const [projectAudio, setProjectAudio] = useState([]);
+  const [impulses, setImpulses] = useState([]);
   const [neededJSFX, setNeededJSFX] = useState([]);
   const [fileText, setFileText] = useState('');
   const [projectDetails, setProjectDetails] = useState('');
+  const [contestFiles, setContestFiles] = useState([]);
 
   useEffect(() => {
+    axios('/api/contests/current').then((contest) => {
+      setContestFiles(contest.data.audiofiles);
+    });
+  }, []);
+
+  useEffect(() => {
+    // split tracks
     const tracks = fileText.split('<TRACK');
-    setProjectDetails(tracks.shift());
+    setProjectDetails(tracks[0]);
     const tracksObj = {};
     const vsts = [];
-    const jsfxList = [];
+    const jsfxList = new Set();
+    const impulseList = new Set();
 
     tracks.forEach((track) => {
       // get VSTs
@@ -25,60 +35,50 @@ export default function MixCheck() {
       trackVsts.shift();
       vsts.push(trackVsts);
       // get JSFC
-      const trackJsfx = track.split('<JS ').map((js) => {
+      track.split('<JS ').forEach((js, i) => {
+        if (!i) return;
         const line = js.split('"');
-        if (line[0]) return line[0].trim();
-        return line[1];
+        if (line[0]) {
+          jsfxList.add(line[0].trim());
+        } else {
+          jsfxList.add(line[1]);
+        }
       });
-      trackJsfx.shift();
-      jsfxList.push(jsfxList);
     });
+    setNeededJSFX([...jsfxList]);
+
     const vstFiles = vstParser(vsts);
-    const newNotAllowed = new Set(notAllowedFx);
+    const newNotAllowed = new Set();
     vstFiles.forEach((vst) => {
       if (!nativeVsts.includes(vst.file)) {
         newNotAllowed.add(vst);
       }
-      if (vst.impulses.length) {
-        setImpulses(new Set([...impulses, ...vst.impulses]));
-      }
+      vst.impulses.forEach((impulse) => impulseList.add(impulse));
     });
+    setImpulses([...impulseList]);
     const waves = fileText.split('<SOURCE');
     waves.shift();
-    console.log(waves);
-    console.log(
-      new Set(
-        waves.map((a) =>
-          a
-            .split('\r\n')[1]
-            .trim()
-            .split('FILE ')[1]
-            .replaceAll('"', '')
-            .split('\\')
-            .pop()
-        )
-      )
-    );
-
-    setNotAllowedFx([...newNotAllowed]);
-    const js = tracks.map((track) => track.split('<JS '));
+    const audioFiles = new Set();
+    waves.forEach((a, i) => {
+      const temp1 = a.split('\r\n')[1].trim().split('FILE ')[1];
+      if (!temp1) {
+        console.log('undefined temp', i, a);
+        return;
+      }
+      return temp1.replaceAll('"', '').split('\\').pop();
+    });
+    setProjectAudio([...audioFiles].sort());
+    setNotAllowedFx([...newNotAllowed].sort());
   }, [fileText]);
 
   function loadMix(e) {
     e.preventDefault();
-    // split into tracks
-    // confirm it's an rpp file
-    // check for extra audio files
-    // check for notAllowedFx
-    // check for needed jsfx files
-    // check for needed impulses
     if (!e.target.files[0]) return;
     e.target.files[0].text().then((text) => {
       setFileText(text);
     });
   }
 
-  const nonNativeJSFX = [];
   const extraAudio = [];
 
   const notValid = !!fileText && !projectDetails.includes('<REAPER_PROJECT');
@@ -105,12 +105,10 @@ export default function MixCheck() {
       none: 'No Non-native JSFX found.',
       some: 'Please include the following JSFX with your submission:',
       color: 'yellow',
-      array: nonNativeJSFX,
+      array: neededJSFX.filter((a) => !nativeJsfx.includes(a)).sort(),
       mapFunc: (fx, i) => (
-        <tr key={fx.name + i}>
-          <td>
-            {fx.name} on track {fx.track}
-          </td>
+        <tr key={fx + i}>
+          <td>{fx}</td>
         </tr>
       ),
     },
@@ -119,12 +117,10 @@ export default function MixCheck() {
       none: 'No Additional audio files found.',
       some: 'Please remove the following audio files before submitting your project:',
       color: 'red',
-      array: extraAudio,
+      array: projectAudio.filter((file) => !contestFiles.includes(file)),
       mapFunc: (file, i) => (
-        <tr key={file.name + i}>
-          <td>
-            {file.name} on track {file.track}
-          </td>
+        <tr key={file + i}>
+          <td>{file}</td>
         </tr>
       ),
     },
@@ -133,7 +129,7 @@ export default function MixCheck() {
       none: 'No impulse files found.',
       some: 'Please include the following impulse files when submitting your project:',
       color: 'yellow',
-      array: [...impulses],
+      array: impulses.sort(),
       mapFunc: (file, i) => (
         <tr key={file + i}>
           <td>{file}</td>
@@ -145,6 +141,7 @@ export default function MixCheck() {
     <Container fluid style={{ color: 'white' }}>
       <br />
       <h1>Mix Check</h1>
+      <br />
       <form>
         <input
           type='file'
@@ -160,6 +157,7 @@ export default function MixCheck() {
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
           {results.map((result) => (
             <Card
+              key={result.name}
               style={{
                 margin: '.25em',
                 minWidth: '10em',
@@ -174,7 +172,13 @@ export default function MixCheck() {
                   <div style={{ color: 'green' }}>{result.none}</div>
                 )}
                 {!!result.array.length && (
-                  <Table striped hover variant='dark'>
+                  <Table
+                    striped
+                    hover
+                    variant='dark'
+                    size='sm'
+                    style={{ wordBreak: 'break-all' }}
+                  >
                     <thead>
                       <tr style={{ color: result.color }}>
                         <td>{result.some}</td>

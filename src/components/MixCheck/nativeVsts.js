@@ -7,6 +7,7 @@ export default [
   'reafir',
   'reagate',
   'reainsert',
+  'realimit',
   'reaninjam',
   'reapitch',
   'reastream',

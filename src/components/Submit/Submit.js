@@ -1,6 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Form, Button, Container, Toast, ProgressBar } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import {
+  Form,
+  Button,
+  Container,
+  Toast,
+  ProgressBar,
+  Alert,
+} from 'react-bootstrap';
 import bsCustomFileInput from 'bs-custom-file-input';
 import axios from 'axios';
 import PreModal from './PreModal';
@@ -224,6 +232,13 @@ class Submit extends React.Component {
               onChange={() => this.textChangeHandler(event)}
             />
             <br />
+            <Alert variant='info'>
+              Please use{' '}
+              <Link to='/mixcheck' target='_blank'>
+                MixCheck
+              </Link>{' '}
+              to make sure your project complies with the contest rules.
+            </Alert>
             <Form.Label>Your zip file:</Form.Label>
             <Form.File
               id='custom-file'

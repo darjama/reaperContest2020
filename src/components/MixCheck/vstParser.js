@@ -1,5 +1,6 @@
 export default function vstParser(vsts) {
   const vstFiles = [];
+  const impulses = [];
   vsts.forEach((track, trackNum) => {
     let vstLine1 = [''];
     let quoteStarted = false;
@@ -26,21 +27,26 @@ export default function vstParser(vsts) {
       let encoded = '';
 
       while (line[0] !== '>') {
-        encoded += Buffer.from(line, 'base64') + '\n';
+        encoded += Buffer.from(line, 'base64');
         lineIndex++;
         line = vst[lineIndex].trim();
       }
       const file = vstLine1[2].split('.')[0];
-      const impulses = [];
       if (encoded && file === 'reaverb') {
-        const impulseSplit = encoded.split('FILELDR');
-        impulseSplit.shift();
+        const impulseSplit = encoded.split('\0');
         while (impulseSplit.length) {
-          impulses.push(impulseSplit.shift().split(`/`).slice(-1)[0].trim());
+          const possible = impulseSplit
+            .pop()
+            .replace(/\\/g, '/')
+            .split(`/`)
+            .slice(-1)[0];
+          if (possible.length > 4 && possible.includes('.')) {
+            impulses.push(possible);
+          }
         }
       }
       vstFiles.push({
-        track: trackNum + 1,
+        track: trackNum || 'master',
         name: vstLine1[0],
         file,
         line1: vstLine1,
