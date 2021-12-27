@@ -65,6 +65,7 @@ export default function MixCheck() {
         console.log('undefined temp', i, a);
         return;
       }
+      // @ts-ignore
       return temp1.replaceAll('"', '').split('\\').pop();
     });
     setProjectAudio([...audioFiles].sort());
