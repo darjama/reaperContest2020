@@ -7,7 +7,6 @@ var NavBar = function () {
   const [expanded, setExpanded] = React.useState(false);
   const location = useLocation();
   React.useEffect(() => {
-    console.log(document.location.href);
     window.gtag('config', 'G-7JCK4EJFYD', {
       page_location: document.location.href,
       page_path: location.pathname,

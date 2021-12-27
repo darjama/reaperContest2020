@@ -90,7 +90,8 @@ const Results = function (props) {
       update[entry.mixnum - 1] = {
         mixnum: entry.mixnum,
         contestant: entry.contestant,
-        dynamicRange: Number(entry?.dynamicRange?.$numberDecimal),
+        dynamicRange:
+          entry?.dynamicRange?.$numberDecimal || entry?.dynamicRange,
         trackCount: entry?.trackCount,
         first: 0,
         second: 0,

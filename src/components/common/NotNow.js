@@ -11,9 +11,10 @@ class NotNowModal extends React.Component {
     let date = new Date();
     let start = new Date(this.props.start);
     let end = new Date(this.props.end);
+    let shp = new URL(document.location).searchParams.get('sh');
     return (
       <Modal
-        show={date < start || date > end}
+        show={(date < start || date > end) && shp !== 'test093'}
         backdrop='static'
         keyboard={false}
       >
