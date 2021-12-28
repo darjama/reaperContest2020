@@ -7,12 +7,12 @@ mongoose.Promise = global.Promise;
 mongoose.connect(
   `mongodb+srv://${config.get('dbs.un')}:${config.get(
     'dbs.pw'
-  )}@reamixed.lqgfh.gcp.mongodb.net/reamix?retryWrites=true&w=majority`,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  }
+  )}@reamixed.lqgfh.gcp.mongodb.net/reamix?retryWrites=true&w=majority`
+  // {
+  //   useNewUrlParser: true,
+  //   useUnifiedTopology: true,
+  //   useCreateIndex: true,
+  // }
 );
 
 const Schema = mongoose.Schema;
@@ -28,7 +28,6 @@ const Entry = new Schema({
   mixnum: Number,
   audiouri: String,
   contestid: Number,
-  contestant: String,
   ipaddr: String,
   email: String,
   zipfile: String,
@@ -85,4 +84,4 @@ const DlLog = new Schema({
 
 const DlLogModel = mongoose.model('DlLogs', DlLog);
 
-module.exports = { ContestModel, DlLogModel, EntryModel };
+module.exports = { ContestModel, DlLogModel, EntryModel, VoteModel };

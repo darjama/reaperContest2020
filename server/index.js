@@ -4,7 +4,10 @@ const app = express();
 const fs = require('fs');
 const cors = require('cors');
 const models = require('./db/model');
-const Contest = models.ContestModel, DlLog = models.DlLogModel, Entry = models.EntryModel, Vote = models.VoteModel;
+const Contest = models.ContestModel;
+const DlLog = models.DlLogModel;
+const Entry = models.EntryModel;
+const Vote = models.VoteModel;
 const bodyParser = require('body-parser');
 
 const port = config.get('port');
@@ -13,8 +16,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
-app.set("json spaces", 2);
+app.set('json spaces', 2);
 
 var contestRoutes = require('./db/contestRoutes');
 contestRoutes(app);
@@ -37,7 +39,9 @@ votingRoutes(app);
 var resultRoutes = require('./db/resultRoutes');
 resultRoutes(app);
 
-app.use('/', express.static(__dirname + '/../dist/'))
-app.use('/:id', express.static(__dirname + '/../dist/'))
+app.use('/', express.static(__dirname + '/../dist/'));
+app.use('/:id', express.static(__dirname + '/../dist/'));
 
-app.listen(port, ()=>console.log(`Started ReaperContest server on port ${port} at ${new Date()}`))
+app.listen(port, () =>
+  console.log(`Started ReaperContest server on port ${port} at ${new Date()}`)
+);
