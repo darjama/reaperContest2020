@@ -8,17 +8,21 @@ module.exports = {
       {
         test: /\.js$|jsx/,
         exclude: /node_modules/,
-        loader: 'babel-loader'
+        loader: 'babel-loader',
       },
       {
         test: /\.css$/,
-        loaders: ['style-loader', 'css-loader']
+        loader: 'style-loader',
+      },
+      {
+        test: /\.css$/,
+        loader: 'css-loader',
       },
       {
         test: /\.(png|jpe?g|gif)$/i,
         exclude: /node_modules/,
         loader: 'file-loader',
       },
-    ]
-  }
+    ],
+  },
 };
