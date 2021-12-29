@@ -1,16 +1,13 @@
 name: After server responds
-on:
-  pull_request:
-  branches:
-  - master
+name: CI
+on: push
 jobs:
-  cypress-run:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        - uses: actions/checkout@v2
-        - name: Install modules
-          run: npm install
-        - name: Run tests
-          run: npm test
-        env: ${{ secrets.TEST_ENV_FILE }}
+    - uses: actions/checkout@v2
+    - name: Install modules
+      run: npm install
+    - name: Run tests
+      run: npm test
+      env: ${{ secrets.TEST_ENV_FILE }}
