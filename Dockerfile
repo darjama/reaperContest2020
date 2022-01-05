@@ -1,5 +1,5 @@
 # pull official base image
-FROM node:lts-alpine
+FROM node:lts-alpine as base-stage
 
 # set working directory
 WORKDIR /app
@@ -10,11 +10,16 @@ ENV PATH /app/node_modules/.bin:$PATH
 # install app dependencies
 COPY package.json ./
 COPY package-lock.json ./
-RUN npm install --silent --production
-RUN npm install react-scripts@3.4.1 -g --silent
+RUN npm install nodemon -g
 
-# add app
-COPY . ./
+FROM base-stage as production
 
-# start app
+RUN npm install --silent
+COPY dist ./dist
+COPY server ./server
+COPY  *.js* .
 CMD ["npm", "start"]
+
+FROM base-stage as development
+RUN npm install
+CMD ["npm", "run", "dev"]
