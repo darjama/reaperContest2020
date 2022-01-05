@@ -171,28 +171,6 @@ const Results = function (props) {
           <div style={{ flex: '1 2 450px', margin: '7px' }}>
             <Player songName={details.songname} markers={details.markers} />
             <Playlist entries={allEntriesData} prefix={details.prefix} />
-            <Button
-              style={{ margin: '10px' }}
-              href={`https://flac.reamixed.com/${details.contestid}/${details.contestid}flacs.zip`}
-              download
-            >
-              Download All Mixes
-            </Button>
-            <Button
-              style={{ margin: '10px' }}
-              href={`https://flac.reamixed.com/${details.contestid}/${details.contestid}projects.zip`}
-              download
-            >
-              Download All Project Files
-            </Button>
-            <Button
-              style={{ margin: '10px' }}
-              href={details.rawuri}
-              target={details.rawuri.slice(-4) === '.zip' ? '_self' : '_blank'}
-              download
-            >
-              Download Original Tracks
-            </Button>
           </div>
           <div style={{ flex: '2 1 50%', margin: '7px' }}>
             {!!resultData[0]?.first && (
@@ -207,6 +185,32 @@ const Results = function (props) {
                 isArchive={!!props.contestid}
               />
             )}
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Button
+                style={{ margin: '10px' }}
+                href={`https://flac.reamixed.com/${details.contestid}/${details.contestid}flacs.zip`}
+                download
+              >
+                Download All Mixes
+              </Button>
+              <Button
+                style={{ margin: '10px' }}
+                href={`https://flac.reamixed.com/${details.contestid}/${details.contestid}projects.zip`}
+                download
+              >
+                Download All Project Files
+              </Button>
+              <Button
+                style={{ margin: '10px' }}
+                href={details.rawuri}
+                target={
+                  details.rawuri.slice(-4) === '.zip' ? '_self' : '_blank'
+                }
+                download
+              >
+                Download Original Tracks
+              </Button>
+            </div>
             <Comments allComments={allComments} allEntries={allEntriesData} />
           </div>
         </div>
