@@ -1,0 +1,15 @@
+name: CI
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Do Something with env files
+        env:
+          SECRETS_FILE: ${{ secrets.TEST_ENV_FILE }}
+        run: echo $SECRETS_FILE | base64 --decode > .env
+      - name: Install modules
+        run: npm install
+      - name: Run tests
+        run: npm test
