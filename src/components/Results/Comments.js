@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Table,
-  Form,
-  InputGroup,
-  FormControl,
-  Row,
-  Col,
-} from 'react-bootstrap';
+import { Table, Form, FormControl } from 'react-bootstrap';
 
 const Comments = function ({ allComments, allEntries }) {
   const [textFilter, setTextFilter] = useState('');

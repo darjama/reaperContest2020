@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Card, Row, Col, Button } from 'react-bootstrap';
-import Logo from '../../../dist/assets/reaperlogo.jpg';
+import Logo from '/src/assets/reaper_logo.jpg';
 import Hero from '../common/Hero';
 
 var GetStarted = function (props) {

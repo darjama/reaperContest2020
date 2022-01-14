@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Table, Button, Spinner } from 'react-bootstrap';
+import { Button, Spinner } from 'react-bootstrap';
 import Hero from '../common/Hero';
 import axios from 'axios';
 import Top3PointsGraph from './Top3PointsGraph';
@@ -8,7 +7,7 @@ import FiveStarPointsGraph from './FiveStarPointsGraph';
 import Comments from './Comments';
 import Playlist from '../common/Playlist';
 import Player from '../common/Player';
-import '../../css/results.css';
+import '/src/css/results.css';
 
 const Results = function (props) {
   const [details, setDetails] = useState();

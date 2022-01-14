@@ -8,6 +8,24 @@ exports.contests = function (req, res) {
   });
 };
 
+exports.contestsRaw = function () {
+  console.log('getting contests');
+  return Contest.find({}, null, { sort: { contestid: -1 } });
+};
+
+exports.contestRaw = function (contestid) {
+  console.log('getting contest');
+  return Contest.findOne({ contestid }, null);
+};
+
+exports.currentContestRaw = function () {
+  console.log('getting current contest');
+  return Contest.findOne(
+    { startdate: { $lte: new Date() }, nextstart: { $gte: new Date() } },
+    null
+  );
+};
+
 exports.contest = function (req, res) {
   const month = req.params.month;
   const year = req.params.year;

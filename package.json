@@ -5,7 +5,7 @@
   "main": "./src/index.js",
   "scripts": {
     "build": "NODE_ENV=production webpack",
-    "build-dev": "webpack --mode development --watch",
+    "build-dev": "NODE_ENV=development webpack --mode development --watch",
     "start": "NODE_ENV=production node ./server/index.js",
     "test": "jest",
     "dev": "NODE_ENV=development nodemon ./server/index.js"
@@ -26,9 +26,11 @@
     "convict": "^6.0.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-graphql": "^0.12.0",
     "file-loader": "^6.0.0",
     "firebase": "^7.17.1",
     "ftp": "^0.3.10",
+    "graphql": "^15.8.0",
     "jest": "^27.4.5",
     "lodash": "^4.17.19",
     "mongoose": "^6.1.3",
