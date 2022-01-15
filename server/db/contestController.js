@@ -8,18 +8,25 @@ exports.contests = function (req, res) {
   });
 };
 
+exports.currentContest = function (req, res) {
+  Contest.findOne(
+    { startdate: { $lte: new Date() }, nextstart: { $gte: new Date() } },
+    function (err, contest) {
+      if (err) res.send(err);
+      res.json(contest);
+    }
+  );
+};
+
 exports.contestsRaw = function () {
-  console.log('getting contests');
   return Contest.find({}, null, { sort: { contestid: -1 } });
 };
 
 exports.contestRaw = function (contestid) {
-  console.log('getting contest');
   return Contest.findOne({ contestid }, null);
 };
 
 exports.currentContestRaw = function () {
-  console.log('getting current contest');
   return Contest.findOne(
     { startdate: { $lte: new Date() }, nextstart: { $gte: new Date() } },
     null
