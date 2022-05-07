@@ -1,3 +1,5 @@
+const { entries } = require('lodash');
+
 const mongoose = require('mongoose'),
   Entry = mongoose.model('Entries');
 
@@ -41,6 +43,14 @@ exports.entries = function (req, res) {
       if (err) res.send(err);
       res.json(list);
     }
+  );
+};
+
+exports.entriesRaw = function (contestid) {
+  return Entry.find(
+    { contestid, mixnum: { $ne: null } },
+    {},
+    { sort: { mixnum: 1 } }
   );
 };
 

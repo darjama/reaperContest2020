@@ -1,15 +1,10 @@
+// @ts-nocheck
 import React, { useState, useEffect } from 'react';
 import { Row, Col } from 'react-bootstrap';
 
 var Schedule = function (props) {
-  let {
-    startdate,
-    duedate,
-    votestart,
-    voteend,
-    resultdate,
-    nextstart,
-  } = props.details;
+  let { startdate, duedate, votestart, voteend, resultdate, nextstart } =
+    props.details;
 
   let dates = [
     startdate,

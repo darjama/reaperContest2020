@@ -5,7 +5,6 @@ import { ListGroup, Container, Button, Col, Row } from 'react-bootstrap';
 import loadable from '@loadable/component';
 import NotNowModal from '../common/NotNow';
 const ExcludeModal = loadable(() => import('./ExcludeModal'));
-import Hero from '../common/Hero';
 const Player = loadable(() => import('../common/Player'));
 const VoteCard = loadable(() => import('./VoteCard'));
 const SubmitVote = loadable(() => import('./SubmitVote'));

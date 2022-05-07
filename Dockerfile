@@ -10,16 +10,21 @@ ENV PATH /app/node_modules/.bin:$PATH
 # install app dependencies
 COPY package.json ./
 COPY package-lock.json ./
-RUN npm install nodemon -g
+RUN npm install --silent
+RUN mkdir dist
+COPY src/assets/index.html dist/
+COPY src/assets/favicon.ico dist/
+
+FROM base-stage as intermediate
+COPY . .
+RUN npm run build
 
 FROM base-stage as production
-
-RUN npm install --silent
-COPY dist ./dist
+COPY --from=intermediate app/dist ./dist
 COPY server ./server
 COPY  *.js* .
 CMD ["npm", "start"]
 
 FROM base-stage as development
-RUN npm install
+RUN npm install nodemon -g
 CMD ["npm", "run", "dev"]

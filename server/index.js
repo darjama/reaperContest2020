@@ -9,13 +9,13 @@ const DlLog = models.DlLogModel;
 const Entry = models.EntryModel;
 const Vote = models.VoteModel;
 const bodyParser = require('body-parser');
-
+const graphqlController = require('./db/graphqlController');
 const port = config.get('port');
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+// app.use('/graphql', graphqlController);
 app.set('json spaces', 2);
 
 var contestRoutes = require('./db/contestRoutes');

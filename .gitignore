@@ -1,8 +1,13 @@
+
+dist/*
 node_modules
-dist
+!dist/index.html
+!dist/images
+!dist/favicon.ico
 config.js
 config.json
 /uploads*
 Firebase.js
 upload.json
 .env
+build-deploy.sh

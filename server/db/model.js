@@ -59,6 +59,7 @@ const VoteModel = mongoose.model('Votes', Vote);
 const Contest = new Schema({
   month: Number,
   year: Number,
+  contestid: Number,
   artist: String,
   artistimg: String,
   songname: String,
@@ -67,11 +68,13 @@ const Contest = new Schema({
   duedate: Date,
   votestart: Date,
   voteend: Date,
+  nextstart: Date,
   resultdate: Date,
-  rawfile: String,
+  rawuri: String,
   mixedbundle: String,
   projectbundle: String,
   markers: Array,
+  audiofiles: Array,
   prefix: String,
 });
 

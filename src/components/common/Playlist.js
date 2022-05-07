@@ -8,9 +8,9 @@ import {
   shareLink,
   shareLink2,
   rerenderNow,
-} from '../../redux/playlist/playlistActions';
+} from '/src/redux/playlist/playlistActions';
 import { RiPlayFill, RiDeleteBin6Line } from 'react-icons/ri';
-import { Container, ListGroup, Button } from 'react-bootstrap';
+import { ListGroup, Button } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 
 function Playlist({ entries, prefix, random }) {

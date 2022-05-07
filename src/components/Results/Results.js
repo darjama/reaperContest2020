@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Table, Button, Spinner } from 'react-bootstrap';
+import { Button, Spinner } from 'react-bootstrap';
 import Hero from '../common/Hero';
 import axios from 'axios';
 import Top3PointsGraph from './Top3PointsGraph';
 import FiveStarPointsGraph from './FiveStarPointsGraph';
+import VoteGraph from './voteStats';
 import Comments from './Comments';
 import Playlist from '../common/Playlist';
 import Player from '../common/Player';
-import '../../css/results.css';
+import '/src/css/results.css';
 
 const Results = function (props) {
   const [details, setDetails] = useState();
@@ -148,7 +148,7 @@ const Results = function (props) {
   }, [resultData, allEntriesData]);
 
   if (isLoading) {
-    return <Spinner size='lg' animation='border' variant='light' />;
+    return <Spinner animation='border' variant='light' />;
   }
 
   return (
@@ -211,6 +211,9 @@ const Results = function (props) {
                 Download Original Tracks
               </Button>
             </div>
+            {!!pointsData[0]?.ratings.length && (
+              <VoteGraph votes={resultData} />
+            )}
             <Comments allComments={allComments} allEntries={allEntriesData} />
           </div>
         </div>
