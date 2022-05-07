@@ -28,7 +28,7 @@ export default function vstParser(vsts) {
         let encoded = '';
 
         while (line[0] !== '>') {
-          encoded += line.toString('base64');
+          encoded += window.atob(line);
           lineIndex++;
           line = vst[lineIndex].trim();
         }

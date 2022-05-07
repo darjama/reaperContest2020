@@ -66,7 +66,7 @@ export default function MixCheck() {
         return;
       }
       // @ts-ignore
-      return temp1.replaceAll('"', '').split('\\').pop();
+      audioFiles.add(temp1.replaceAll('"', '').split(/[/\\]/).pop());
     });
     setProjectAudio([...audioFiles].sort());
     setNotAllowedFx([...newNotAllowed].sort());
