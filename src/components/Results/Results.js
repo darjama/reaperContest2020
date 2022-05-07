@@ -4,6 +4,7 @@ import Hero from '../common/Hero';
 import axios from 'axios';
 import Top3PointsGraph from './Top3PointsGraph';
 import FiveStarPointsGraph from './FiveStarPointsGraph';
+import VoteGraph from './voteStats';
 import Comments from './Comments';
 import Playlist from '../common/Playlist';
 import Player from '../common/Player';
@@ -147,7 +148,7 @@ const Results = function (props) {
   }, [resultData, allEntriesData]);
 
   if (isLoading) {
-    return <Spinner size='lg' animation='border' variant='light' />;
+    return <Spinner animation='border' variant='light' />;
   }
 
   return (
@@ -210,6 +211,9 @@ const Results = function (props) {
                 Download Original Tracks
               </Button>
             </div>
+            {!!pointsData[0]?.ratings.length && (
+              <VoteGraph votes={resultData} />
+            )}
             <Comments allComments={allComments} allEntries={allEntriesData} />
           </div>
         </div>
