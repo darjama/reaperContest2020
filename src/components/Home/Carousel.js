@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState } from 'react';
 import { Carousel } from 'react-bootstrap';
 import headphoneJPG from '/src/assets/headphones.jpeg';

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from 'react';
 import { Jumbotron, Container } from 'react-bootstrap';
 import Background from '/src/assets/reaper-panel.png';

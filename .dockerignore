@@ -4,5 +4,4 @@ node_modules
 uploads
 .dockerignore
 Dockerfile
-src
 .env
