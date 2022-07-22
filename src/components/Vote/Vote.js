@@ -16,7 +16,6 @@ function Vote(props) {
   const details = useSelector((state) => state.contestDetailReducer);
   const entries = useSelector((state) => state.entriesDetailReducer);
   const dispatch = useDispatch();
-
   const d = new Date();
   const month = '0' + (d.getMonth() + 1).toString();
   const contestId = Number(
