@@ -71,7 +71,11 @@ var Player = function ({ songName, markers }) {
     playing && (audio.paused || audio.ended) ? audio.play() : '';
     !playing && !audio.paused && !audio.ended ? audio.pause() : '';
     endOfRange ? endOfSong() : '';
-    !audio.paused && audio.currentTime >= endTime - offset ? endRange() : '';
+    !audio.paused &&
+    audio.currentTime >=
+      endTime - (endTime > markers[markers.length - 2].time ? 0 : offset)
+      ? endRange()
+      : '';
 
     if (clickedTime && clickedTime !== curTime) {
       audio.currentTime = clickedTime;
