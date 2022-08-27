@@ -12,8 +12,8 @@ COPY package.json ./
 COPY package-lock.json ./
 RUN npm install --silent
 RUN mkdir dist
-COPY src/assets/index.html dist/
-COPY src/assets/favicon.ico dist/
+COPY public/index.html dist/
+COPY public/favicon.ico dist/
 
 FROM base-stage as intermediate
 COPY . .
