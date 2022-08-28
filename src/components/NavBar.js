@@ -47,6 +47,13 @@ var NavBar = function () {
           <LinkContainer className='ml-auto' to='/archive'>
             <Nav.Link>Archive</Nav.Link>
           </LinkContainer>
+          <a
+            className='external-navbar-link'
+            href='https://reamixed.myshopify.com/'
+            target='_blank'
+          >
+            Merch
+          </a>
           {/* <NavDropdown title="Archive" id="basic-nav-dropdown">
 
               <NavDropdown.Item className="cuprum" href="/Archive">Past Raw Files</NavDropdown.Item>
