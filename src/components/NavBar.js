@@ -49,10 +49,10 @@ var NavBar = function () {
           </LinkContainer>
           <a
             className='external-navbar-link'
-            href='https://reamixed.myshopify.com/'
+            href='https://www.paypal.com/donate/?hosted_button_id=JHVM2LWFUYCBY'
             target='_blank'
           >
-            Merch
+            Donate
           </a>
           {/* <NavDropdown title="Archive" id="basic-nav-dropdown">
 
