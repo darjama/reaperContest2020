@@ -62,14 +62,17 @@ class App extends React.PureComponent {
       <div>
         <HeaderCarousel />
         <Container style={{ minWidth: '350px' }} fluid>
-          <CardDeck style={{ margin: '10px 0 0 0' }}>
-            <Card style={{ minWidth: '99%', margin: '5px 10px' }}>
+          <CardDeck style={{ margin: '10px 0 0 0', gap: '10px' }}>
+            <Card style={{ minWidth: '30rem' }}>
               <Card.Body>
+                <Card.Title className='text-center rem2 cuprum'>
+                  reaMIXed
+                </Card.Title>
                 <Card.Text>
-                  reaMIXed is the (unauthorized) Reaper Mix Contest Page. The
-                  perfect place to find new music to mix and to learn and share
-                  mixing techniques with others. If you're new to the contest or
-                  to Reaper I'd suggest you visit the{' '}
+                  ... is the (unauthorized) Reaper Mix Contest Page. The perfect
+                  place to find new music to mix and to learn and share mixing
+                  techniques with others. If you're new to the contest or to
+                  Reaper I'd suggest you visit the{' '}
                   <Link to='/getstarted'>Getting Started</Link> page to find
                   some helpful resources.
                   <br />
@@ -86,7 +89,7 @@ class App extends React.PureComponent {
                 </Card.Text>
               </Card.Body>
             </Card>
-            <Card style={{ minWidth: '35rem' }} id='download'>
+            <Card style={{ minWidth: '30rem' }} id='download'>
               <Card.Body>
                 <Card.Title className='text-center rem2 cuprum'>
                   {months[month - 1]} {year}
@@ -113,7 +116,7 @@ class App extends React.PureComponent {
                 <Card.Img variant='bottom' src={artistimg} />
               </Card.Body>
             </Card>
-            <Card style={{ minWidth: '35rem' }}>
+            <Card style={{ minWidth: '30rem' }}>
               <Card.Body>
                 <Card.Title className='text-center rem2 cuprum'>
                   Contest Schedule
