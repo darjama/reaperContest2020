@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Card, Table, Container } from 'react-bootstrap';
 import nativeVsts from './nativeVsts';
 import nativeJsfx from './nativeJsfx';
+import tukanJsfx from './tukanJsfx';
 import vstParser from './vstParser';
 import axios from 'axios';
+
+const allJsfx = new Set([...nativeJsfx, ...tukanJsfx]);
 
 export default function MixCheck() {
   const [notAllowedFx, setNotAllowedFx] = useState([]);
@@ -106,7 +109,7 @@ export default function MixCheck() {
       none: 'No Non-native JSFX found.',
       some: 'Please include the following JSFX with your submission:',
       color: 'yellow',
-      array: neededJSFX.filter((a) => !nativeJsfx.includes(a)).sort(),
+      array: neededJSFX.filter((a) => !allJsfx.has(a)).sort(),
       mapFunc: (fx, i) => (
         <tr key={fx + i}>
           <td>{fx}</td>
