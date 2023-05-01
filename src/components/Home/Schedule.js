@@ -77,22 +77,22 @@ var Schedule = function (props) {
         <Col className='countdown-table'>
           {days}
           <br />
-          days
+          <span className='countdown-label'>days</span>
         </Col>
         <Col className='countdown-table'>
           {hours}
           <br />
-          hours
+          <span className='countdown-label'>hours</span>
         </Col>
         <Col className='countdown-table'>
           {minutes}
           <br />
-          minutes
+          <span className='countdown-label'>minutes</span>
         </Col>
         <Col className='countdown-table'>
           {seconds}
           <br />
-          seconds
+          <span className='countdown-label'>seconds</span>
         </Col>
         <Col />
       </Row>

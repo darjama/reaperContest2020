@@ -1,6 +1,10 @@
-html { font-size: 80%; }
+html {
+  font-size: 80%;
+}
 
-h1   { font-size: 2.4rem; }
+h1 {
+  font-size: 2.4rem;
+}
 
 body {
   font-family: 'Ubuntu', sans-serif;
@@ -21,14 +25,19 @@ body {
 .countdown-table {
   border: solid 1px grey;
   border-radius: 3px;
-  padding: 3px;
+  padding: 6px;
+}
+
+.countdown-label {
+  font-size: 14px;
 }
 
 .hide-form {
   display: none;
 }
 
-
 @media only screen and (max-device-width: 720px) {
-  html { font-size: 145%; }
+  html {
+    font-size: 145%;
+  }
 }
