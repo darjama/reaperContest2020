@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "strict": true,
+    "jsx": "react-jsx"
+  },
+  "exclude": ["node_modules"],
+  "include": ["**/*.js", "**/*.jsx", "src/components/Home/App.js"]
+}
