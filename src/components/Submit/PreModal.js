@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Modal, Button, Form } from 'react-bootstrap';
 
 const rules = [
-  'I am uploading a zip-compressed file <= 85MB in size.',
+  'I am uploading a zip-compressed file <= 105MB in size.',
   'The file contains my Reaper project .RPP file.',
   'The file contains a 24-bit FLAC file of my mix at the same sample rate as the media files.',
   'The mix measures no more than -14 LUFS (integrated) and dBFS peaks at -1.0dB or less',
