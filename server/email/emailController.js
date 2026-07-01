@@ -6,8 +6,8 @@ async function main(req, res) {
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
     host: 'smtp.dreamhost.com',
-    port: 465,
-    secure: true,
+    port: 587,
+    secure: false,
     auth: {
       user: config.get('gms.un'),
       pass: config.get('gms.pw'),
