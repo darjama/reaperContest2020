@@ -1,29 +1,30 @@
-import React from 'react';
+import * as React from 'react';
 import HeaderCarousel from './Carousel.js';
-import Schedule from './Schedule';
+import Schedule from './Schedule.js';
 import { connect } from 'react-redux';
-import { fetchContestDetails } from '../../redux/contestDetails/contestDetailActions';
+import { fetchContestDetails } from '../../redux/contestDetails/contestDetailActions.js';
 import { Card, CardDeck, Container, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import DownloadModal from './DownloadModal.js';
 
 class App extends React.PureComponent {
   constructor(props) {
     super(props);
+    this.state = {
+      showDownloadModal: false
+    }
+    this.toggleDownloadModal = this.toggleDownloadModal.bind(this)
   }
 
   componentDidMount() {
     document.title = 'reaMIXed: The (Unauthorized) Reaper Mix Contest';
   }
 
-  logHandler() {
-    axios({ url: '/api/dlLog', method: 'post' })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+  toggleDownloadModal() {
+    this.setState((prevState) => ({
+      showDownloadModal: !prevState.showDownloadModal
+    }));
   }
 
   render() {
@@ -60,6 +61,7 @@ class App extends React.PureComponent {
 
     return (
       <div>
+        <DownloadModal open={this.state.showDownloadModal} toggle={this.toggleDownloadModal} url={rawuri} />
         <HeaderCarousel />
         <Container style={{ minWidth: '350px' }} fluid>
           <CardDeck style={{ margin: '10px 0 0 0', gap: '10px' }}>
@@ -107,8 +109,12 @@ class App extends React.PureComponent {
                     placeContent: 'center',
                   }}
                 >
-                  <Button href={rawuri} onClick={() => this.logHandler()}>
-                    Download the Tracks
+                  <Button
+                    type='button'
+                    onClick={this.toggleDownloadModal}
+                    style={{ fontSize: '1.2rem' }}
+                  >
+                    Get the Tracks
                   </Button>
                 </div>
 

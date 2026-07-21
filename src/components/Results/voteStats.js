@@ -10,7 +10,6 @@ import {
   ChartLabel,
 } from 'react-vis';
 import { Form, Container } from 'react-bootstrap';
-import { range } from 'lodash';
 
 export default function VoteStats(props) {
   const { votes } = props;
@@ -32,17 +31,17 @@ export default function VoteStats(props) {
       total += vote;
       count++;
     });
-    rangeData.push({ x: total / count, y0: lowest, y: highest });
+    rangeData.push({ x: (total / count), y0: lowest, y: highest });
     averageData.push({ x: index + 1, y: total / count });
   });
 
   rangeData.sort((a, b) => a.x - b.x);
   rangeData.forEach((data, index) => {
-    data.x = index + 1;
+    data.x = (index + 1).toString();
   });
   averageData.sort((a, b) => a.y - b.y);
   averageData.forEach((data, index) => {
-    data.x = index + 1;
+    data.x = (index + 1).toString();
   });
 
   const values = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5];
@@ -51,7 +50,7 @@ export default function VoteStats(props) {
 
   values.forEach((value) => {
     allVoteData.push({
-      x: value,
+      x: value.toString(),
       y: allVotes[value] ?? 0,
     });
   });
@@ -60,6 +59,8 @@ export default function VoteStats(props) {
     distribution: allVoteData,
     'vote range': rangeData,
   };
+
+  console.log(data)
 
   const title = {
     distribution: { x: 'Rating', y: 'Vote Count' },

@@ -11,3 +11,4 @@ Firebase.js
 upload.json
 .env
 build-deploy.sh
+.vscode/*

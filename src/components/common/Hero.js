@@ -13,7 +13,7 @@ const Hero = function (props) {
         backgroundSize: 'cover',
         color: 'yellow',
         minHeight: '25vh',
-        width: '100vw',
+        width: '100%',
       }}
     >
       <Container>
