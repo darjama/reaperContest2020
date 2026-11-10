@@ -43,25 +43,102 @@ class App extends React.PureComponent {
       'December',
     ];
 
-    let {
-      month,
-      year,
-      songname,
-      artist,
-      artistimg,
-      description,
-      rawuri,
-      startdate,
-      duedate,
-      votestart,
-      voteend,
-      resultdate,
-      nextstart,
-    } = this.props.details;
+    // details is {} while the fetch is still in flight and null once it
+    // found no contest for the current month
+    const noContest = this.props.details == null;
+    console.log('noContest', noContest, this.props.details);
+
+    let downloadModal = null;
+    let contestCards = null;
+
+    if (!noContest) {
+      let {
+        month,
+        year,
+        songname,
+        artist,
+        artistimg,
+        description,
+        rawuri,
+        startdate,
+        duedate,
+        votestart,
+        voteend,
+        resultdate,
+        nextstart,
+      } = this.props.details;
+
+      downloadModal = (
+        <DownloadModal
+          open={this.state.showDownloadModal}
+          toggle={this.toggleDownloadModal}
+          url={rawuri}
+        />
+      );
+
+      contestCards = (
+        <React.Fragment>
+          <Card style={{ minWidth: '30rem' }} id='download'>
+            <Card.Body>
+              <Card.Title className='text-center rem2 cuprum'>
+                {months[month - 1]} {year}
+              </Card.Title>
+              <Card.Text>
+                This month's song is "{songname}" by {artist}.
+                <br />
+                <br />
+                {description}
+              </Card.Text>
+              <div
+                style={{
+                  display: 'grid',
+                  width: '100%',
+                  placeContent: 'center',
+                }}
+              >
+                <Button
+                  type='button'
+                  onClick={this.toggleDownloadModal}
+                  style={{ fontSize: '1.2rem' }}
+                >
+                  Get the Tracks
+                </Button>
+              </div>
+
+              <br />
+              <Card.Img variant='bottom' src={artistimg} />
+            </Card.Body>
+          </Card>
+          <Card style={{ minWidth: '30rem' }}>
+            <Card.Body>
+              <Card.Title className='text-center rem2 cuprum'>
+                Contest Schedule
+              </Card.Title>
+              <Schedule details={this.props.details} date={new Date()} />
+            </Card.Body>
+          </Card>
+        </React.Fragment>
+      );
+    } else {
+      contestCards = (
+        <Card style={{ minWidth: '30rem' }}>
+          <Card.Body>
+            <Card.Title className='text-center rem2 cuprum'>
+              No Contest
+            </Card.Title>
+            <Card.Text>
+              There is no contest currently available, please check back
+              soon. Use the contact form below if you believe you are getting
+              this message in error.
+            </Card.Text>
+          </Card.Body>
+        </Card>
+      );
+    }
 
     return (
       <div>
-        <DownloadModal open={this.state.showDownloadModal} toggle={this.toggleDownloadModal} url={rawuri} />
+        {downloadModal}
         <HeaderCarousel />
         <Container style={{ minWidth: '350px' }} fluid>
           <CardDeck style={{ margin: '10px 0 0 0', gap: '10px' }}>
@@ -91,45 +168,7 @@ class App extends React.PureComponent {
                 </Card.Text>
               </Card.Body>
             </Card>
-            <Card style={{ minWidth: '30rem' }} id='download'>
-              <Card.Body>
-                <Card.Title className='text-center rem2 cuprum'>
-                  {months[month - 1]} {year}
-                </Card.Title>
-                <Card.Text>
-                  This month's song is "{songname}" by {artist}.
-                  <br />
-                  <br />
-                  {description}
-                </Card.Text>
-                <div
-                  style={{
-                    display: 'grid',
-                    width: '100%',
-                    placeContent: 'center',
-                  }}
-                >
-                  <Button
-                    type='button'
-                    onClick={this.toggleDownloadModal}
-                    style={{ fontSize: '1.2rem' }}
-                  >
-                    Get the Tracks
-                  </Button>
-                </div>
-
-                <br />
-                <Card.Img variant='bottom' src={artistimg} />
-              </Card.Body>
-            </Card>
-            <Card style={{ minWidth: '30rem' }}>
-              <Card.Body>
-                <Card.Title className='text-center rem2 cuprum'>
-                  Contest Schedule
-                </Card.Title>
-                <Schedule details={this.props.details} date={new Date()} />
-              </Card.Body>
-            </Card>
+            {contestCards}
           </CardDeck>
         </Container>
       </div>

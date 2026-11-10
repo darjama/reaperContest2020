@@ -15,8 +15,8 @@ const BOUNDARY_FIELDS = [
 const MAX_TIMEOUT = 2147483647;
 
 const getBoundaries = (details = {}) =>
-  BOUNDARY_FIELDS.filter((field) => details[field])
-    .map((field) => new Date(details[field]))
+  BOUNDARY_FIELDS.filter((field) => details?.[field])
+    .map((field) => new Date(details?.[field]))
     .filter((date) => !isNaN(date));
 
 const monthKey = (date) => `${date.getFullYear()}-${date.getMonth()}`;
