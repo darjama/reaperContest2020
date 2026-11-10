@@ -15,6 +15,7 @@ import PreModal from './PreModal';
 import Hero from '../common/Hero';
 import NotNow from '../common/NotNow';
 import { validateEmail } from '../common/SharedFormulas';
+import PhaseCountdown from '../common/PhaseCountdown';
 
 class Submit extends React.Component {
   constructor(props) {
@@ -174,6 +175,9 @@ class Submit extends React.Component {
 
   render() {
     const { startdate, duedate, votestart } = this.props.details;
+    // props.now updates when the date/contest phase changes, so the
+    // submission window is re-evaluated while the app stays open
+    const now = new Date(this.props.now);
     const options = {
       weekday: 'long',
       year: 'numeric',
@@ -190,8 +194,7 @@ class Submit extends React.Component {
       <React.Fragment>
         <Hero name='Submit Your Mix' />
         <Container style={{ width: '50%', color: 'white' }}>
-          {new Date() >= new Date(startdate) &&
-          new Date() <= new Date(duedate) ? (
+          {now >= new Date(startdate) && now <= new Date(duedate) ? (
             <PreModal />
           ) : (
             <NotNow start={startdate} end={duedate} early={early} late={late} />
@@ -258,7 +261,8 @@ class Submit extends React.Component {
             >
               {this.state.typeWarning}
             </div>
-            <br /> <br />
+            <br />
+            <div  className='d-flex flex-row justify-content-between'>
             <Button
               variant='primary'
               type='submit'
@@ -269,6 +273,12 @@ class Submit extends React.Component {
             >
               Submit
             </Button>
+            <PhaseCountdown
+              label='Submissions Due'
+              targetDate={new Date(duedate)}
+              isActive={now >= new Date(startdate) && now <= new Date(duedate)}
+            />
+            </div>
           </Form>
           <br />
           <Toast show={this.state.showToast} onClose={() => this.closeToast()}>
@@ -290,6 +300,7 @@ class Submit extends React.Component {
 const mapStateToProps = (state) => {
   return {
     details: state.contestDetailReducer,
+    now: state.nowReducer,
   };
 };
 

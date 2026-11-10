@@ -15,12 +15,13 @@ import { withRouter } from 'react-router-dom';
 function Vote(props) {
   const details = useSelector((state) => state.contestDetailReducer);
   const entries = useSelector((state) => state.entriesDetailReducer);
+  const now = useSelector((state) => state.nowReducer);
   const dispatch = useDispatch();
-  const d = new Date();
+  // now updates when the date/contest phase changes, so the voting window
+  // and the contest id are re-evaluated while the app stays open
+  const d = new Date(now);
   const month = '0' + (d.getMonth() + 1).toString();
-  const contestId = Number(
-    d.getFullYear().toString() + month.substring(month.length - 2)
-  );
+  const contestId = details.contestid || (d.getFullYear().toString() + month.slice(-2));
 
   const { votestart, voteend, resultdate, prefix, songname, markers } = details;
   const [top3, setTop3] = useState([null, null, null]);
@@ -41,7 +42,9 @@ function Vote(props) {
     } else {
       localStorage.removeItem('excluded');
     }
-  }, []);
+    // re-runs when the contest month rolls over so saved notes/exclusions
+    // are validated against the new contest
+  }, [contestId]);
 
   const entryList = entries
     .sort((a, b) => a.mixnum - b.mixnum)

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Button, Spinner } from 'react-bootstrap';
 import Hero from '../common/Hero';
 import axios from 'axios';
@@ -15,6 +16,9 @@ const Results = function (props) {
   const [resultData, setResultData] = useState([]);
   const [allEntriesData, setAllEntriesData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  // changes only when the date/contest phase changes, so the published
+  // results are reloaded once this contest's result date is reached
+  const now = useSelector((state) => state.nowReducer);
 
   useEffect(() => {
     document.title = 'reaMIXed: Results';
@@ -42,7 +46,7 @@ const Results = function (props) {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [now]);
 
   useEffect(() => {
     if (!props.contestid) return;
