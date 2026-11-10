@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { PlaylistMaker, PlaylistNode } from '../redux/playlist/playlistObj';
+import { TICK } from '../redux/date/dateTypes';
 
 const initPlaylist = new PlaylistMaker();
 
@@ -113,6 +114,18 @@ const entriesDetailReducer = function (state = [], action) {
   }
 };
 
+// Timestamp of the last detected date/phase change. Components that gate
+// page availability on the contest phase subscribe to this so they
+// re-evaluate `new Date()` based checks when the date changes.
+const nowReducer = function (state = Date.now(), action) {
+  switch (action.type) {
+    case TICK:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   playlistReducer,
   noteReducer,
@@ -124,4 +137,5 @@ export default combineReducers({
   shareNodeReducer,
   shareNodeReducer2,
   rerenderReducer,
+  nowReducer,
 });
