@@ -15,6 +15,7 @@ const GetStarted = loadable(() =>
 import Vote from './components/Vote/Vote.js';
 const Submit = loadable(() => import('./components/Submit/Submit.js'));
 const Loader = loadable(() => import('./components/common/Loader'));
+import DateWatcher from './components/common/DateWatcher';
 const MixCheck = loadable(() => import('./components/MixCheck/MixCheck'));
 const Footer = loadable(() => import('./components/common/Footer'));
 const Results = loadable(() => import('./components/Results/Results.js'));
@@ -26,6 +27,7 @@ const store = createStore(combinedReducers, applyMiddleware(thunk));
 ReactDOM.render(
   <Provider store={store}>
     <Loader />
+    <DateWatcher />
     <div style={{ minHeight: '90vh', maxWidth: '2000px', margin: 'auto' }}>
       <BrowserRouter>
         <NavBar />
