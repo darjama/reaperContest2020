@@ -4,6 +4,7 @@ import { clearVotes } from '../../redux/voting/voteActions';
 import { clearNotes } from '../../redux/notes/notesActions';
 import { playLink } from '../../redux/playlist/playlistActions';
 import { validateEmail } from '../common/SharedFormulas';
+import PhaseCountdown from '../common/PhaseCountdown';
 import { ListGroup, Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { addVote } from '../../redux/voting/voteActions';
 import axios from 'axios';
@@ -11,8 +12,10 @@ import axios from 'axios';
 var SubmitVote = function ({ voter, setExcluded, entriesCount }) {
   const notesAll = useSelector((state) => state.noteReducer);
   const ratings = useSelector((state) => state.voteReducer);
+  const details = useSelector((state) => state.contestDetailReducer);
   const dispatch = useDispatch();
 
+  const now = useSelector((state) => state.nowReducer);
   const [includeNotes, setIncludeNotes] = useState(true);
   const [email, setEmail] = useState('');
   const [disableSubmit, setDisableSubmit] = useState(false);
@@ -22,7 +25,7 @@ var SubmitVote = function ({ voter, setExcluded, entriesCount }) {
     new Date().getMonth() +
     1
   ).toString();
-
+  const { votestart, voteend, resultdate, prefix, songname, markers } = details;
   const submitHandler = function (e) {
     e.preventDefault();
     setDisableSubmit(true);
@@ -115,6 +118,11 @@ var SubmitVote = function ({ voter, setExcluded, entriesCount }) {
                   </Form>
                 </Col>
                 <Col>
+                  <PhaseCountdown
+                    label='Voting Ends'
+                    targetDate={new Date(voteend)}
+                    isActive={now >= new Date(votestart) && now <= new Date(voteend)}
+                  />
                   <Button
                     variant='primary'
                     type='submit'

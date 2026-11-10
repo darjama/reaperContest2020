@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';
 
@@ -8,7 +9,9 @@ class NotNowModal extends React.Component {
   }
 
   render() {
-    let date = new Date();
+    // props.now comes from the store and only changes when the date or
+    // contest phase changes, so the gate re-evaluates while the app is open
+    let date = new Date(this.props.now);
     let start = new Date(this.props.start);
     let end = new Date(this.props.end);
     let shp = new URL(document.location).searchParams.get('sh');
@@ -26,11 +29,17 @@ class NotNowModal extends React.Component {
           {date > end ? this.props.late : ''}
           <br />
           <br />
-          <Link to='/'>Return to homepage</Link>
+          <Link to={'/' + document.location.search}>Return to homepage</Link>
         </Modal.Body>
       </Modal>
     );
   }
 }
 
-export default NotNowModal;
+const mapStateToProps = (state) => {
+  return {
+    now: state.nowReducer,
+  };
+};
+
+export default connect(mapStateToProps)(NotNowModal);

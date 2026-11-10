@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import Hero from '../common/Hero';
 import { useHistory } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
@@ -9,6 +10,9 @@ var Archive = function (props) {
   const [contestList, setContestList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [archiveContest, setArchiveContest] = useState();
+  // re-renders when the date/contest phase changes so contest availability
+  // is re-evaluated while the app stays open
+  const now = useSelector((state) => state.nowReducer);
   const history = useHistory();
   console.log(props);
 
@@ -23,24 +27,28 @@ var Archive = function (props) {
   }, []);
 
   useEffect(() => {
-    let params = Number(new URL(document.location).searchParams.get('id'));
-    let shp = new URL(document.location).searchParams.get('sh');
-    console.log('shp', shp);
     axios
       .get('/api/contestnames/')
       .then((data) => {
         setContestList(data.data);
-        if (
-          data.data.some(
-            (a) => a.contestid === params && new Date(a.resultdate) < new Date()
-          ) ||
-          shp === 'test093'
-        ) {
-          setArchiveContest(params);
-        }
       })
       .catch((err) => console.log(err));
   }, [props.location.search]);
+
+  useEffect(() => {
+    if (!contestList.length) return;
+    let params = Number(new URL(document.location).searchParams.get('id'));
+    let shp = new URL(document.location).searchParams.get('sh');
+    console.log('shp', shp);
+    if (
+      contestList.some(
+        (a) => a.contestid === params && new Date(a.resultdate) < new Date(now)
+      ) ||
+      shp === 'test093'
+    ) {
+      setArchiveContest(params);
+    }
+  }, [contestList, props.location.search, now]);
 
   return (
     <div style={{ textAlign: 'center' }}>
@@ -62,7 +70,7 @@ var Archive = function (props) {
                       <option
                         key={contest._id}
                         value={contest.contestid}
-                        disabled={new Date(contest.resultdate) > new Date()}
+                        disabled={new Date(contest.resultdate) > new Date(now)}
                       >
                         {contest.contestlabel}: {contest.songname} by{' '}
                         {contest.artist}
