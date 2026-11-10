@@ -3,15 +3,11 @@ import { Link } from 'react-router-dom';
 import { Modal, Button, Form } from 'react-bootstrap';
 
 const rules = [
-  'I am uploading a zip-compressed file <= 105MB in size.',
-  'The file contains my Reaper project .RPP file.',
-  'The file contains a 24-bit FLAC file of my mix at the same sample rate as the media files.',
-  'The mix measures no more than -14 LUFS (integrated) and dBFS peaks at -1.0dB or less',
-  'The file DOES NOT contain the original media files.',
-  'The file contains a JSFX directory with any JSFX effects used that are not part of the Reaper installation or the current Tukan release.',
-  'The file contains an IMPULSE directory with any impulses used in REAFIR.',
   'No additional samples, gluing, or destructive editing was done in the mix.',
-  'I will not vote for my own mix.',
+  'I am uploading a zip-compressed file <= 105MB in size.',
+  'The file contains my Reaper project .RPP file, any JSFX effects used that are not part of the Reaper installation or the current Tukan release, and any impulses used in REAFIR.',
+  'The file contains a 24-bit FLAC file of my mix at the same sample rate as the media files that measures measures no more than -14 LUFS (integrated) and dBFS peaks at -1.0dB or less.',
+  'The file DOES NOT contain the original media files.',
 ];
 function PreModal(props) {
 
@@ -37,7 +33,7 @@ function PreModal(props) {
           <Modal.Title>Before you submit your mix...</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          
+
           Please make sure that you followed the rules:
           <div style={{ padding: '20px'}}>
 
@@ -55,7 +51,7 @@ function PreModal(props) {
                 boxSizing: 'border-box',
               }}
               >
-                <Form.Check.Input style={{ placeSelf: 'center start' }} onChange={changeHandler} />
+                <Form.Check.Input style={{ placeSelf: 'start', minHeight: '13px', minWidth: '13px', marginTop: '8px' }} onChange={changeHandler} />
                 <Form.Check.Label style={{ maxWidth: '85%' }}>
                   {rule}
                 </Form.Check.Label>
