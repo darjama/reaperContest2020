@@ -29,7 +29,7 @@ export function fetchContestDetails() {
       return {data};
   })
         .then(({ data }) => {
-      dispatch(updateContestDetails(null));})
+      dispatch(updateContestDetails(data));})
   };
 
 }
