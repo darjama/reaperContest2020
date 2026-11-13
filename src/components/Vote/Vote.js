@@ -21,9 +21,9 @@ function Vote(props) {
   // and the contest id are re-evaluated while the app stays open
   const d = new Date(now);
   const month = '0' + (d.getMonth() + 1).toString();
-  const contestId = details.contestid || (d.getFullYear().toString() + month.slice(-2));
+  const contestId = details?.contestid || (d.getFullYear().toString() + month.slice(-2));
 
-  const { votestart, voteend, resultdate, prefix, songname, markers } = details;
+  const { votestart, voteend, resultdate, prefix, songname, markers } = details ?? {};
   const [top3, setTop3] = useState([null, null, null]);
   const [excluded, setExcluded] = useState(undefined);
 
@@ -68,7 +68,8 @@ function Vote(props) {
     month: 'long',
     day: 'numeric',
   };
-  const early = `Voting hasn't started yet. Come back on  ${new Date(
+  let early = `Voting hasn't started yet. `;
+  if (votestart) early += `Come back on ${new Date(
     votestart
   ).toLocaleDateString('en-US', options)}.`;
   const late = `Voting for this month is over. Check the homepage for results starting on ${new Date(

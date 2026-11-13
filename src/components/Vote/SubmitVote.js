@@ -25,7 +25,7 @@ var SubmitVote = function ({ voter, setExcluded, entriesCount }) {
     new Date().getMonth() +
     1
   ).toString();
-  const { votestart, voteend, resultdate, prefix, songname, markers } = details;
+  const { votestart, voteend, resultdate, prefix, songname, markers } = details ?? {};
   const submitHandler = function (e) {
     e.preventDefault();
     setDisableSubmit(true);
