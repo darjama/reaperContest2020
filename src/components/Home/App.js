@@ -46,7 +46,6 @@ class App extends React.PureComponent {
     // details is {} while the fetch is still in flight and null once it
     // found no contest for the current month
     const noContest = this.props.details == null;
-    console.log('noContest', noContest, this.props.details);
 
     let downloadModal = null;
     let contestCards = null;
