@@ -174,7 +174,7 @@ class Submit extends React.Component {
   }
 
   render() {
-    const { startdate, duedate, votestart } = this.props.details;
+    const { startdate, duedate, votestart } = this.props.details ?? {};
     // props.now updates when the date/contest phase changes, so the
     // submission window is re-evaluated while the app stays open
     const now = new Date(this.props.now);
@@ -184,9 +184,12 @@ class Submit extends React.Component {
       month: 'long',
       day: 'numeric',
     };
-    const early = `The contest hasn't started yet. Come back on  ${new Date(
-      startdate
-    ).toLocaleDateString('en-US', options)}.`;
+    let  early = `The contest hasn't started yet.`
+    if (startdate) {
+      early += `Come back on  ${new Date(
+        startdate
+      ).toLocaleDateString('en-US', options)}.`;
+    }
     const late = `Sorry, you've missed the deadline for submissions. Come back to cast your vote on ${new Date(
       votestart
     ).toLocaleDateString('en-US', options)}.`;

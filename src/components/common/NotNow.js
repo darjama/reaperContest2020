@@ -15,9 +15,11 @@ class NotNowModal extends React.Component {
     let start = new Date(this.props.start);
     let end = new Date(this.props.end);
     let shp = new URL(document.location).searchParams.get('sh');
+    const validStart = !isNaN(start) && start instanceof Date;
+    console.log('NotNowModal', date, start, end, shp);
     return (
       <Modal
-        show={(date < start || date > end) && shp !== 'test093'}
+        show={(!validStart || date < start || date > end) && shp !== 'test093'}
         backdrop='static'
         keyboard={false}
       >
@@ -25,7 +27,7 @@ class NotNowModal extends React.Component {
           <Modal.Title>Sorry!</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {date < start ? this.props.early : ''}
+          {(!validStart || date < start) ? this.props.early : ''}
           {date > end ? this.props.late : ''}
           <br />
           <br />
