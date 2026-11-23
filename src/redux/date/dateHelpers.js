@@ -14,7 +14,8 @@ const BOUNDARY_FIELDS = [
 // setTimeout overflows above 2^31 - 1 ms (~24.8 days)
 const MAX_TIMEOUT = 2147483647;
 
-const getBoundaries = (details = {}) =>
+const getBoundaries = (detailsArg) =>
+  const details = detailsArg || {};
   BOUNDARY_FIELDS.filter((field) => details[field])
     .map((field) => new Date(details[field]))
     .filter((date) => !isNaN(date));
