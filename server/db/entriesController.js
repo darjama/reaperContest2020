@@ -1,4 +1,4 @@
-const { entries } = require('lodash');
+const entries  = require('lodash').entries;
 
 const mongoose = require('mongoose'),
   Entry = mongoose.model('Entries');

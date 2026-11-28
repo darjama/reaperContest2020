@@ -1,4 +1,4 @@
-const { keyBy } = require('lodash');
+const keyBy  = require('lodash').keyBy;
 
 const mongoose = require('mongoose'),
   Vote = mongoose.model('Votes');
