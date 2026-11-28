@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(opencode run:*)",
+      "Bash(git worktree add:*)",
+      "Bash(git worktree list:*)"
+    ]
+  }
+}
