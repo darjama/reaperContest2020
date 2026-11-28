@@ -1,6 +1,5 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
-import ContactForm from './ContactForm';
 
 var Footer = function (props) {
   return (
@@ -14,8 +13,10 @@ var Footer = function (props) {
       }}
     >
       <Col className='mr-auto'>Copyright 2020</Col>
-      <Col className='ml-auto'>
-        <ContactForm />
+      <Col className='ml-auto text-right'>
+        <a href='/contact' style={{ color: 'white' }}>
+          Contact Us
+        </a>
       </Col>
     </Row>
   );

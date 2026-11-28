@@ -168,7 +168,7 @@ class Submit extends React.Component {
         axios.post('/api/entry', data).catch((err) => console.log(err));
         this.setState({
           toastMessage:
-            'There was an error with your upload, please try again later or use the contact form to make arrangements to send a link to your file.',
+            'There was an error with your upload, please try again later or use the contact page to make arrangements to send a link to your file.',
         });
       });
   }

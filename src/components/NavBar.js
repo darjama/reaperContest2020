@@ -47,6 +47,9 @@ var NavBar = function () {
           <LinkContainer className='ml-auto' to='/archive'>
             <Nav.Link>Archive</Nav.Link>
           </LinkContainer>
+          <LinkContainer className='ml-auto' to='/contact'>
+            <Nav.Link>Contact Us</Nav.Link>
+          </LinkContainer>
           <a
             className='external-navbar-link'
             href='https://www.paypal.com/donate/?hosted_button_id=JHVM2LWFUYCBY'

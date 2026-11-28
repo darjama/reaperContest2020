@@ -32,10 +32,6 @@ body {
   font-size: 1.4rem;
 }
 
-.hide-form {
-  display: none;
-}
-
 @media only screen and (max-device-width: 720px) {
   html {
     font-size: 145%;

@@ -127,8 +127,8 @@ class App extends React.PureComponent {
             </Card.Title>
             <Card.Text>
               There is no contest currently available, please check back
-              soon. Use the contact form below if you believe you are getting
-              this message in error.
+              soon. Use the <Link to='/contact'>contact form</Link> if you
+              believe you are getting this message in error.
             </Card.Text>
           </Card.Body>
         </Card>
