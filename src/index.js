@@ -12,6 +12,7 @@ const NavBar = loadable(() => import('./components/NavBar.js'));
 const GetStarted = loadable(() =>
   import('./components/GetStarted/GetStarted.js')
 );
+const Contact = loadable(() => import('./components/Contact/Contact.js'));
 import Vote from './components/Vote/Vote.js';
 const Submit = loadable(() => import('./components/Submit/Submit.js'));
 const Loader = loadable(() => import('./components/common/Loader'));
@@ -34,6 +35,7 @@ ReactDOM.render(
         <Route exact path='/' component={App} />
         <Route path='/Vote' component={Vote} />
         <Route path='/GetStarted' component={GetStarted} />
+        <Route path='/Contact' component={Contact} />
         <Route path='/Submit' component={Submit} />
         <Route path='/Archive' component={Archive} />
         <Route path='/Results' component={Results} />

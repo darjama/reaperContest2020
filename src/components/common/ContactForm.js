@@ -1,15 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import { Container, Form, Button, Toast } from 'react-bootstrap';
+import { Form, Button, Modal } from 'react-bootstrap';
 
 var ContactForm = function (props) {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [confirmation, setConfirmation] = useState(false);
   const [oops, setOops] = useState(false);
-  const [showForm, setShowForm] = useState(false);
   const [sending, setSending] = useState(false);
-  const submitButton = useRef(null);
 
   function validateEmail(testString) {
     const re =
@@ -26,8 +24,6 @@ var ContactForm = function (props) {
     </Form.Text>
   );
 
-  let isFormVisible = showForm ? '' : 'hide-form';
-
   function sendMessage(e) {
     e.preventDefault();
     setSending(true);
@@ -38,7 +34,6 @@ var ContactForm = function (props) {
         setMessage('');
         setSending(false);
         setConfirmation(true);
-        setShowForm(false);
       })
       .catch((err) => {
         setSending(false);
@@ -46,56 +41,47 @@ var ContactForm = function (props) {
       });
   }
 
-  function clickContact() {
-    setShowForm(!showForm);
+  function closeModal() {
+    if (sending) return;
+    setConfirmation(false);
+    setOops(false);
   }
 
-  React.useEffect(() => {
-    if (showForm)
-      submitButton.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      }),
-        [];
-  }, [showForm]);
+  const modalOpen = sending || confirmation || oops;
+
+  let modalTitle = 'Sending...';
+  let modalBody = 'Please wait while we send your message.';
+  if (confirmation) {
+    modalTitle = 'Success!';
+    modalBody = "Thank you, message sent! We'll respond to you post haste.";
+  } else if (oops) {
+    modalTitle = 'Oops!';
+    modalBody =
+      'There was an error in sending your message, please try again later.';
+  }
 
   return (
-    <Container>
-      <div style={{ width: '100%', textAlign: 'right' }}>
-        <h2
-          style={{ textAlign: 'right' }}
-          onClick={() => clickContact()}
-          style={{ cursor: 'pointer' }}
-        >
-          Contact Us
-        </h2>
-      </div>
-      <Toast show={sending} onClose={() => setSending(false)}>
-        <Toast.Header>
-          <strong>Sending...</strong>
-        </Toast.Header>
-      </Toast>
-      <Toast show={confirmation} onClose={() => setConfirmation(false)}>
-        <Toast.Header>
-          <strong>Success!</strong>
-        </Toast.Header>
-        <Toast.Body style={{ color: 'black' }}>
-          Thank you, message sent! We'll respond to you post haste.
-        </Toast.Body>
-      </Toast>
-      <Toast
-        show={oops}
-        onClose={() => setOops(false)}
-        style={{ color: 'black' }}
+    <React.Fragment>
+      <Modal
+        show={modalOpen}
+        onHide={closeModal}
+        centered
+        backdrop={sending ? 'static' : true}
+        keyboard={!sending}
       >
-        <Toast.Header>
-          <strong>Oops!</strong>
-        </Toast.Header>
-        <Toast.Body style={{ color: 'black' }}>
-          There was an error in sending your message, please try again later.
-        </Toast.Body>
-      </Toast>
-      <Form onSubmit={sendMessage} className={isFormVisible}>
+        <Modal.Header closeButton={!sending}>
+          <Modal.Title>{modalTitle}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{modalBody}</Modal.Body>
+        {!sending && (
+          <Modal.Footer>
+            <Button variant='primary' onClick={closeModal}>
+              Close
+            </Button>
+          </Modal.Footer>
+        )}
+      </Modal>
+      <Form onSubmit={sendMessage}>
         <Form.Group controlId='formBasicEmail'>
           <Form.Label>Email address</Form.Label>
           <Form.Control
@@ -122,8 +108,7 @@ var ContactForm = function (props) {
           Submit
         </Button>
       </Form>
-      <div ref={submitButton} />
-    </Container>
+    </React.Fragment>
   );
 };
 

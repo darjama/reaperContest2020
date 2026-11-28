@@ -19,7 +19,7 @@ jest.mock('./DownloadModal.js', () => ({
 }));
 
 const NO_CONTEST_MESSAGE =
-  'There is no contest currently available, please check back soon. Use the contact form below if you believe you are getting this message in error.';
+  'There is no contest currently available, please check back soon. Use the';
 
 const details = {
   month: 11,
@@ -53,6 +53,10 @@ function renderApp(contestDetails) {
 test('renders the no contest message instead of the contest cards when details is null', () => {
   const html = renderApp(null);
   expect(html).toContain(NO_CONTEST_MESSAGE);
+  expect(html).toContain('contact form');
+  expect(html).toContain(
+    'if you believe you are getting this message in error.'
+  );
   expect(html).toContain('HEADER_CAROUSEL');
   expect(html).toContain('reaMIXed');
   expect(html).not.toContain('Get the Tracks');
