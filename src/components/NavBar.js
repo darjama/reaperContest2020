@@ -9,11 +9,11 @@ import '../css/navBar.css';
 const LINKS = [
   ['/', 'Home'],
   ['/getstarted', 'Get Started'],
+  ['/submit', 'Submit Your Mix'],
   ['/vote', 'Vote'],
   ['/results', 'Results'],
   ['/archive', 'Archive'],
-  ['/submit', 'Submit Your Mix'],
-  ['/contact', 'ContactS'],
+  ['/contact', 'Contact'],
 ];
 
 var NavBar = function ({ details, now }) {
