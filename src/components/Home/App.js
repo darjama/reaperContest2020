@@ -1,20 +1,19 @@
 import * as React from 'react';
-import HeaderCarousel from './Carousel.js';
-import Schedule from './Schedule.js';
 import { connect } from 'react-redux';
-import { fetchContestDetails } from '../../redux/contestDetails/contestDetailActions.js';
-import { Card, CardDeck, Container, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import HomeContest from './HomeContest.js';
+import HowItWorks from './HowItWorks.js';
+import Illustration from './Illustration.js';
 import DownloadModal from './DownloadModal.js';
+import '../../css/home.css';
 
 class App extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      showDownloadModal: false
-    }
-    this.toggleDownloadModal = this.toggleDownloadModal.bind(this)
+      showDownloadModal: false,
+    };
+    this.toggleDownloadModal = this.toggleDownloadModal.bind(this);
   }
 
   componentDidMount() {
@@ -23,153 +22,49 @@ class App extends React.PureComponent {
 
   toggleDownloadModal() {
     this.setState((prevState) => ({
-      showDownloadModal: !prevState.showDownloadModal
+      showDownloadModal: !prevState.showDownloadModal,
     }));
   }
 
   render() {
-    var months = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ];
+    const { details } = this.props;
 
     // details is {} while the fetch is still in flight and null once it
     // found no contest for the current month
-    const noContest = this.props.details == null;
-
-    let downloadModal = null;
-    let contestCards = null;
-
-    if (!noContest) {
-      let {
-        month,
-        year,
-        songname,
-        artist,
-        artistimg,
-        description,
-        rawuri,
-        startdate,
-        duedate,
-        votestart,
-        voteend,
-        resultdate,
-        nextstart,
-      } = this.props.details;
-
-      downloadModal = (
-        <DownloadModal
-          open={this.state.showDownloadModal}
-          toggle={this.toggleDownloadModal}
-          url={rawuri}
-        />
-      );
-
-      contestCards = (
-        <React.Fragment>
-          <Card style={{ minWidth: '30rem' }} id='download'>
-            <Card.Body>
-              <Card.Title className='text-center rem2 cuprum'>
-                {months[month - 1]} {year}
-              </Card.Title>
-              <Card.Text>
-                This month's song is "{songname}" by {artist}.
-                <br />
-                <br />
-                {description}
-              </Card.Text>
-              <div
-                style={{
-                  display: 'grid',
-                  width: '100%',
-                  placeContent: 'center',
-                }}
-              >
-                <Button
-                  type='button'
-                  onClick={this.toggleDownloadModal}
-                  style={{ fontSize: '1.2rem' }}
-                >
-                  Get the Tracks
-                </Button>
-              </div>
-
-              <br />
-              <Card.Img variant='bottom' src={artistimg} />
-            </Card.Body>
-          </Card>
-          <Card style={{ minWidth: '30rem' }}>
-            <Card.Body>
-              <Card.Title className='text-center rem2 cuprum'>
-                Contest Schedule
-              </Card.Title>
-              <Schedule details={this.props.details} date={new Date()} />
-            </Card.Body>
-          </Card>
-        </React.Fragment>
-      );
-    } else {
-      contestCards = (
-        <Card style={{ minWidth: '30rem' }}>
-          <Card.Body>
-            <Card.Title className='text-center rem2 cuprum'>
-              No Contest
-            </Card.Title>
-            <Card.Text>
-              There is no contest currently available, please check back
-              soon. Use the <Link to='/contact'>contact form</Link> if you
-              believe you are getting this message in error.
-            </Card.Text>
-          </Card.Body>
-        </Card>
-      );
-    }
+    const noContest = details == null;
 
     return (
-      <div>
-        {downloadModal}
-        <HeaderCarousel />
-        <Container style={{ minWidth: '350px' }} fluid>
-          <CardDeck style={{ margin: '10px 0 0 0', gap: '10px' }}>
-            <Card style={{ minWidth: '30rem' }}>
-              <Card.Body>
-                <Card.Title className='text-center rem2 cuprum'>
-                  reaMIXed
-                </Card.Title>
-                <Card.Text>
-                  ... is the (unauthorized) Reaper Mix Contest Page. The perfect
-                  place to find new music to mix and to learn and share mixing
-                  techniques with others. If you're new to the contest or to
-                  Reaper I'd suggest you visit the{' '}
-                  <Link to='/getstarted'>Getting Started</Link> page to find
-                  some helpful resources.
-                  <br />
-                  <br />
-                  Please join us over in the{' '}
-                  <a
-                    href='https://forums.cockos.com/forumdisplay.php?f=24'
-                    target='_blank'
-                  >
-                    the Reaper Forums
-                  </a>{' '}
-                  for discussion about this month's contest and mixing in Reaper
-                  in general.
-                </Card.Text>
-              </Card.Body>
-            </Card>
-            {contestCards}
-          </CardDeck>
-        </Container>
+      <div className='hm'>
+        {noContest ? (
+          <header className='hm-hero'>
+            <div className='hm-wrap hm-hero-grid'>
+              <div>
+                <h1 className='hm-phase'>No Contest</h1>
+                <p>
+                  There is no contest currently available, please check back
+                  soon. Use the <Link to='/contact'>contact form</Link> if you
+                  believe you are getting this message in error.
+                </p>
+              </div>
+              <div className='hm-side'>
+                <Illustration />
+              </div>
+            </div>
+          </header>
+        ) : (
+          <React.Fragment>
+            <DownloadModal
+              open={this.state.showDownloadModal}
+              toggle={this.toggleDownloadModal}
+              url={details.rawuri}
+            />
+            <HomeContest
+              details={details}
+              onGetTracks={this.toggleDownloadModal}
+            />
+          </React.Fragment>
+        )}
+        <HowItWorks />
       </div>
     );
   }

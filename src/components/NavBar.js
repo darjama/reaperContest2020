@@ -1,9 +1,22 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Navbar, Nav, NavItem, NavDropdown } from 'react-bootstrap';
+import { Navbar, Nav } from 'react-bootstrap';
+import { getPhase } from './Home/homePhase.js';
 import '../css/navBar.css';
-var NavBar = function () {
+
+const LINKS = [
+  ['/', 'Home'],
+  ['/getstarted', 'Get Started'],
+  ['/vote', 'Vote'],
+  ['/results', 'Results'],
+  ['/archive', 'Archive'],
+  ['/submit', 'Submit Your Mix'],
+  ['/contact', 'ContactS'],
+];
+
+var NavBar = function ({ details, now }) {
   const [expanded, setExpanded] = React.useState(false);
   const location = useLocation();
   React.useEffect(() => {
@@ -13,61 +26,51 @@ var NavBar = function () {
     });
   }, [location.pathname]);
 
+  // `now` only changes when DateWatcher sees the date or contest phase change.
+  // Nothing is highlighted while details load or when there is no contest.
+  const phase = getPhase(details, new Date(now));
+  const highlighted = phase && phase.nav;
+
   return (
     <Navbar
-      bg='dark'
       variant='dark'
       expand='lg'
       expanded={expanded}
       onToggle={() => setExpanded(!expanded)}
-      className='stickyheader cuprum rem2'
+      className='site-nav'
     >
-      <Navbar.Brand href='/' className='cabin rem4'>
-        {' '}
+      <Navbar.Brand href='/'>
         reaMIXed
       </Navbar.Brand>
       <Navbar.Toggle aria-controls='basic-navbar-nav' />
       <Navbar.Collapse id='basic-navbar-nav'>
         <Nav className='ml-auto' onSelect={() => setExpanded(false)}>
-          <LinkContainer className='ml-auto' to='/'>
-            <Nav.Link>Home</Nav.Link>
-          </LinkContainer>
-          <LinkContainer className='ml-auto' to='/getstarted'>
-            <Nav.Link>Get Started</Nav.Link>
-          </LinkContainer>
-          <LinkContainer className='ml-auto' to='/submit'>
-            <Nav.Link>Submit Your Mix</Nav.Link>
-          </LinkContainer>
-          <LinkContainer className='ml-auto' to='/vote'>
-            <Nav.Link>Vote</Nav.Link>
-          </LinkContainer>
-          <LinkContainer className='ml-auto' to='/results'>
-            <Nav.Link>Results</Nav.Link>
-          </LinkContainer>
-          <LinkContainer className='ml-auto' to='/archive'>
-            <Nav.Link>Archive</Nav.Link>
-          </LinkContainer>
-          <LinkContainer className='ml-auto' to='/contact'>
-            <Nav.Link>Contact Us</Nav.Link>
-          </LinkContainer>
-          <a
-            className='external-navbar-link'
+          {LINKS.map(([to, label]) => (
+            <LinkContainer key={to} to={to} exact={to === '/'}>
+              <Nav.Link className={to === highlighted ? 'nav-cta' : ''}>
+                {label}
+              </Nav.Link>
+            </LinkContainer>
+          ))}
+          <Nav.Link
+            className='nav-donate'
             href='https://www.paypal.com/donate/?hosted_button_id=JHVM2LWFUYCBY'
             target='_blank'
+            rel='noopener noreferrer'
           >
             Donate
-          </a>
-          {/* <NavDropdown title="Archive" id="basic-nav-dropdown">
-
-              <NavDropdown.Item className="cuprum" href="/Archive">Past Raw Files</NavDropdown.Item>
-              <NavDropdown.Item className="cuprum" href="/Archive#action/3.3">Past Mixes</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item className="cuprum" href="/Archive#action/3.1">Hall of Fame</NavDropdown.Item>
-            </NavDropdown> */}
+          </Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
   );
 };
 
-export default NavBar;
+const mapStateToProps = (state) => {
+  return {
+    details: state.contestDetailReducer,
+    now: state.nowReducer,
+  };
+};
+
+export default connect(mapStateToProps)(NavBar);

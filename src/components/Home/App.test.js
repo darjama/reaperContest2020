@@ -5,12 +5,6 @@ import { createStore } from 'redux';
 import { MemoryRouter } from 'react-router-dom';
 import App from './App.js';
 
-// Carousel imports images and css that jest cannot transform
-jest.mock('./Carousel.js', () => ({
-  __esModule: true,
-  default: () => 'HEADER_CAROUSEL',
-}));
-
 // DownloadModal renders nothing while it is closed, so a sentinel text
 // makes its presence in the output observable
 jest.mock('./DownloadModal.js', () => ({
@@ -37,6 +31,10 @@ const details = {
   nextstart: '2026-12-01T00:00:00',
 };
 
+// the buttons depend on the contest phase, so pin the clock to mixing time
+beforeAll(() => jest.useFakeTimers().setSystemTime(new Date('2026-11-10')));
+afterAll(() => jest.useRealTimers());
+
 function renderApp(contestDetails) {
   const store = createStore(
     (state = { contestDetailReducer: contestDetails }) => state
@@ -57,8 +55,7 @@ test('renders the no contest message instead of the contest cards when details i
   expect(html).toContain(
     'if you believe you are getting this message in error.'
   );
-  expect(html).toContain('HEADER_CAROUSEL');
-  expect(html).toContain('reaMIXed');
+  expect(html).toContain('How it works');
   expect(html).not.toContain('Get the Tracks');
   expect(html).not.toContain('Contest Schedule');
   expect(html).not.toContain('DOWNLOAD_MODAL');
@@ -67,8 +64,7 @@ test('renders the no contest message instead of the contest cards when details i
 test('keeps rendering the contest cards without the no contest message while details is loading', () => {
   const html = renderApp({});
   expect(html).not.toContain('There is no contest currently available');
-  expect(html).toContain('HEADER_CAROUSEL');
-  expect(html).toContain('reaMIXed');
+  expect(html).toContain('How it works');
   expect(html).toContain('Get the Tracks');
   expect(html).toContain('Contest Schedule');
 });
@@ -76,8 +72,7 @@ test('keeps rendering the contest cards without the no contest message while det
 test('renders the contest cards when a contest exists', () => {
   const html = renderApp(details);
   expect(html).not.toContain('There is no contest currently available');
-  expect(html).toContain('HEADER_CAROUSEL');
-  expect(html).toContain('reaMIXed');
+  expect(html).toContain('How it works');
   // react-dom/server separates adjacent text children with comment markers
   expect(html).toContain('November');
   expect(html).toContain('2026');

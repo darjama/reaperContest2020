@@ -1,0 +1,64 @@
+.site-footer {
+  background: #111417;
+  border-top: 1px solid var(--line);
+  padding: 32px 16px 20px;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.footer-grid,
+.footer-legal {
+  max-width: 1068px;
+  margin: 0 auto;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 24px;
+}
+
+.footer-grid > div {
+  min-width: 0;
+}
+
+.site-footer h4 {
+  font-family: var(--head);
+  font-size: 18px;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+
+.site-footer h4.cabin {
+  font-family: 'Cabin Sketch', cursive;
+  font-size: 22px;
+  color: #fff;
+}
+
+.site-footer a {
+  display: block;
+  color: var(--muted);
+  padding: 2px 0;
+}
+
+.site-footer a:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.footer-legal {
+  border-top: 1px solid var(--line);
+  margin-top: 24px;
+  padding-top: 14px;
+  font-size: 13px;
+}
+
+@media (max-width: 600px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footer-grid > div:first-child {
+    grid-column: 1 / -1;
+  }
+}

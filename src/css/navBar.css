@@ -1,36 +1,68 @@
-.stickyheader {
+.site-nav {
   position: sticky;
   top: 0;
-  width: 100%;
   z-index: 50;
+  padding: 6px 16px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  font-size: 16px;
 }
 
-@media only screen and (min-width: 1000px) {
-  .stickyheader {
-    max-height: 4rem;
+.site-nav .navbar-brand {
+  font-family: 'Cabin Sketch', cursive;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1;
+  color: #fff;
+}
+
+.site-nav .navbar-nav {
+  align-items: stretch;
+}
+
+.site-nav.navbar-dark .nav-link {
+  font-family: var(--head);
+  font-size: 18px;
+  color: var(--muted);
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.site-nav.navbar-dark .nav-link:hover {
+  color: var(--text);
+  background: var(--surface);
+}
+
+.site-nav.navbar-dark .nav-link.active {
+  color: var(--text);
+  box-shadow: inset 0 -2px 0 var(--accent);
+  border-radius: 0;
+}
+
+/* The phase's call to action reads like any other item in the collapsed menu */
+.site-nav.navbar-dark .nav-link.nav-cta {
+  color: var(--accent);
+}
+
+.site-nav.navbar-dark .nav-link.nav-donate {
+  opacity: 0.7;
+}
+
+@media (min-width: 992px) {
+  .site-nav .navbar-nav {
+    align-items: center;
   }
-}
 
-.rem2 {
-  font-size: 2rem;
-}
+  .site-nav.navbar-dark .nav-link.nav-cta {
+    margin: 0 8px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-radius: 8px;
+    font-weight: 700;
+    box-shadow: none;
+  }
 
-.rem4 {
-  font-size: 4rem;
-}
-
-.cuprum {
-  font-family: 'Cuprum', sans-serif;
-}
-
-.external-navbar-link {
-  color: rgba(255, 255, 255, 0.5);
-  text-decoration: none;
-  margin: auto 0 auto auto;
-  padding-left: 6px;
-}
-
-.external-navbar-link:hover {
-  color: rgba(255, 255, 255, 0.75);
-  text-decoration: none;
+  .site-nav.navbar-dark .nav-link.nav-cta:hover {
+    background: var(--accent-hover);
+  }
 }

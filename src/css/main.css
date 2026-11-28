@@ -1,3 +1,18 @@
+:root {
+  --bg: #1b1f23;
+  --surface: #252b31;
+  --line: #3a424a;
+  --text: #e9edf0;
+  --text-soft: #cdd5db;
+  --muted: #9aa5ae;
+  --accent: #84c13d;
+  --accent-hover: #97d44f;
+  --accent-ink: #0f1a02;
+  --blue: #6a9bd4;
+  --rust: #c07e68;
+  --head: 'Cuprum', sans-serif;
+}
+
 html {
   font-size: 80%;
 }
@@ -9,11 +24,23 @@ h1 {
 body {
   font-family: 'Ubuntu', sans-serif;
   font-size: 1.4rem;
-  background-color: #343a40;
+  background-color: var(--bg);
 }
 
 .cabin {
   font-family: 'Cabin Sketch', cursive;
+}
+
+.cuprum {
+  font-family: var(--head);
+}
+
+.rem2 {
+  font-size: 2rem;
+}
+
+.rem4 {
+  font-size: 4rem;
 }
 
 .card {
@@ -30,10 +57,4 @@ body {
 
 .countdown-label {
   font-size: 1.4rem;
-}
-
-@media only screen and (max-device-width: 720px) {
-  html {
-    font-size: 145%;
-  }
 }
