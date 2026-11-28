@@ -1,0 +1,92 @@
+/* The modal renders outside the page, so it sets its own sizes */
+.modal-content.dl-modal {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.dl-modal .modal-header,
+.dl-modal .modal-footer {
+  border-color: var(--line);
+  padding: 16px 24px;
+}
+
+.dl-modal .modal-title {
+  font-family: var(--head);
+  font-weight: 700;
+  font-size: 28px;
+}
+
+.dl-modal .close {
+  color: var(--text);
+  text-shadow: none;
+  font-size: 28px;
+}
+
+.dl-modal .modal-body {
+  padding: 20px 24px;
+  color: var(--text-soft);
+}
+
+.dl-modal ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dl-modal li {
+  position: relative;
+  padding: 0 0 0 26px;
+  margin-top: 12px;
+}
+
+/* dots cycle through the logo colors */
+.dl-modal li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 7px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.dl-modal li:nth-child(3n + 2)::before {
+  background: var(--blue);
+}
+
+.dl-modal li:nth-child(3n)::before {
+  background: var(--rust);
+}
+
+.dl-modal .modal-footer {
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.dl-modal .modal-footer > * {
+  margin: 0;
+}
+
+.dl-modal .modal-footer a {
+  color: var(--blue);
+}
+
+.dl-modal .modal-footer a.dl-download {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-radius: 10px;
+  padding: 9px 22px;
+  font-family: var(--head);
+  font-weight: 700;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.dl-modal .modal-footer a.dl-download:hover {
+  background: var(--accent-hover);
+}
