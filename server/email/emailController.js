@@ -22,7 +22,8 @@ async function main(req, res) {
   // send mail with defined transport object
   let info = await transporter.sendMail({
     from: '"reaMIXed" <reamixed@flac.reamixed.com>', // sender address
-    to: 'darmarco@gmail.com', // list of receivers
+    to: 'darmarco@gmail.com', // list of receivers,
+    replyTo: req.body.email,
     subject: 'reaMIXed Contact Form', // Subject line
     text:
       req.body.message +
